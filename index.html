@@ -21,7 +21,6 @@
             color: #fff; font-family: 'Orbitron', sans-serif; overflow: hidden;
         }
 
-        /* Overlay Awal (Are You Ready) */
         #gatekeeper {
             position: fixed; inset: 0; z-index: 9999;
             background: black; display: flex; flex-direction: column;
@@ -58,7 +57,6 @@
         }
         .ready-btn:hover { transform: scale(1.15) rotate(-2deg); box-shadow: 0 0 50px #ef4444; }
 
-        /* Animasi khusus tombol tiket */
         @keyframes glowing {
             0% { box-shadow: 0 0 5px #ff0000; }
             50% { box-shadow: 0 0 30px #ff0000; }
@@ -94,6 +92,23 @@
             10% { opacity: 1; }
             100% { opacity: 0; transform: translate(var(--tw-x), var(--tw-y)) scale(1.8) rotate(var(--tw-r)); }
         }
+
+        /* --- CSS JUDUL BERJALAN --- */
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .animate-marquee {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 8s linear infinite;
+            width: max-content;
+        }
+
+        .pause-animation {
+            animation-play-state: paused !important;
+        }
     </style>
 </head>
 <body class="flex flex-col items-center justify-center p-4 min-h-screen">
@@ -107,7 +122,7 @@
     <nav class="fixed top-0 w-full z-50 p-4 flex justify-between items-center bg-black/60 backdrop-blur-lg border-b border-white/10 hidden-content" id="nav-content">
         <div class="flex items-center gap-2 md:gap-3">
             <div class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-red-600 overflow-hidden shadow-[0_0_15px_red]">
-                <img src="logo.png" alt="Logo" class="w-full h-full object-cover">
+                <img src="blitar.png" alt="Logo" class="w-full h-full object-cover">
             </div>
             <div class="leading-tight">
                 <h2 class="text-[10px] md:text-xs font-bold text-red-500 tracking-widest uppercase">A7X Blitar Raya</h2>
@@ -162,14 +177,14 @@
         </div>
 
         <div class="mt-8 md:mt-12 flex flex-col items-center px-4">
-            <div class="bg-black/80 backdrop-blur-md px-4 py-3 md:px-6 md:py-4 rounded-full border border-red-600/30 flex items-center gap-4 md:gap-6 w-full max-w-sm">
-                <button onclick="prevSong()" class="text-gray-400 hover:text-white transition"><i class="fas fa-step-backward text-lg"></i></button>
-                <button onclick="togglePlay()" id="playBtn" class="w-10 h-10 md:w-12 md:h-12 bg-red-600 rounded-full flex items-center justify-center text-black shadow-lg active:scale-90 transition">
+            <div class="bg-black/80 backdrop-blur-md px-4 py-3 md:px-6 md:py-4 rounded-full border border-red-600/30 flex items-center gap-4 md:gap-6 w-full max-w-sm overflow-hidden">
+                <button onclick="prevSong()" class="text-gray-400 hover:text-white transition z-10 bg-black/80 pr-2"><i class="fas fa-step-backward text-lg"></i></button>
+                <button onclick="togglePlay()" id="playBtn" class="w-10 h-10 md:w-12 md:h-12 bg-red-600 rounded-full flex items-center justify-center text-black shadow-lg active:scale-90 transition z-10 shrink-0">
                     <i id="playIcon" class="fas fa-play ml-1 text-lg"></i>
                 </button>
-                <button onclick="nextSong()" class="text-gray-400 hover:text-white transition"><i class="fas fa-step-forward text-lg"></i></button>
-                <div class="text-left border-l border-white/10 pl-4 overflow-hidden">
-                    <p id="songTitle" class="text-[9px] md:text-[10px] font-bold text-red-500 uppercase truncate">Tap to Play</p>
+                <button onclick="nextSong()" class="text-gray-400 hover:text-white transition z-10 bg-black/80 pl-2"><i class="fas fa-step-forward text-lg"></i></button>
+                <div class="text-left border-l border-white/10 pl-4 overflow-hidden w-full relative">
+                    <p id="songTitle" class="text-[9px] md:text-[10px] font-bold text-red-500 uppercase animate-marquee pause-animation">Tap to Play</p>
                     <p class="text-[7px] md:text-[8px] text-gray-500 uppercase tracking-widest">Blitar Playlist</p>
                 </div>
             </div>
@@ -180,52 +195,39 @@
     <script>
         const player = document.getElementById('audioPlayer');
         const playIcon = document.getElementById('playIcon');
+        const songTitle = document.getElementById('songTitle');
 
-        // --- TAMBAHAN FUNGSI KELELAWAR PUTIH ---
         function spawnBats() {
-            const batCount = 40; // Jumlah kelelawar
+            const batCount = 40;
             for (let i = 0; i < batCount; i++) {
                 const bat = document.createElement('img');
-                // Menggunakan siluet kelelawar transparan
                 bat.src = 'https://www.pngarts.com/files/1/Bat-PNG-Transparent-Image.png'; 
                 bat.className = 'bat-particle';
-                
-                // Mulai dari posisi tengah tombol
                 bat.style.left = '50%';
                 bat.style.top = '50%';
-
-                // Arah terbang acak
                 const moveX = (Math.random() - 0.5) * 1500 + 'px';
                 const moveY = (Math.random() - 0.8) * 1200 + 'px';
                 const rotate = (Math.random() - 0.5) * 400 + 'deg';
-
                 bat.style.setProperty('--tw-x', moveX);
                 bat.style.setProperty('--tw-y', moveY);
                 bat.style.setProperty('--tw-r', rotate);
-
                 document.body.appendChild(bat);
-
-                // Hapus elemen setelah animasi selesai
-                setTimeout(() => {
-                    bat.remove();
-                }, 2500);
+                setTimeout(() => { bat.remove(); }, 2500);
             }
         }
 
         function unlockMoshpit() {
-            // Picu efek kelelawar
             spawnBats();
-
             document.getElementById('gatekeeper').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('gatekeeper').style.display = 'none';
                 document.getElementById('nav-content').classList.add('show-content');
                 document.getElementById('main-content').classList.add('show-content');
                 document.body.style.overflow = 'auto';
-
                 load(index);
                 player.play();
                 playIcon.className = 'fas fa-pause text-lg';
+                songTitle.classList.remove('pause-animation');
             }, 1000);
         }
 
@@ -234,12 +236,10 @@
             const now = new Date().getTime();
             const gap = targetDate - now;
             const s = 1000, m = s * 60, h = m * 60, d = h * 24;
-            
             if (gap < 0) {
                 document.querySelector('main').innerHTML = "<h1 class='a7x-title text-5xl p-10 uppercase'>IT'S SHOWTIME! 🤘</h1>";
                 return;
             }
-
             document.getElementById('days').innerText = String(Math.floor(gap / d)).padStart(2, '0');
             document.getElementById('hours').innerText = String(Math.floor((gap % d) / h)).padStart(2, '0');
             document.getElementById('minutes').innerText = String(Math.floor((gap % h) / m)).padStart(2, '0');
@@ -257,16 +257,37 @@
 
         function load(i) {
             player.src = playlist[i].url;
-            document.getElementById('songTitle').innerText = playlist[i].title;
+            songTitle.innerText = playlist[i].title;
         }
 
         function togglePlay() {
-            if (player.paused) { player.play(); playIcon.className = 'fas fa-pause text-lg'; }
-            else { player.pause(); playIcon.className = 'fas fa-play ml-1 text-lg'; }
+            if (player.paused) { 
+                player.play(); 
+                playIcon.className = 'fas fa-pause text-lg';
+                songTitle.classList.remove('pause-animation');
+            }
+            else { 
+                player.pause(); 
+                playIcon.className = 'fas fa-play ml-1 text-lg';
+                songTitle.classList.add('pause-animation');
+            }
         }
 
-        function nextSong() { index = (index + 1) % playlist.length; load(index); player.play(); playIcon.className = 'fas fa-pause text-lg'; }
-        function prevSong() { index = (index - 1 + playlist.length) % playlist.length; load(index); player.play(); playIcon.className = 'fas fa-pause text-lg'; }
+        function nextSong() { 
+            index = (index + 1) % playlist.length; 
+            load(index); 
+            player.play(); 
+            playIcon.className = 'fas fa-pause text-lg';
+            songTitle.classList.remove('pause-animation');
+        }
+
+        function prevSong() { 
+            index = (index - 1 + playlist.length) % playlist.length; 
+            load(index); 
+            player.play(); 
+            playIcon.className = 'fas fa-pause text-lg';
+            songTitle.classList.remove('pause-animation');
+        }
 
         updateTimer();
     </script>
