@@ -80,6 +80,20 @@
 
         .hidden-content { opacity: 0; pointer-events: none; transition: 1.5s ease; }
         .show-content { opacity: 1; pointer-events: auto; }
+
+        /* --- TAMBAHAN EFEK KELELAWAR PUTIH --- */
+        .bat-particle {
+            position: fixed; pointer-events: none; z-index: 10000;
+            width: 45px; height: auto; 
+            filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,0.8));
+            animation: flyOut 2.5s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes flyOut {
+            0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
+            10% { opacity: 1; }
+            100% { opacity: 0; transform: translate(var(--tw-x), var(--tw-y)) scale(1.8) rotate(var(--tw-r)); }
+        }
     </style>
 </head>
 <body class="flex flex-col items-center justify-center p-4 min-h-screen">
@@ -167,7 +181,41 @@
         const player = document.getElementById('audioPlayer');
         const playIcon = document.getElementById('playIcon');
 
+        // --- TAMBAHAN FUNGSI KELELAWAR PUTIH ---
+        function spawnBats() {
+            const batCount = 40; // Jumlah kelelawar
+            for (let i = 0; i < batCount; i++) {
+                const bat = document.createElement('img');
+                // Menggunakan siluet kelelawar transparan
+                bat.src = 'https://www.pngarts.com/files/1/Bat-PNG-Transparent-Image.png'; 
+                bat.className = 'bat-particle';
+                
+                // Mulai dari posisi tengah tombol
+                bat.style.left = '50%';
+                bat.style.top = '50%';
+
+                // Arah terbang acak
+                const moveX = (Math.random() - 0.5) * 1500 + 'px';
+                const moveY = (Math.random() - 0.8) * 1200 + 'px';
+                const rotate = (Math.random() - 0.5) * 400 + 'deg';
+
+                bat.style.setProperty('--tw-x', moveX);
+                bat.style.setProperty('--tw-y', moveY);
+                bat.style.setProperty('--tw-r', rotate);
+
+                document.body.appendChild(bat);
+
+                // Hapus elemen setelah animasi selesai
+                setTimeout(() => {
+                    bat.remove();
+                }, 2500);
+            }
+        }
+
         function unlockMoshpit() {
+            // Picu efek kelelawar
+            spawnBats();
+
             document.getElementById('gatekeeper').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('gatekeeper').style.display = 'none';
