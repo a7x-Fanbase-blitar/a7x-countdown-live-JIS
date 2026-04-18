@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>A7X Live Jakarta 2026 - Blitar Raya</title>
+    <meta name="description" content="Countdown Konser Avenged Sevenfold Live at JIS 2026 - Fanbase Blitar Raya">
+    <meta property="og:title" content="A7X Live Jakarta 2026 - Countdown">
+    <meta property="og:description" content="Gabung bareng Deathbat Blitar Raya menuju konser A7X di JIS!">
+    <meta property="og:image" content="logo.png"> <meta property="og:url" content="https://yourlink.com">
+    <meta name="theme-color" content="#ef4444">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), 
+                        url('a7x.jpg'); 
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .a7x-title {
+            font-family: 'Metal Mania', cursive;
+            animation: flicker 3s infinite alternate, float 6s infinite ease-in-out;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+        }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; text-shadow: 0 0 20px #ff0000; }
+            20%, 24%, 55% { opacity: 0.5; text-shadow: none; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.02); }
+        }
+
+        .ultra-glass {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+        }
+
+        .countdown-item {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            transition: 0.3s ease;
+        }
+
+        /* Penyesuaian khusus layar HP kecil */
+        @media (max-width: 380px) {
+            .a7x-title { font-size: 2.5rem; }
+            .countdown-text { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center p-4">
+
+    <nav class="fixed top-0 w-full z-50 p-4 flex justify-between items-center bg-black/60 backdrop-blur-lg border-b border-white/10">
+        <div class="flex items-center gap-2 md:gap-3">
+            <div class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-red-600 overflow-hidden shadow-[0_0_15px_red]">
+                <img src="logo.png" alt="Logo" class="w-full h-full object-cover">
+            </div>
+            <div class="leading-tight">
+                <h2 class="text-[10px] md:text-xs font-bold text-red-500 tracking-widest uppercase">A7X Blitar Raya</h2>
+                <p class="text-[8px] md:text-[9px] text-gray-400">Miftahul Rohman</p>
+            </div>
+        </div>
+        <a href="https://chat.whatsapp.com/F6p4rFx2CDoKu76h1egyML?mode=gi_t" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-full text-[9px] md:text-[10px] font-bold transition shadow-lg whitespace-nowrap">
+            JOIN <span class="hidden sm:inline">FANBASE</span> <i class="fas fa-users ml-1"></i>
+        </a>
+    </nav>
+
+    <main class="text-center z-10 w-full max-w-4xl mt-16 md:mt-24">
+        <h1 class="a7x-title text-4xl sm:text-6xl md:text-8xl mb-2 uppercase px-2">Avenged Sevenfold</h1>
+        <p class="text-[10px] sm:text-sm md:text-xl text-gray-300 tracking-[0.2em] md:tracking-[0.4em] mb-8 md:mb-12 uppercase">
+            Jakarta International Stadium <br class="sm:hidden"> | 10 Okt 2026
+        </p>
+
+        <div class="ultra-glass p-6 md:p-10 w-full">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
+                <div class="countdown-item p-4 md:p-6 rounded-xl">
+                    <span id="days" class="countdown-text block text-3xl md:text-5xl font-bold text-red-600">00</span>
+                    <span class="text-[9px] md:text-xs text-gray-400 uppercase tracking-widest">Hari</span>
+                </div>
+                <div class="countdown-item p-4 md:p-6 rounded-xl">
+                    <span id="hours" class="countdown-text block text-3xl md:text-5xl font-bold text-red-600">00</span>
+                    <span class="text-[9px] md:text-xs text-gray-400 uppercase tracking-widest">Jam</span>
+                </div>
+                <div class="countdown-item p-4 md:p-6 rounded-xl">
+                    <span id="minutes" class="countdown-text block text-3xl md:text-5xl font-bold text-red-600">00</span>
+                    <span class="text-[9px] md:text-xs text-gray-400 uppercase tracking-widest">Menit</span>
+                </div>
+                <div class="countdown-item p-4 md:p-6 rounded-xl">
+                    <span id="seconds" class="countdown-text block text-3xl md:text-5xl font-bold text-red-600">00</span>
+                    <span class="text-[9px] md:text-xs text-gray-400 uppercase tracking-widest">Detik</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 md:mt-12 flex flex-col items-center px-4">
+            <div class="bg-black/80 backdrop-blur-md px-4 py-3 md:px-6 md:py-4 rounded-full border border-red-600/30 flex items-center gap-4 md:gap-6 w-full max-w-sm sm:max-w-md">
+                <button onclick="prevSong()" class="text-gray-400 hover:text-white transition"><i class="fas fa-step-backward text-lg"></i></button>
+                <button onclick="togglePlay()" id="playBtn" class="w-10 h-10 md:w-12 md:h-12 bg-red-600 rounded-full flex items-center justify-center text-black shadow-lg active:scale-90 transition">
+                    <i id="playIcon" class="fas fa-play ml-1 text-lg"></i>
+                </button>
+                <button onclick="nextSong()" class="text-gray-400 hover:text-white transition"><i class="fas fa-step-forward text-lg"></i></button>
+                <div class="text-left border-l border-white/10 pl-4 overflow-hidden">
+                    <p id="songTitle" class="text-[9px] md:text-[10px] font-bold text-red-500 uppercase truncate">Tap to Play Music</p>
+                    <p class="text-[7px] md:text-[8px] text-gray-500 whitespace-nowrap uppercase">A7X Blitar Playlist</p>
+                </div>
+            </div>
+            <audio id="audioPlayer" loop></audio>
+        </div>
+    </main>
+
+    <script>
+        // --- COUNTDOWN LOGIC ---
+        const targetDate = new Date('October 10, 2026 20:00:00').getTime();
+        function updateTimer() {
+            const now = new Date().getTime();
+            const gap = targetDate - now;
+            const s = 1000, m = s * 60, h = m * 60, d = h * 24;
+            
+            if (gap < 0) {
+                document.querySelector('main').innerHTML = "<h1 class='a7x-title text-5xl p-10'>IT'S SHOWTIME! 🤘</h1>";
+                return;
+            }
+
+            document.getElementById('days').innerText = String(Math.floor(gap / d)).padStart(2, '0');
+            document.getElementById('hours').innerText = String(Math.floor((gap % d) / h)).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(Math.floor((gap % h) / m)).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(Math.floor((gap % m) / s)).padStart(2, '0');
+        }
+        setInterval(updateTimer, 1000);
+
+        // --- MUSIC PLAYER ---
+        const playlist = [
+            { title: "second heartbeat", url: "https://videotourl.com/audio/1776474412497-5ea5b9ac-6e55-498a-ad8c-2e0baf164d54.mp3" },
+            { title: "unholly confesions", url: "https://videotourl.com/audio/1776474668704-88101917-9230-47b9-b4d4-ee5512573e49.mp3" },
+            { title: "welcome to the family", url: "https://videotourl.com/audio/1776474594247-3dd66973-badf-477a-aac8-293add53f09f.mp3" }
+        ];
+
+        let index = Math.floor(Math.random() * playlist.length);
+        const player = document.getElementById('audioPlayer');
+        const playIcon = document.getElementById('playIcon');
+
+        function load(i) {
+            player.src = playlist[i].url;
+            document.getElementById('songTitle').innerText = playlist[i].title;
+        }
+
+        function togglePlay() {
+            if (player.paused) { player.play(); playIcon.className = 'fas fa-pause text-lg'; }
+            else { player.pause(); playIcon.className = 'fas fa-play ml-1 text-lg'; }
+        }
+
+        function nextSong() { index = (index + 1) % playlist.length; load(index); player.play(); playIcon.className = 'fas fa-pause text-lg'; }
+        function prevSong() { index = (index - 1 + playlist.length) % playlist.length; load(index); player.play(); playIcon.className = 'fas fa-pause text-lg'; }
+
+        // Interaction for Autoplay
+        window.addEventListener('click', () => { if(player.paused) togglePlay(); }, { once: true });
+
+        load(index);
+        updateTimer();
+    </script>
+</body>
+</html>
