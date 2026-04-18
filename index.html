@@ -58,6 +58,26 @@
         }
         .ready-btn:hover { transform: scale(1.15) rotate(-2deg); box-shadow: 0 0 50px #ef4444; }
 
+        /* Animasi khusus tombol tiket */
+        @keyframes glowing {
+            0% { box-shadow: 0 0 5px #ff0000; }
+            50% { box-shadow: 0 0 30px #ff0000; }
+            100% { box-shadow: 0 0 5px #ff0000; }
+        }
+
+        .btn-ticket {
+            animation: glowing 2s infinite;
+            transition: all 0.3s ease-in-out;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .btn-ticket:hover {
+            transform: scale(1.1) translateY(-5px);
+            background: #fff;
+            color: #ff0000;
+            box-shadow: 0 0 50px #ff0000;
+        }
+
         .hidden-content { opacity: 0; pointer-events: none; transition: 1.5s ease; }
         .show-content { opacity: 1; pointer-events: auto; }
     </style>
@@ -117,6 +137,16 @@
             </div>
         </div>
 
+        <div class="mt-10 mb-6">
+            <a href="https://www.tiket.com/en-id/to-do/avenged-sevenfold-indonesia-2026" target="_blank" 
+               class="btn-ticket inline-flex items-center gap-3 bg-red-600 text-white px-8 py-4 rounded-full font-black text-lg md:text-2xl tracking-tighter uppercase italic border-2 border-white/20">
+                <i class="fas fa-ticket-alt"></i>
+                Amankan Tiketmu!
+                <i class="fas fa-external-link-alt text-sm ml-1"></i>
+            </a>
+            <p class="text-[10px] text-gray-400 mt-3 animate-pulse uppercase tracking-[0.2em]">Beli Sebelum Kehabisan!</p>
+        </div>
+
         <div class="mt-8 md:mt-12 flex flex-col items-center px-4">
             <div class="bg-black/80 backdrop-blur-md px-4 py-3 md:px-6 md:py-4 rounded-full border border-red-600/30 flex items-center gap-4 md:gap-6 w-full max-w-sm">
                 <button onclick="prevSong()" class="text-gray-400 hover:text-white transition"><i class="fas fa-step-backward text-lg"></i></button>
@@ -138,24 +168,19 @@
         const playIcon = document.getElementById('playIcon');
 
         function unlockMoshpit() {
-            // Sembunyikan Overlay
             document.getElementById('gatekeeper').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('gatekeeper').style.display = 'none';
-                
-                // Munculkan Konten
                 document.getElementById('nav-content').classList.add('show-content');
                 document.getElementById('main-content').classList.add('show-content');
                 document.body.style.overflow = 'auto';
 
-                // AUTO PLAY MUSIK
                 load(index);
                 player.play();
                 playIcon.className = 'fas fa-pause text-lg';
             }, 1000);
         }
 
-        // --- COUNTDOWN LOGIC ---
         const targetDate = new Date('October 10, 2026 20:00:00').getTime();
         function updateTimer() {
             const now = new Date().getTime();
@@ -174,7 +199,6 @@
         }
         setInterval(updateTimer, 1000);
 
-        // --- MUSIC PLAYER ---
         const playlist = [
             { title: "Second Heartbeat", url: "https://videotourl.com/audio/1776474412497-5ea5b9ac-6e55-498a-ad8c-2e0baf164d54.mp3" },
             { title: "Unholy Confessions", url: "https://videotourl.com/audio/1776474668704-88101917-9230-47b9-b4d4-ee5512573e49.mp3" },
