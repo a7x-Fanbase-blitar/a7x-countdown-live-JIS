@@ -13,7 +13,7 @@
 
     <style>
         body {
-            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('avenged-sevenfold-9r7u0konl31speut.jpg');
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('a7x.jpg');
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
@@ -25,7 +25,25 @@
 
         .a7x-title {
             font-family: 'Metal Mania', cursive;
-            text-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000;
+        }
+
+        /* ANIMASI TULISAN GALLERY BERGERAK */
+        .animate-gallery {
+            display: inline-block;
+            animation: glow-float 3s ease-in-out infinite;
+        }
+
+        @keyframes glow-float {
+            0%, 100% {
+                transform: translateY(0);
+                text-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000;
+                color: #dc2626; /* red-600 */
+            }
+            50% {
+                transform: translateY(-8px); /* Bergerak ke atas */
+                text-shadow: 0 0 25px #ff0000, 0 0 50px #ff0000, 0 0 70px #ff0000; /* Glow menguat */
+                color: #ff4d4d; /* Warna memudar sedikit terang */
+            }
         }
 
         .ultra-glass {
@@ -84,8 +102,11 @@
         <a href="index.html" class="flex items-center text-red-500 hover:text-white transition group text-sm font-bold tracking-widest">
             <i class="fas fa-chevron-left mr-2 group-hover:-translate-x-1 transition"></i> KEMBALI
         </a>
-        <h1 class="a7x-title text-xl md:text-3xl tracking-widest text-red-600">GALLERY</h1>
-        <div class="w-16"></div> </nav>
+        
+        <h1 class="a7x-title text-xl md:text-4xl tracking-widest animate-gallery">GALLERY</h1>
+        
+        <div class="w-16"></div> 
+    </nav>
 
     <main class="w-full max-w-6xl px-4 py-10 text-center">
         <header class="mb-10">
@@ -99,28 +120,28 @@
                 <div class="swiper-slide">
                     <img src="1.jpg" alt="Foto Fanbase 1">
                     <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black via-black/70 to-transparent">
-                        <p class="text-red-500 text-[10px] font-bold uppercase tracking-widest">COMMING SOON</p>
+                        <p class="text-red-500 text-[10px] font-bold uppercase tracking-widest">COMING SOON</p>
                     </div>
                 </div>
 
                 <div class="swiper-slide">
                     <img src="1.jpg" alt="Foto Fanbase 2">
                     <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black via-black/70 to-transparent">
-                        <p class="text-red-500 text-[10px] font-bold uppercase tracking-widest">COMMING SOON</p>
+                        <p class="text-red-500 text-[10px] font-bold uppercase tracking-widest">COMING SOON</p>
                     </div>
                 </div>
 
                 <div class="swiper-slide">
                     <img src="1.jpg" alt="Foto Fanbase 3">
                     <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black via-black/70 to-transparent">
-                        <p class="text-red-500 text-[10px] font-bold uppercase tracking-widest">COMMING SOON</p>
+                        <p class="text-red-500 text-[10px] font-bold uppercase tracking-widest">COMING SOON</p>
                     </div>
                 </div>
 
                 <div class="swiper-slide">
                     <img src="1.jpg" alt="Foto Fanbase 4">
                     <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black via-black/70 to-transparent">
-                        <p class="text-red-500 text-[10px] font-bold uppercase tracking-widest">COMMING SOON</p>
+                        <p class="text-red-500 text-[10px] font-bold uppercase tracking-widest">COMING SOON</p>
                     </div>
                 </div>
 
@@ -140,7 +161,7 @@
     </main>
 
     <footer class="mt-auto py-8 text-gray-600 text-[9px] uppercase tracking-[0.5em]">
-        &copy; DEATHBATH FAMILY - Blitar Raya Fanbase
+        &copy; DEATHBAT FAMILY - Blitar Raya Fanbase
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
