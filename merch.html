@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deathbat Shop - A7X Blitar Raya</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('a7x.jpg');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- ANIMASI GLITCH DEATHBAT SHOP --- */
+        .a7x-title {
+            font-family: 'Metal Mania', cursive;
+            position: relative;
+            color: #ef4444;
+            animation: flicker 2s infinite alternate;
+            display: inline-block;
+        }
+
+        .a7x-title::before, .a7x-title::after {
+            content: "Deathbat Shop";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.7;
+        }
+
+        .a7x-title::before {
+            color: #0ff;
+            z-index: -1;
+            animation: glitch 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+        }
+
+        .a7x-title::after {
+            color: #f0f;
+            z-index: -2;
+            animation: glitch 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff0000;
+                color: #ef4444;
+            }
+            20%, 24%, 55% {       
+                text-shadow: none;
+                color: #450a0a;
+            }
+        }
+
+        /* --- UI COMPONENTS --- */
+        .ultra-glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.4s;
+        }
+
+        .merch-card:hover {
+            transform: translateY(-10px);
+            border-color: #ef4444;
+            box-shadow: 0 15px 35px rgba(239, 68, 68, 0.25);
+        }
+
+        .price-tag {
+            background: #ef4444;
+            color: black;
+            font-weight: 900;
+            clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%);
+            z-index: 10;
+        }
+
+        .btn-buy {
+            background: transparent;
+            border: 1px solid #ef4444;
+            transition: 0.3s;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .btn-buy:hover {
+            background: #ef4444;
+            color: black;
+            box-shadow: 0 0 20px #ef4444;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 16rem;
+            object-fit: cover;
+            border-radius: 1rem;
+            background-color: #18181b;
+            transition: 0.5s;
+        }
+
+        .merch-card:hover .product-img {
+            transform: scale(1.05);
+        }
+
+        /* --- NOTIFIKASI TOAST --- */
+        #toast {
+            visibility: hidden;
+            min-width: 280px;
+            background-color: #ef4444;
+            color: #000;
+            text-align: center;
+            border-radius: 50px;
+            padding: 16px;
+            position: fixed;
+            z-index: 100;
+            left: 50%;
+            bottom: 40px;
+            transform: translateX(-50%);
+            font-weight: 900;
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+
+        @keyframes fadein { from { bottom: 0; opacity: 0; } to { bottom: 40px; opacity: 1; } }
+        @keyframes fadeout { from { bottom: 40px; opacity: 1; } to { bottom: 0; opacity: 0; } }
+
+        /* --- POPUP STYLING --- */
+        #welcome-popup.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #ef4444; border-radius: 10px; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div id="welcome-popup" class="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md transition-opacity duration-500">
+        <div class="ultra-glass max-w-md w-full p-8 border-2 border-red-600 text-center shadow-[0_0_50px_rgba(239,68,68,0.3)]">
+            <i class="fas fa-skull-crossbones text-5xl text-red-600 mb-4 animate-bounce"></i>
+            <h2 class="a7x-title text-3xl mb-4 uppercase tracking-tighter">PERINGATAN !!!</h2>
+            <p class="text-gray-300 text-sm mb-8 leading-relaxed font-bold tracking-widest uppercase">
+                ini hanya sekedar buat seru2 an guys, jadi ini belum resmi dijual sebelum mendapatkan izin dari pusat Deathbat INDONNESIA so jangan diseriusin🤘
+            </p>
+            <button onclick="closePopup()" class="w-full bg-red-600 hover:bg-white text-black font-black py-4 rounded-full transition-all duration-300 shadow-[0_0_20px_#ef4444] uppercase tracking-widest text-xs">
+                OK, lanjutkan !
+            </button>
+        </div>
+    </div>
+
+    <header class="max-w-6xl mx-auto flex justify-between items-center mb-16">
+        <a href="index.html" class="bg-white/10 hover:bg-red-600 w-12 h-12 flex items-center justify-center rounded-full transition shadow-lg">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        
+        <div class="text-center">
+            <h1 class="a7x-title text-5xl md:text-7xl uppercase tracking-tighter">Deathbat Shop</h1>
+            <p class="text-[10px] md:text-xs tracking-[0.5em] text-gray-400 uppercase font-black mt-3 opacity-80">
+                <i class="fas fa-skull-crossbones mr-2 text-red-600"></i> Official Blitar FANBASE
+            </p>
+        </div>
+
+        <button onclick="checkoutWhatsApp()" class="relative group w-12 h-12 flex items-center justify-center bg-white/5 rounded-full border border-white/10 transition hover:border-red-600">
+            <div class="absolute -inset-1 bg-red-600 rounded-full blur opacity-0 group-hover:opacity-30 transition"></div>
+            <i class="fas fa-shopping-cart text-xl relative"></i>
+            <span id="cart-count" class="absolute -top-1 -right-1 bg-red-600 text-black text-[10px] font-black px-1.5 py-0.5 rounded-full border-2 border-black min-w-[20px]">0</span>
+        </button>
+    </header>
+
+    <main class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        
+        <div class="ultra-glass merch-card rounded-[2.5rem] p-5">
+            <div class="relative overflow-hidden rounded-2xl">
+                <div class="absolute top-4 right-4 price-tag px-4 py-1.5 text-sm">Rp 100000k</div>
+                <img id="img-prod-1" src="produk-1.jpeg" alt="T-Shirt" class="product-img">
+            </div>
+            <div class="mt-6 space-y-3">
+                <h3 class="font-bold text-lg uppercase tracking-tighter text-red-500">Deathbat Blitar 2026</h3>
+                <p class="text-[11px] text-gray-400 leading-relaxed font-medium uppercase">Cotton Combed 30s High Quality Plastisol.</p>
+                <div class="pt-2">
+                    <button onclick="addToCart('Deathbat Blitar 2026', 185000)" class="w-full btn-buy py-3 rounded-2xl text-xs">Add To Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="ultra-glass merch-card rounded-[2.5rem] p-5">
+            <div class="relative overflow-hidden rounded-2xl">
+                <div class="absolute top-4 right-4 price-tag px-4 py-1.5 text-sm">Rp 10000k</div>
+                <img id="img-prod-2" src="produk-2.jpeg" alt="Hoodie" class="product-img">
+                <div id="overlay-2" class="hidden absolute inset-0 bg-black/80 flex items-center justify-center font-black text-red-600 italic uppercase rotate-12 border-2 border-red-600 m-4 rounded-xl text-xl">Soon</div>
+            </div>
+            <div class="mt-6 space-y-3">
+                <h3 class="font-bold text-lg uppercase tracking-tighter text-red-500">THE FALLEN PLAT AG</h3>
+                <p class="text-[11px] text-gray-400 leading-relaxed font-medium uppercase">Premium Heavy Fleece Embroidery Logo.</p>
+                <div class="pt-2">
+                    <button onclick="addToCart('The Rev Tribute Hoodie', 350000)" class="w-full btn-buy py-3 rounded-2xl text-xs">Add To Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="ultra-glass merch-card rounded-[2.5rem] p-5">
+            <div class="relative overflow-hidden rounded-2xl">
+                <div class="absolute top-4 right-4 price-tag px-4 py-1.5 text-sm">Rp 10000k</div>
+                <img id="img-prod-3" src="produk-3.jpeg" alt="Snapback" class="product-img">
+            </div>
+            <div class="mt-6 space-y-3">
+                <h3 class="font-bold text-lg uppercase tracking-tighter text-red-500">baju3</h3>
+                <p class="text-[11px] text-gray-400 leading-relaxed font-medium uppercase">High Density Printing Adjustable Strap.</p>
+                <div class="pt-2">
+                    <button onclick="addToCart('Deathbat Snapback', 85000)" class="w-full btn-buy py-3 rounded-2xl text-xs">Add To Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="ultra-glass merch-card rounded-[2.5rem] p-5">
+            <div class="relative overflow-hidden rounded-2xl">
+                <div class="absolute top-4 right-4 price-tag px-4 py-1.5 text-sm">Rp 1000000k</div>
+                <img id="img-prod-4" src="produk-4.jpeg" alt="Wristband" class="product-img">
+            </div>
+            <div class="mt-6 space-y-3">
+                <h3 class="font-bold text-lg uppercase tracking-tighter text-red-500">TOPI </h3>
+                <p class="text-[11px] text-gray-400 leading-relaxed font-medium uppercase">Rubber Embossed Glow In The Dark.</p>
+                <div class="pt-2">
+                    <button onclick="addToCart('Official Wristband', 35000)" class="w-full btn-buy py-3 rounded-2xl text-xs">Add To Cart</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="max-w-4xl mx-auto mt-20 p-10 ultra-glass rounded-[3rem] text-center border-b-4 border-red-600 shadow-2xl">
+        <h2 class="font-black mb-3 uppercase tracking-[0.3em] text-red-500">ini masih belum resmi ya guys</h2>
+        <p class="text-[10px] text-gray-400 mb-8 uppercase font-bold tracking-widest">kalau sudah dapat izin dari pusat baru kita lanjutkan </p>
+        <button onclick="checkoutWhatsApp()" class="group relative inline-flex items-center justify-center px-10 py-4 font-black text-black bg-red-600 rounded-full transition-all duration-300 hover:bg-white hover:shadow-[0_0_30px_#fff]">
+            <span class="relative flex items-center gap-2">
+                CHECKOUT VIA WHATSAPP <i class="fab fa-whatsapp text-xl"></i>
+            </span>
+        </button>
+    </footer>
+
+    <div id="toast"> BERHASIL DITAMBAHKAN KE KERANJANG 🤘</div>
+
+    <script>
+        // --- POPUP LOGIC ---
+        function closePopup() {
+            const popup = document.getElementById('welcome-popup');
+            popup.classList.add('fade-out');
+            setTimeout(() => { popup.remove(); }, 500);
+        }
+
+        // --- KONFIGURASI GAMBAR ---
+        const productImages = {
+            product1: "aset-gambar/produk-1.jpeg",
+            product2: "aset-gambar/produk-2.jpeg",
+            product3: "aset-gambar/produk-3.jpeg",
+            product4: "aset-gambar/produk-4.jpeg"
+        };
+
+        Object.keys(productImages).forEach((key, index) => {
+            const imgEl = document.getElementById(`img-prod-${index + 1}`);
+            if(imgEl) {
+                imgEl.src = productImages[key];
+                imgEl.onerror = () => {
+                    imgEl.src = `https://via.placeholder.com/400x400/111/ef4444?text=PREVIEW+${index+1}`;
+                };
+            }
+        });
+
+        if(productImages.product2 === "" || productImages.product2.includes("placeholder")) {
+            document.getElementById('overlay-2').classList.remove('hidden');
+        }
+
+        // --- SISTEM KERANJANG ---
+        let cart = [];
+        const adminNumber = "628123456789"; // GANTI DENGAN NOMOR WA ADMIN ANDA
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCartUI();
+            showToast();
+            
+            const cartBtn = document.querySelector('.fa-shopping-cart').parentElement;
+            cartBtn.style.transform = "scale(1.3)";
+            setTimeout(() => cartBtn.style.transform = "scale(1)", 200);
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-count').innerText = cart.length;
+        }
+
+        function showToast() {
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+        function checkoutWhatsApp() {
+            if (cart.length === 0) {
+                alert("🛒 KERANJANG KOSONG!\nPilih merch favoritmu dulu sebelum checkout.");
+                return;
+            }
+
+            let message = "HELL YEAH ADMIN! 🤘\n\nSaya ingin memesan Official Merch A7X Blitar Raya:\n\n";
+            let total = 0;
+            
+            const summary = cart.reduce((acc, curr) => {
+                acc[curr.name] = (acc[curr.name] || 0) + 1;
+                return acc;
+            }, {});
+
+            Object.keys(summary).forEach((name) => {
+                const price = cart.find(i => i.name === name).price;
+                const qty = summary[name];
+                message += `▪️ ${name} (${qty}x)\n`;
+                total += (price * qty);
+            });
+
+            message += `\n━━━━━━━━━━━━━━━\n`;
+            message += `💰 ESTIMASI TOTAL: Rp ${total.toLocaleString('id-ID')}\n`;
+            message += `━━━━━━━━━━━━━━━\n\n`;
+            message += `Mohon info ketersediaan stok dan prosedur pembayarannya. A7X FOREVER! 🔥`;
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${adminNumber}?text=${encodedMessage}`, '_blank');
+        }
+    </script>
+
+</body>
+</html>
