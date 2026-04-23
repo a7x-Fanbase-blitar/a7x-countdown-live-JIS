@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kopdar Schedule - DEATHBAT Blitar Raya</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            /* Background disamakan dengan halaman utama */
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('a7x.jpg'); 
+            background-attachment: fixed; background-size: cover; background-position: center;
+            color: #fff; font-family: 'Orbitron', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* --- ANIMASI GLITCH METAL --- */
+        .glitch-metal {
+            font-family: 'Metal Mania', cursive;
+            position: relative;
+            animation: metalGlow 3s infinite ease-in-out;
+        }
+
+        .glitch-metal::before, .glitch-metal::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.8;
+        }
+
+        .glitch-metal::before {
+            color: #ff0000;
+            z-index: -1;
+            animation: glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+        }
+
+        .glitch-metal::after {
+            color: #00fff2;
+            z-index: -2;
+            animation: glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(-3px, -3px); }
+            60% { transform: translate(3px, 3px); }
+            80% { transform: translate(3px, -3px); }
+            100% { transform: translate(0); }
+        }
+
+        @keyframes metalGlow {
+            0%, 100% { text-shadow: 0 0 10px #ff0000; color: #fff; }
+            50% { text-shadow: 0 0 30px #ff0000; color: #ef4444; }
+        }
+
+        /* --- EFEK KELELAWAR --- */
+        .bat-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(255,0,0,0.5));
+            animation: flyAround 8s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes flyAround {
+            0% { transform: translate(-10vw, 110vh) rotate(0deg) scale(0.5); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            100% { transform: translate(110vw, -10vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+
+        .metal-title { font-family: 'Metal Mania', cursive; }
+        
+        .animate-focus { animation: textFocus 1s ease-out forwards; }
+        @keyframes textFocus {
+            0% { filter: blur(12px); opacity: 0; transform: translateY(20px); }
+            100% { filter: blur(0); opacity: 1; transform: translateY(0); }
+        }
+        
+        .delay-1 { animation-delay: 0.3s; opacity: 0; }
+        .delay-2 { animation-delay: 0.6s; opacity: 0; }
+
+        .kopdar-card {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(10px);
+            border-left: 5px solid #ef4444;
+            border-right: 1px solid rgba(239, 68, 68, 0.3);
+            border-top: 1px solid rgba(239, 68, 68, 0.3);
+            border-bottom: 1px solid rgba(239, 68, 68, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; overflow: hidden; cursor: pointer; z-index: 10;
+        }
+
+        .kopdar-card::before {
+            content: "DEATHBAT";
+            position: absolute; right: -20px; bottom: -10px;
+            font-family: 'Metal Mania'; font-size: 5rem; opacity: 0.05;
+            transform: rotate(-15deg); pointer-events: none;
+        }
+
+        .kopdar-card:hover {
+            transform: scale(1.02) translateX(10px);
+            background: rgba(40, 0, 0, 0.4);
+            box-shadow: -10px 0 20px rgba(239, 68, 68, 0.4);
+            border-left-width: 15px;
+        }
+
+        .status-badge {
+            background: #ef4444; color: black; font-weight: 900;
+            padding: 2px 12px; font-size: 10px;
+            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+        }
+
+        #modalOverlay { opacity: 0; transition: opacity 0.4s ease; }
+        
+        .ultra-glass {
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 50px rgba(0,0,0,1);
+        }
+
+        .scanner {
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom, transparent, rgba(239, 68, 68, 0.1), transparent);
+            animation: scanline 3s linear infinite; pointer-events: none;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        .back-btn { background: transparent; border: 1px solid #ef4444; color: #ef4444; transition: 0.3s; }
+        .back-btn:hover { background: #ef4444; color: white; box-shadow: 0 0 20px #ef4444; }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+
+    <div id="modalOverlay" class="fixed inset-0 bg-black/90 backdrop-blur-xl z-[100] hidden flex items-center justify-center p-4">
+        <div class="ultra-glass w-full max-w-lg p-8 border-t-4 border-red-600 relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 opacity-10">
+                <i class="fas fa-skull text-[150px] text-red-600"></i>
+            </div>
+            
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-white transition">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+
+            <h2 id="modalTitle" class="metal-title text-3xl text-red-600 mb-2 uppercase tracking-tighter">DETAIL KOPDAR</h2>
+            <div class="h-1 w-20 bg-red-600 mb-6"></div>
+
+            <div class="space-y-6 relative z-10">
+                <div>
+                    <label class="text-[10px] text-gray-500 font-black tracking-widest uppercase">Location</label>
+                    <p id="modalLocation" class="text-xl font-bold italic text-white flex items-center gap-3">
+                        <i class="fas fa-map-marked-alt text-red-600"></i> -
+                    </p>
+                    <p id="modalAddress" class="text-[11px] text-gray-400 mt-1 pl-8 italic uppercase leading-relaxed"></p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-[10px] text-gray-500 font-black tracking-widest uppercase">Start Time</label>
+                        <p id="modalTime" class="text-lg font-bold text-white flex items-center gap-3">
+                            <i class="fas fa-clock text-red-600"></i> -
+                        </p>
+                    </div>
+                    <div>
+                        <label class="text-[10px] text-gray-500 font-black tracking-widest uppercase">Agenda</label>
+                        <p id="modalAgenda" class="text-lg font-bold text-white flex items-center gap-3">
+                            <i class="fas fa-skull-crossbones text-red-600"></i> -
+                        </p>
+                    </div>
+                </div>
+
+                <div class="pt-6 border-t border-white/10">
+                    <p class="text-[9px] text-gray-500 italic mb-4">*Jangan lupa bawa atribut A7X kebanggaanmu!</p>
+                    <a id="modalMaps" href="#" target="_blank" class="block w-full bg-red-600 text-black text-center py-4 font-black tracking-widest uppercase hover:bg-white transition-all shadow-[0_0_20px_rgba(239,68,68,0.5)]">
+                        GAS KE LOKASI! <i class="fas fa-chevron-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto flex justify-between items-center mb-12">
+        <a href="index.html" class="back-btn px-6 py-2 rounded-full font-bold text-[10px] tracking-widest flex items-center gap-2 animate-focus">
+            <i class="fas fa-arrow-left"></i> BACK TO BASE
+        </a>
+        <div class="text-right animate-focus delay-1">
+            <h2 class="metal-title text-2xl text-red-600">DEATHBAT</h2>
+            <p class="text-[9px] tracking-[0.3em] font-bold text-gray-400 uppercase">Blitar Raya Chapter</p>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto relative">
+        <header class="text-center mb-16 relative z-20">
+            <h1 class="glitch-metal text-5xl md:text-7xl mb-4 animate-focus" data-text="JADWAL KOPDAR">JADWAL KOPDAR</h1>
+            <div class="h-1 w-32 bg-red-600 mx-auto mb-4 shadow-[0_0_15px_#ef4444] animate-focus delay-1"></div>
+            <p class="text-gray-400 text-sm md:text-base italic animate-focus delay-2">"Gather the fallen, strengthen the family."</p>
+        </header>
+
+       
+
+            
+
+            <div class="kopdar-card p-6 rounded-r-xl flex flex-col md:flex-row justify-between items-center gap-6 opacity-60 grayscale cursor-not-allowed animate-focus delay-2">
+                <div class="flex items-center gap-6">
+                    <div class="text-center border-r border-gray-600 pr-6">
+                        <span class="block text-4xl font-black text-gray-500">1</span>
+                        <span class="text-xs font-bold text-gray-500 uppercase">MEI 2026</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold tracking-tighter text-gray-500 uppercase">Meet Up & Fotbar</h3>
+                        <p class="text-gray-500 text-xs italic">Location to be announced...</p>
+                    </div>
+                </div>
+                <div class="text-gray-500 font-black italic">STAY TUNED</div>
+            </div>
+    </div>
+
+        <footer class="mt-20 text-center border-t border-white/10 pt-8 pb-12 animate-focus relative z-20">
+            <p class="text-[10px] text-gray-500 tracking-[0.5em] mb-4 uppercase">Official Fanbase Blitar Raya</p>
+            <p class="text-[9px] text-gray-600 font-bold uppercase tracking-widest">Developed by The fallen_Blitar • 2026</p>
+        </footer>
+    </div>
+
+    <script>
+        const modal = document.getElementById('modalOverlay');
+
+        function spawnBats() {
+            const batCount = 8;
+            for(let i=0; i<batCount; i++) {
+                setTimeout(() => {
+                    const bat = document.createElement('img');
+                    bat.src = 'https://www.pngarts.com/files/1/Bat-PNG-Transparent-Image.png';
+                    bat.className = 'bat-particle';
+                    bat.style.width = Math.random() * 50 + 20 + 'px';
+                    bat.style.top = Math.random() * 100 + 'vh';
+                    bat.style.animationDuration = Math.random() * 5 + 5 + 's';
+                    bat.style.animationDelay = Math.random() * 10 + 's';
+                    document.body.appendChild(bat);
+                }, i * 2000);
+            }
+        }
+        spawnBats();
+
+        function openModal(title, loc, address, time, agenda, mapsLink) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalLocation').innerText = loc;
+            document.getElementById('modalAddress').innerText = address;
+            document.getElementById('modalTime').innerText = time;
+            document.getElementById('modalAgenda').innerText = agenda;
+            document.getElementById('modalMaps').href = mapsLink;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => { modal.style.opacity = '1'; }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.style.opacity = '0';
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 400);
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) { closeModal(); }
+        }
+    </script>
+</body>
+</html>
