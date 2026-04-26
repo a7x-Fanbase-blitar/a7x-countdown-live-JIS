@@ -207,24 +207,32 @@
             <p class="text-gray-400 text-sm md:text-base italic animate-focus delay-2">"Gather the fallen, strengthen the family."</p>
         </header>
 
-       
-
-            
-
-            <div class="kopdar-card p-6 rounded-r-xl flex flex-col md:flex-row justify-between items-center gap-6 opacity-60 grayscale cursor-not-allowed animate-focus delay-2">
+        <div class="space-y-6 relative z-20">
+            <div class="kopdar-card p-6 rounded-r-xl flex flex-col md:flex-row justify-between items-center gap-6 animate-focus delay-2"
+                 onclick="openModal('MEETUP & SHARING ', 'WARKOP MR.JOKO', 'RT 02 RW 01, Minggirsari 1, Minggirsari, Kec. Kanigoro, Kabupaten Blitar, Jawa Timur 66171', '18:00 WIB- Selesai', 'Sharing & Membahas keberangkatan Ke JIS ', 'https://maps.app.goo.gl/H4UwZ5N8PiKVqMSm7')">
                 <div class="flex items-center gap-6">
-                    <div class="text-center border-r border-gray-600 pr-6">
-                        <span class="block text-4xl font-black text-gray-500">1</span>
-                        <span class="text-xs font-bold text-gray-500 uppercase">MEI 2026</span>
+                    <div class="text-center border-r border-red-600/30 pr-6">
+                        <span class="block text-4xl font-black text-red-600">1</span>
+                        <span class="text-xs font-bold text-gray-400 uppercase">MEI 2026</span>
                     </div>
                     <div>
-                        <h3 class="text-xl font-bold tracking-tighter text-gray-500 uppercase">Meet Up & Fotbar</h3>
-                        <p class="text-gray-500 text-xs italic">Location to be announced...</p>
+                        <div class="flex items-center gap-3 mb-1">
+                            <span class="status-badge">NEXT EVENT</span>
+                            <h3 class="text-xl font-bold tracking-tighter uppercase">Meetup & Sharing</h3>
+                        </div>
+                        <p class="text-gray-400 text-xs flex items-center gap-2">
+                            <i class="fas fa-map-marker-alt text-red-600"></i> WARKOP MR.JOKO | kota Blitar
+                        </p>
                     </div>
                 </div>
-                <div class="text-gray-500 font-black italic">STAY TUNED</div>
+                <div class="text-right flex flex-col gap-2">
+                    <span class="text-[10px] font-black text-gray-500 italic uppercase">Click for Details</span>
+                    <button class="bg-white text-black px-4 py-2 text-[10px] font-black uppercase">VIEW DETAIL</button>
+                </div>
+                <div class="scanner"></div>
             </div>
-    </div>
+
+        
 
         <footer class="mt-20 text-center border-t border-white/10 pt-8 pb-12 animate-focus relative z-20">
             <p class="text-[10px] text-gray-500 tracking-[0.5em] mb-4 uppercase">Official Fanbase Blitar Raya</p>
