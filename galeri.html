@@ -8,7 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <style>
@@ -21,29 +20,36 @@
             font-family: 'Orbitron', sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
         }
 
-        .a7x-title {
-            font-family: 'Metal Mania', cursive;
-        }
+        .a7x-title { font-family: 'Metal Mania', cursive; }
 
-        /* ANIMASI TULISAN GALLERY BERGERAK */
         .animate-gallery {
             display: inline-block;
             animation: glow-float 3s ease-in-out infinite;
         }
 
         @keyframes glow-float {
-            0%, 100% {
-                transform: translateY(0);
-                text-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000;
-                color: #dc2626; /* red-600 */
-            }
-            50% {
-                transform: translateY(-8px); /* Bergerak ke atas */
-                text-shadow: 0 0 25px #ff0000, 0 0 50px #ff0000, 0 0 70px #ff0000; /* Glow menguat */
-                color: #ff4d4d; /* Warna memudar sedikit terang */
-            }
+            0%, 100% { transform: translateY(0); text-shadow: 0 0 15px #ff0000; color: #dc2626; }
+            50% { transform: translateY(-8px); text-shadow: 0 0 30px #ff0000; color: #ff4d4d; }
+        }
+
+        /* --- ANIMASI KELELAWAR --- */
+        .bat-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(255,0,0,0.5));
+            animation: flyAround 10s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes flyAround {
+            0% { transform: translate(-10vw, 100vh) rotate(0deg) scale(0.5); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            100% { transform: translate(110vw, -10vh) rotate(360deg) scale(1.2); opacity: 0; }
         }
 
         .ultra-glass {
@@ -53,146 +59,148 @@
             border-radius: 20px;
         }
 
-        /* Swiper Customization */
-        .swiper {
-            width: 100%;
-            padding-top: 50px;
-            padding-bottom: 50px;
-        }
+        /* --- SWIPER LANDSCAPE & RESPONSIVE --- */
+        .swiper { width: 100%; padding-top: 30px; padding-bottom: 50px; }
 
         .swiper-slide {
-            background-position: center;
-            background-size: cover;
-            width: 280px;
-            height: 380px;
-            border-radius: 20px;
+            width: 85vw; /* Landscape di HP */
+            aspect-ratio: 16 / 9; /* Paksa Rasio Landscape */
+            border-radius: 15px;
             border: 1px solid rgba(239, 68, 68, 0.3);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
             overflow: hidden;
-            transition: 0.3s;
+            transition: 0.4s;
         }
 
         @media (min-width: 768px) {
-            .swiper-slide {
-                width: 350px;
-                height: 500px;
-            }
+            .swiper-slide { width: 600px; } /* Landscape di Desktop */
         }
 
         .swiper-slide-active {
             border: 2px solid #ef4444;
-            box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
+            box-shadow: 0 0 40px rgba(239, 68, 68, 0.5);
         }
 
-        .swiper-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
 
-        .swiper-pagination-bullet-active {
-            background: #ef4444 !important;
-            box-shadow: 0 0 10px #ef4444;
-        }
+        .swiper-button-next, .swiper-button-prev { color: #ef4444 !important; }
+        .swiper-pagination-bullet-active { background: #ef4444 !important; }
     </style>
 </head>
 <body class="flex flex-col items-center">
 
-    <nav class="w-full p-5 flex justify-between items-center bg-black/60 backdrop-blur-xl border-b border-white/10 sticky top-0 z-[100]">
-        <a href="index.html" class="flex items-center text-red-500 hover:text-white transition group text-sm font-bold tracking-widest">
+    <nav class="w-full p-4 md:p-5 flex justify-between items-center bg-black/60 backdrop-blur-xl border-b border-white/10 sticky top-0 z-[100]">
+        <a href="index.html" class="flex items-center text-red-500 hover:text-white transition group text-[10px] md:text-sm font-bold tracking-widest">
             <i class="fas fa-chevron-left mr-2 group-hover:-translate-x-1 transition"></i> KEMBALI
         </a>
-        
         <h1 class="a7x-title text-xl md:text-4xl tracking-widest animate-gallery">GALLERY</h1>
-        
-        <div class="w-16"></div> 
+        <div class="w-12 md:w-16"></div> 
     </nav>
 
-    <main class="w-full max-w-6xl px-4 py-10 text-center">
-        <header class="mb-10">
-            <h2 class="text-2xl md:text-4xl font-bold uppercase mb-2">Dokumentasi Fanbase</h2>
-            <p class="text-gray-500 text-[10px] md:text-xs tracking-[0.4em] uppercase">Momen Kebersamaan Deathbat Blitar Raya</p>
+    <main class="w-full max-w-6xl px-4 py-8 text-center relative z-10">
+        <header class="mb-6 md:mb-10">
+            <h2 class="text-xl md:text-4xl font-bold uppercase mb-2">Dokumentasi Fanbase</h2>
+            <p class="text-gray-500 text-[8px] md:text-xs tracking-[0.4em] uppercase">Momen Kebersamaan Deathbat Blitar Raya</p>
         </header>
 
         <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                
-                <div class="swiper-slide">
-                    <img src="1.jpg" alt="Foto Fanbase 1">
-                    <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black via-black/70 to-transparent">
-                        <p class="text-red-500 text-[10px] font-bold uppercase tracking-widest">COMING SOON</p>
-                    </div>
+            <div class="swiper-wrapper" id="gallery-wrapper">
+                <div class="swiper-slide flex items-center justify-center bg-black/40">
+                    <p class="text-red-500 animate-pulse text-[10px]">MENGAMBIL DATA DARI CLOUD...</p>
                 </div>
-
-                <div class="swiper-slide">
-                    <img src="1.jpg" alt="Foto Fanbase 2">
-                    <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black via-black/70 to-transparent">
-                        <p class="text-red-500 text-[10px] font-bold uppercase tracking-widest">COMING SOON</p>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <img src="1.jpg" alt="Foto Fanbase 3">
-                    <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black via-black/70 to-transparent">
-                        <p class="text-red-500 text-[10px] font-bold uppercase tracking-widest">COMING SOON</p>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <img src="1.jpg" alt="Foto Fanbase 4">
-                    <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black via-black/70 to-transparent">
-                        <p class="text-red-500 text-[10px] font-bold uppercase tracking-widest">COMING SOON</p>
-                    </div>
-                </div>
-
             </div>
-
-            <div class="swiper-button-next !text-red-600 !w-8 !h-8 after:!text-xl"></div>
-            <div class="swiper-button-prev !text-red-600 !w-8 !h-8 after:!text-xl"></div>
             <div class="swiper-pagination"></div>
         </div>
 
-        <div class="mt-12 ultra-glass p-6 inline-block mx-auto">
-            <p class="text-gray-400 text-[10px] uppercase tracking-widest mb-4">Punya foto dokumentasi?</p>
-            <a href="https://wa.me/6287753855074" class="bg-white/10 hover:bg-red-600 px-6 py-2 rounded-full text-[10px] font-bold transition flex items-center gap-2">
+        <div class="mt-8 ultra-glass p-6 inline-block mx-auto">
+            <p class="text-gray-400 text-[8px] md:text-[10px] uppercase tracking-widest mb-4">Punya foto dokumentasi?</p>
+            <a href="https://wa.me/6287753855074" class="bg-red-600/20 hover:bg-red-600 border border-red-600/50 px-6 py-2 rounded-full text-[10px] font-bold transition flex items-center gap-2">
                 KIRIM FOTO <i class="fas fa-paper-plane"></i>
             </a>
         </div>
     </main>
 
-    <footer class="mt-auto py-8 text-gray-600 text-[9px] uppercase tracking-[0.5em]">
+    <footer class="mt-auto py-8 text-gray-600 text-[8px] md:text-[9px] uppercase tracking-[0.5em] text-center">
         &copy; DEATHBAT FAMILY - Blitar Raya Fanbase
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
     <script>
-        var swiper = new Swiper(".mySwiper", {
-            effect: "coverflow",
-            grabCursor: true,
-            centeredSlides: true,
-            slidesPerView: "auto",
-            loop: true,
-            coverflowEffect: {
-                rotate: 20,
-                stretch: 0,
-                depth: 200,
-                modifier: 1,
-                slideShadows: true,
-            },
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-        });
+        const REPO = "a7x-Fanbase-blitar/image";
+        
+        // --- SPAWN BATS (ANIMASI KELELAWAR) ---
+        function spawnBats() {
+            const batCount = 6;
+            for(let i=0; i<batCount; i++) {
+                setTimeout(() => {
+                    const bat = document.createElement('img');
+                    bat.src = 'https://www.pngarts.com/files/1/Bat-PNG-Transparent-Image.png';
+                    bat.className = 'bat-particle';
+                    bat.style.width = Math.random() * 40 + 20 + 'px';
+                    bat.style.left = Math.random() * 100 + 'vw';
+                    bat.style.animationDuration = Math.random() * 5 + 7 + 's';
+                    bat.style.animationDelay = Math.random() * 5 + 's';
+                    document.body.appendChild(bat);
+                }, i * 2500);
+            }
+        }
+
+        async function loadImages() {
+            const wrapper = document.getElementById('gallery-wrapper');
+            try {
+                const res = await fetch(`https://api.github.com/repos/${REPO}/contents/?ref=main`);
+                const files = await res.json();
+                const images = files.filter(f => f.name.match(/\.(jpg|jpeg|png|webp)$/i));
+
+                if (images.length === 0) {
+                    wrapper.innerHTML = '<p class="w-full text-center text-gray-500">BELUM ADA FOTO DI REPO.</p>';
+                    return;
+                }
+
+                wrapper.innerHTML = '';
+                images.forEach(img => {
+                    const cdn = `https://cdn.jsdelivr.net/gh/${REPO}@main/${img.path}`;
+                    const name = img.name.split('.')[0].replace(/_/g, ' ');
+                    
+                    const slide = document.createElement('div');
+                    slide.className = 'swiper-slide';
+                    slide.innerHTML = `
+                        <img src="${cdn}" alt="A7X Blitar">
+                        <div class="absolute bottom-0 left-0 w-full p-3 md:p-5 bg-gradient-to-t from-black via-black/80 to-transparent text-left">
+                            <p class="text-white text-[9px] md:text-[11px] font-bold uppercase tracking-widest">${name}</p>
+                            <p class="text-red-500 text-[7px] md:text-[8px] font-black uppercase">Deathbat Blitar Raya</p>
+                        </div>
+                    `;
+                    wrapper.appendChild(slide);
+                });
+
+                initSwiper();
+                spawnBats();
+            } catch (e) {
+                wrapper.innerHTML = '<p class="text-red-500">KONEKSI BERMASALAH.</p>';
+            }
+        }
+
+        function initSwiper() {
+            new Swiper(".mySwiper", {
+                effect: "coverflow",
+                grabCursor: true,
+                centeredSlides: true,
+                slidesPerView: "auto",
+                loop: true,
+                coverflowEffect: {
+                    rotate: 15,
+                    stretch: 0,
+                    depth: 100,
+                    modifier: 2.5,
+                    slideShadows: true,
+                },
+                autoplay: { delay: 3500, disableOnInteraction: false },
+                pagination: { el: ".swiper-pagination", clickable: true },
+            });
+        }
+
+        window.onload = loadImages;
     </script>
 </body>
 </html>
