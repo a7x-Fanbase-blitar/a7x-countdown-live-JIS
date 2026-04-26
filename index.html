@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
     <style>
         body {
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('a7x.jpg'); 
@@ -178,6 +181,11 @@
         .ig-neon:hover { color: #e1306c; filter: drop-shadow(0 0 8px #e1306c); }
         .fb-neon:hover { color: #1877f2; filter: drop-shadow(0 0 8px #1877f2); }
         .mail-neon:hover { color: #ef4444; filter: drop-shadow(0 0 8px #ef4444); }
+
+        /* ADDED: SHOUTBOX STYLING */
+        .shoutbox-container { border-left: 3px solid #ef4444; background: rgba(255,0,0,0.05); }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #ef4444; border-radius: 10px; }
     </style>
 </head>
 <body class="flex flex-col items-center justify-center p-4 min-h-screen">
@@ -195,7 +203,7 @@
             </div>
             <div class="leading-tight">
                 <h2 class="text-[10px] md:text-xs font-bold text-red-500 tracking-widest uppercase">A7X Blitar Raya</h2>
-                <p class="text-[8px] md:text-[9px] text-gray-400 font-bold">DEATHBAT FAMILY</p>
+                <p class="text-[8px] md:text-[9px] text-gray-400 font-bold uppercase">DEATHBAT FAMILY</p>
             </div>
         </div>
 
@@ -253,7 +261,7 @@
             </div>
         </div>
 
-        <div class="mt-10 mb-6">
+        <div class="mt-10 mb-6 flex flex-col items-center">
             <a href="https://www.tiket.com/en-id/to-do/avenged-sevenfold-indonesia-2026" target="_blank" 
                class="btn-ticket inline-flex items-center gap-3 bg-red-600 text-white px-8 py-4 rounded-full font-black text-lg md:text-2xl tracking-tighter uppercase italic border-2 border-white/20">
                 <i class="fas fa-ticket-alt"></i> Amankan Tiketmu!
@@ -276,6 +284,22 @@
             <audio id="audioPlayer" onended="nextSong()"></audio>
         </div>
 
+        <div class="mt-12 w-full max-w-lg mx-auto shoutbox-container p-6 rounded-r-3xl ultra-glass mb-16 text-left">
+            <h3 class="text-red-500 font-bold mb-4 uppercase text-xs tracking-widest flex items-center gap-2">
+                <i class="fas fa-comment-dots"></i> Moshpit Shoutbox (Blitar)
+            </h3>
+            <div id="shoutbox" class="h-40 overflow-y-auto mb-4 custom-scrollbar space-y-3 pr-2 text-[11px]">
+                <p class="text-gray-500 italic">Memuat pesan...</p>
+            </div>
+            <div class="flex flex-col gap-2">
+                <input type="text" id="shoutName" placeholder="Nama/Nickname..." class="bg-white/5 border border-white/10 rounded-full px-4 py-2 text-[11px] focus:outline-none focus:border-red-600 text-white">
+                <div class="flex gap-2">
+                    <input type="text" id="shoutInput" placeholder="Tulis pesan moshpit..." class="flex-1 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-[11px] focus:outline-none focus:border-red-600 text-white">
+                    <button id="sendBtn" onclick="sendShout()" class="bg-red-600 px-6 py-2 rounded-full text-[11px] font-bold uppercase text-black hover:scale-105 transition cursor-pointer">Kirim</button>
+                </div>
+            </div>
+        </div>
+
         <div class="mt-8 flex justify-center gap-8 border-t border-white/5 pt-6">
             <a href="https://instagram.com/deathbatblitar" target="_blank" class="social-link ig-neon">
                 <i class="fab fa-instagram"></i>
@@ -292,6 +316,22 @@
     </main>
 
     <script>
+        // FIREBASE CONFIGURATION
+        const firebaseConfig = {
+            apiKey: "AIzaSyD6VZW2uZ4XJtH2BiASl7EbbgFsXQlJSvc",
+            authDomain: "a7x-fanbase-blitar.firebaseapp.com",
+            databaseURL: "https://a7x-fanbase-blitar-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "a7x-fanbase-blitar",
+            storageBucket: "a7x-fanbase-blitar.firebasestorage.app",
+            messagingSenderId: "772119272472",
+            appId: "1:772119272472:web:c6e3e222edd59cdb40f76d"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const shoutRef = database.ref('moshpit');
+
         const player = document.getElementById('audioPlayer');
         const playIcon = document.getElementById('playIcon');
         const songTitle = document.getElementById('songTitle');
@@ -391,6 +431,63 @@
             player.play(); 
             playIcon.className = 'fas fa-pause text-lg';
             songTitle.classList.remove('pause-animation');
+        }
+
+        // ADDED: FIREBASE + DISCORD SHOUTBOX LOGIC
+        function sendShout() {
+            const nameInput = document.getElementById('shoutName');
+            const msgInput = document.getElementById('shoutInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const webhookURL = "https://discord.com/api/webhooks/1498097231130132521/cs0CqP98crg0pMadA92EUPsarq4aPmutrbBOwMBkfMZcSrZO6Sitejlb6OPsUgv7NLgF";
+
+            if (msgInput.value.trim() !== "") {
+                const name = nameInput.value.trim() || "Anonymous Fallen";
+                const message = msgInput.value;
+
+                sendBtn.disabled = true;
+                sendBtn.innerHTML = "...";
+
+                // 1. Save to Firebase (Realtime & Permanent)
+                shoutRef.push({
+                    name: name,
+                    message: message,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                }).then(() => {
+                    // 2. Send to Discord Webhook
+                    fetch(webhookURL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            username: "Moshpit Bot Blitar",
+                            avatar_url: "blitar.png",
+                            content: `**${name}**:\n> ${message}`
+                        })
+                    });
+
+                    msgInput.value = "";
+                    setTimeout(() => { sendBtn.disabled = false; sendBtn.innerText = "Kirim"; }, 1500);
+                });
+            }
+        }
+
+        // Auto-load data from Firebase
+        shoutRef.orderByChild('timestamp').limitToLast(15).on('value', (snapshot) => {
+            const shoutbox = document.getElementById('shoutbox');
+            shoutbox.innerHTML = "";
+            const messages = [];
+            snapshot.forEach(child => { messages.push(child.val()); });
+            messages.reverse().forEach(data => {
+                const p = document.createElement('p');
+                p.className = 'text-[10px] text-gray-300 border-b border-white/5 pb-1';
+                p.innerHTML = `<span class="text-red-600 font-bold">${data.name}:</span> ${data.message}`;
+                shoutbox.appendChild(p);
+            });
+        });
+
+        function shareWeb() {
+            const text = "Pantau countdown konser A7X Jakarta 2026 dari Fanbase Blitar Raya! 🤘🔥";
+            if (navigator.share) navigator.share({ title: 'A7X Blitar', text: text, url: window.location.href });
+            else alert("Link dicopy!");
         }
 
         updateTimer();
