@@ -2,20 +2,20 @@
 <html lang="id">
 <head>
     <meta name="title" content="Jadwal Kopdar - DEATHBAT Blitar Raya">
-<meta name="description" content="Gather the fallen! Cek jadwal kopdar resmi Deathbat Blitar Raya untuk persiapan keberangkatan konser Avenged Sevenfold Live at JIS 2026.">
+    <meta name="description" content="Gather the fallen! Cek jadwal kopdar resmi Deathbat Blitar Raya untuk persiapan keberangkatan konser Avenged Sevenfold Live at JIS 2026.">
 
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://a7x-fanbase-blitar.github.io/a7x-countdown-live-JIS/jadwal.html">
-<meta property="og:title" content="Jadwal Kopdar - DEATHBAT Blitar Raya">
-<meta property="og:description" content="Persiapkan dirimu untuk 2026 World Tour. Cek lokasi dan waktu kopdar di sini!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://a7x-fanbase-blitar.github.io/a7x-countdown-live-JIS/jadwal.html">
+    <meta property="og:title" content="Jadwal Kopdar - DEATHBAT Blitar Raya">
+    <meta property="og:description" content="Persiapkan dirimu untuk 2026 World Tour. Cek lokasi dan waktu kopdar di sini!">
 
-<meta property="og:image" content="https://a7x-fanbase-blitar.github.io/a7x-countdown-live-JIS/logo.png"> 
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+    <meta property="og:image" content="https://a7x-fanbase-blitar.github.io/a7x-countdown-live-JIS/logo.png"> 
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
-<meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:title" content="Jadwal Kopdar - DEATHBAT Blitar Raya">
-<meta property="twitter:image" content="https://a7x-fanbase-blitar.github.io/a7x-countdown-live-JIS/logo.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Jadwal Kopdar - DEATHBAT Blitar Raya">
+    <meta property="twitter:image" content="https://a7x-fanbase-blitar.github.io/a7x-countdown-live-JIS/logo.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kopdar Schedule - DEATHBAT Blitar Raya</title>
@@ -26,14 +26,13 @@
     
     <style>
         body {
-            /* Background disamakan dengan halaman utama */
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('a7x.jpg'); 
             background-attachment: fixed; background-size: cover; background-position: center;
             color: #fff; font-family: 'Orbitron', sans-serif;
             overflow-x: hidden;
         }
 
-        /* --- ANIMASI GLITCH METAL --- */
+        /* --- ANIMASI GLITCH METAL (Untuk Judul) --- */
         .glitch-metal {
             font-family: 'Metal Mania', cursive;
             position: relative;
@@ -57,6 +56,12 @@
             color: #00fff2;
             z-index: -2;
             animation: glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
+        }
+
+        /* --- ANIMASI GLOW METAL (Untuk Countdown - Nyala Tanpa Gerak) --- */
+        .glow-metal {
+            font-family: 'Metal Mania', cursive;
+            animation: metalGlow 2s infinite ease-in-out;
         }
 
         @keyframes glitch {
@@ -100,6 +105,7 @@
         
         .delay-1 { animation-delay: 0.3s; opacity: 0; }
         .delay-2 { animation-delay: 0.6s; opacity: 0; }
+        .delay-3 { animation-delay: 0.9s; opacity: 0; }
 
         .kopdar-card {
             background: rgba(20, 20, 20, 0.6);
@@ -154,6 +160,26 @@
 
         .back-btn { background: transparent; border: 1px solid #ef4444; color: #ef4444; transition: 0.3s; }
         .back-btn:hover { background: #ef4444; color: white; box-shadow: 0 0 20px #ef4444; }
+
+        /* --- STYLING COUNTDOWN DI DALAM KARTU --- */
+        .countdown-box {
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.15);
+            padding: 5px 8px;
+            border-radius: 6px;
+            text-align: center;
+            min-width: 50px;
+            backdrop-filter: blur(5px);
+            transition: 0.3s;
+        }
+        .countdown-box:hover {
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+            border-color: #ef4444;
+        }
+        @media (min-width: 768px) {
+            .countdown-box { min-width: 65px; padding: 8px 10px; }
+        }
     </style>
 </head>
 <body class="min-h-screen p-4 md:p-8">
@@ -223,31 +249,56 @@
         </header>
 
         <div class="space-y-6 relative z-20">
-            <div class="kopdar-card p-6 rounded-r-xl flex flex-col md:flex-row justify-between items-center gap-6 animate-focus delay-2"
+            <div class="kopdar-card p-6 rounded-r-xl flex flex-col xl:flex-row justify-between items-center gap-6 animate-focus delay-3"
                  onclick="openModal('MEETUP & SHARING ', 'WARKOP MR.JOKO', 'RT 02 RW 01, Minggirsari 1, Minggirsari, Kec. Kanigoro, Kabupaten Blitar, Jawa Timur 66171', '16:00 WIB- 20.00 WIB', 'Sharing & Membahas keberangkatan Ke JIS ', 'https://maps.app.goo.gl/H4UwZ5N8PiKVqMSm7')">
-                <div class="flex items-center gap-6">
-                    <div class="text-center border-r border-red-600/30 pr-6">
+                
+                <div class="flex flex-col sm:flex-row items-center gap-6 w-full xl:w-auto">
+                    <div class="text-center sm:border-r border-red-600/30 sm:pr-6">
                         <span class="block text-4xl font-black text-red-600">1</span>
                         <span class="text-xs font-bold text-gray-400 uppercase">MEI 2026</span>
                     </div>
-                    <div>
-                        <div class="flex items-center gap-3 mb-1">
+                    <div class="text-center sm:text-left">
+                        <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-1">
                             <span class="status-badge">NEXT EVENT</span>
                             <h3 class="text-xl font-bold tracking-tighter uppercase">Meetup & Sharing</h3>
                         </div>
-                        <p class="text-gray-400 text-xs flex items-center gap-2">
-                            <i class="fas fa-map-marker-alt text-red-600"></i> WARKOP MR.JOKO | kota Blitar
+                        <p class="text-gray-400 text-xs flex items-center justify-center sm:justify-start gap-2">
+                            <i class="fas fa-map-marker-alt text-red-600"></i> WARKOP MR.JOKO | Kota Blitar
                         </p>
                     </div>
                 </div>
-                <div class="text-right flex flex-col gap-2">
-                    <span class="text-[10px] font-black text-gray-500 italic uppercase">Click for Details</span>
-                    <button class="bg-white text-black px-4 py-2 text-[10px] font-black uppercase">VIEW DETAIL</button>
+
+                <div class="flex justify-center items-center gap-1 md:gap-2 w-full xl:w-auto my-4 xl:my-0">
+                    <div class="countdown-box">
+                        <span id="cd-days" class="text-xl md:text-2xl font-black text-red-600 glow-metal block">00</span>
+                        <span class="text-[8px] md:text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-1 block">Days</span>
+                    </div>
+                    <div class="text-lg md:text-xl font-black text-red-600 pb-3">:</div>
+                    <div class="countdown-box">
+                        <span id="cd-hours" class="text-xl md:text-2xl font-black text-red-600 glow-metal block">00</span>
+                        <span class="text-[8px] md:text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-1 block">Hours</span>
+                    </div>
+                    <div class="text-lg md:text-xl font-black text-red-600 pb-3">:</div>
+                    <div class="countdown-box">
+                        <span id="cd-minutes" class="text-xl md:text-2xl font-black text-red-600 glow-metal block">00</span>
+                        <span class="text-[8px] md:text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-1 block">Mins</span>
+                    </div>
+                    <div class="text-lg md:text-xl font-black text-red-600 pb-3">:</div>
+                    <div class="countdown-box">
+                        <span id="cd-seconds" class="text-xl md:text-2xl font-black text-red-600 glow-metal block">00</span>
+                        <span class="text-[8px] md:text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-1 block">Secs</span>
+                    </div>
                 </div>
+
+                <div class="text-center xl:text-right flex flex-col items-center xl:items-end gap-2 w-full xl:w-auto">
+                    <span class="text-[10px] font-black text-gray-500 italic uppercase">Click for Details</span>
+                    <button class="bg-white text-black px-4 py-2 text-[10px] font-black uppercase shadow-[0_0_10px_rgba(255,255,255,0.2)]">VIEW DETAIL</button>
+                </div>
+                
                 <div class="scanner"></div>
             </div>
 
-        
+        </div>
 
         <footer class="mt-20 text-center border-t border-white/10 pt-8 pb-12 animate-focus relative z-20">
             <p class="text-[10px] text-gray-500 tracking-[0.5em] mb-4 uppercase">Official Fanbase Blitar Raya</p>
@@ -300,6 +351,45 @@
         window.onclick = function(event) {
             if (event.target == modal) { closeModal(); }
         }
+
+        // --- SCRIPT COUNTDOWN TIMER ---
+        // Setting target date untuk Kopdar / Event selanjutnya (1 Mei 2026 16:00)
+        const targetDate = new Date("May 1, 2026 16:00:00").getTime();
+
+        const countdownInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("cd-days").innerText = "00";
+                document.getElementById("cd-hours").innerText = "00";
+                document.getElementById("cd-minutes").innerText = "00";
+                document.getElementById("cd-seconds").innerText = "00";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Function untuk format angka agar selalu 2 digit (contoh: 09, 08, dst)
+            const updateElement = (id, value) => {
+                const formattedValue = value.toString().padStart(2, '0');
+                const el = document.getElementById(id);
+                if (el) {
+                    el.innerText = formattedValue;
+                    // Hapus setAttribute data-text karena sudah tidak pakai efek glitch di sini
+                }
+            };
+
+            updateElement("cd-days", days);
+            updateElement("cd-hours", hours);
+            updateElement("cd-minutes", minutes);
+            updateElement("cd-seconds", seconds);
+
+        }, 1000);
     </script>
 </body>
 </html>
