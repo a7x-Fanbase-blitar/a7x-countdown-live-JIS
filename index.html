@@ -14,14 +14,27 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     
+    <!-- Firebase & Particles.js -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
     <style>
         body {
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('a7x.jpg'); 
             background-attachment: fixed; background-size: cover; background-position: center;
             color: #fff; font-family: 'Orbitron', sans-serif; overflow-x: hidden;
+        }
+
+        /* Container untuk efek bara api */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1; /* Di atas background, di bawah konten */
+            pointer-events: none; /* Agar tidak mengganggu klik tombol */
         }
 
         #gatekeeper {
@@ -57,6 +70,7 @@
             padding: 18px 45px; border-radius: 50px; cursor: pointer;
             box-shadow: 0 0 30px #ef4444; transition: 0.4s;
             font-family: 'Orbitron', sans-serif;
+            position: relative; z-index: 10000;
         }
         .ready-btn:hover { transform: scale(1.15) rotate(-2deg); box-shadow: 0 0 50px #ef4444; }
 
@@ -176,6 +190,7 @@
             font-size: 1.5rem;
             color: #666;
             transition: 0.4s;
+            position: relative; z-index: 10;
         }
         .social-link:hover { transform: translateY(-5px); }
         .ig-neon:hover { color: #e1306c; filter: drop-shadow(0 0 8px #e1306c); }
@@ -183,12 +198,15 @@
         .mail-neon:hover { color: #ef4444; filter: drop-shadow(0 0 8px #ef4444); }
 
         /* ADDED: SHOUTBOX STYLING */
-        .shoutbox-container { border-left: 3px solid #ef4444; background: rgba(255,0,0,0.05); }
+        .shoutbox-container { border-left: 3px solid #ef4444; background: rgba(255,0,0,0.05); position: relative; z-index: 10; }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #ef4444; border-radius: 10px; }
     </style>
 </head>
 <body class="flex flex-col items-center justify-center p-4 min-h-screen">
+
+    <!-- EFEK BARA API -->
+    <div id="particles-js"></div>
 
     <div id="gatekeeper">
         <img src="a8x.webp" alt="Logo" class="w-48 h-auto mb-8 animate-pulse object-contain">
@@ -232,7 +250,7 @@
         </div>
     </nav>
 
-    <main class="text-center z-10 w-full max-w-4xl mt-16 md:mt-24 hidden-content" id="main-content">
+    <main class="text-center z-10 w-full max-w-4xl mt-16 md:mt-24 hidden-content relative" id="main-content">
         <h1 class="a7x-title text-4xl sm:text-6xl md:text-8xl mb-0 uppercase px-2">Avenged Sevenfold</h1>
         <p class="a7x-title text-lg sm:text-2xl md:text-4xl mt-0 mb-2 uppercase px-2">LIVE AT</p>
         
@@ -240,7 +258,7 @@
             Jakarta International Stadium <br class="sm:hidden"> | 10 Okt 2026
         </p>
 
-        <div class="ultra-glass p-6 md:p-10 w-full shadow-2xl">
+        <div class="ultra-glass p-6 md:p-10 w-full shadow-2xl relative z-10">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
                 <div class="bg-black/40 p-4 rounded-xl border border-red-600/20">
                     <span id="days" class="block text-3xl md:text-5xl font-bold text-red-600">00</span>
@@ -261,7 +279,7 @@
             </div>
         </div>
 
-        <div class="mt-10 mb-6 flex flex-col items-center">
+        <div class="mt-10 mb-6 flex flex-col items-center relative z-10">
             <a href="https://www.tiket.com/en-id/to-do/avenged-sevenfold-indonesia-2026" target="_blank" 
                class="btn-ticket inline-flex items-center gap-3 bg-red-600 text-white px-8 py-4 rounded-full font-black text-lg md:text-2xl tracking-tighter uppercase italic border-2 border-white/20">
                 <i class="fas fa-ticket-alt"></i> Amankan Tiketmu!
@@ -269,7 +287,7 @@
             <p class="text-[10px] text-gray-400 mt-3 animate-pulse uppercase tracking-[0.2em]">Beli Sebelum Kehabisan!</p>
         </div>
 
-        <div class="mt-8 mb-4 flex flex-col items-center px-4">
+        <div class="mt-8 mb-4 flex flex-col items-center px-4 relative z-10">
             <div class="bg-black/80 backdrop-blur-md px-4 py-3 md:px-6 md:py-4 rounded-full border border-red-600/30 flex items-center gap-4 md:gap-6 w-full max-w-sm overflow-hidden">
                 <button onclick="prevSong()" class="text-gray-400 hover:text-white transition z-10 bg-black/80 pr-2"><i class="fas fa-step-backward text-lg"></i></button>
                 <button onclick="togglePlay()" id="playBtn" class="w-10 h-10 md:w-12 md:h-12 bg-red-600 rounded-full flex items-center justify-center text-black shadow-lg active:scale-90 transition z-10 shrink-0">
@@ -292,15 +310,15 @@
                 <p class="text-gray-500 italic">Memuat pesan...</p>
             </div>
             <div class="flex flex-col gap-2">
-                <input type="text" id="shoutName" placeholder="Nama/Nickname..." class="bg-white/5 border border-white/10 rounded-full px-4 py-2 text-[11px] focus:outline-none focus:border-red-600 text-white">
+                <input type="text" id="shoutName" maxlength="20" placeholder="Nama/Nickname..." class="bg-white/5 border border-white/10 rounded-full px-4 py-2 text-[11px] focus:outline-none focus:border-red-600 text-white">
                 <div class="flex gap-2">
-                    <input type="text" id="shoutInput" placeholder="Tulis pesan moshpit..." class="flex-1 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-[11px] focus:outline-none focus:border-red-600 text-white">
+                    <input type="text" id="shoutInput" maxlength="100" placeholder="Tulis pesan moshpit (Max 100 char)..." class="flex-1 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-[11px] focus:outline-none focus:border-red-600 text-white">
                     <button id="sendBtn" onclick="sendShout()" class="bg-red-600 px-6 py-2 rounded-full text-[11px] font-bold uppercase text-black hover:scale-105 transition cursor-pointer">Kirim</button>
                 </div>
             </div>
         </div>
 
-        <div class="mt-8 flex justify-center gap-8 border-t border-white/5 pt-6">
+        <div class="mt-8 flex justify-center gap-8 border-t border-white/5 pt-6 relative z-10">
             <a href="https://instagram.com/deathbatblitar" target="_blank" class="social-link ig-neon">
                 <i class="fab fa-instagram"></i>
             </a>
@@ -311,11 +329,49 @@
                 <i class="fab fa-facebook-f"></i>
             </a>
         </div>
-        <p class="text-[8px] text-gray-600 mt-4 mb-12 tracking-widest uppercase">© 2026 Deathbat Blitar Raya - Developed by THE FALLEN_BLITAR</p>
+        <p class="text-[8px] text-gray-600 mt-4 mb-12 tracking-widest uppercase relative z-10">© 2026 Deathbat Blitar Raya - Developed by THE FALLEN_BLITAR</p>
 
     </main>
 
     <script>
+        // INIT PARTICLES.JS (EFEK BARA API / EMBERS)
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": ["#ff0000", "#ff5a00", "#ff9a00"] },
+                "shape": { "type": "circle" },
+                "opacity": {
+                    "value": 0.8,
+                    "random": true,
+                    "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false }
+                },
+                "size": {
+                    "value": 4,
+                    "random": true,
+                    "anim": { "enable": true, "speed": 2, "size_min": 0.1, "sync": false }
+                },
+                "line_linked": { "enable": false }, // Tanpa garis penghubung
+                "move": {
+                    "enable": true,
+                    "speed": 1.5,
+                    "direction": "top", // Terbang ke atas seperti bara api
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": { "enable": false },
+                    "onclick": { "enable": false },
+                    "resize": true
+                }
+            },
+            "retina_detect": true
+        });
+
         // FIREBASE CONFIGURATION
         const firebaseConfig = {
             apiKey: "AIzaSyD6VZW2uZ4XJtH2BiASl7EbbgFsXQlJSvc",
@@ -376,7 +432,7 @@
             const gap = targetDate - now;
             const s = 1000, m = s * 60, h = m * 60, d = h * 24;
             if (gap < 0) {
-                document.querySelector('main').innerHTML = "<h1 class='a7x-title text-5xl p-10 uppercase text-center'>IT'S SHOWTIME! 🤘</h1>";
+                document.querySelector('main').innerHTML = "<h1 class='a7x-title text-5xl p-10 uppercase text-center relative z-10'>IT'S SHOWTIME! 🤘</h1>";
                 return;
             }
             document.getElementById('days').innerText = String(Math.floor(gap / d)).padStart(2, '0');
@@ -433,12 +489,14 @@
             songTitle.classList.remove('pause-animation');
         }
 
-        // ADDED: FIREBASE + DISCORD SHOUTBOX LOGIC
+        // FIREBASE + DISCORD SHOUTBOX LOGIC
         function sendShout() {
             const nameInput = document.getElementById('shoutName');
             const msgInput = document.getElementById('shoutInput');
             const sendBtn = document.getElementById('sendBtn');
-            const webhookURL = "https://discord.com/api/webhooks/1498097231130132521/cs0CqP98crg0pMadA92EUPsarq4aPmutrbBOwMBkfMZcSrZO6Sitejlb6OPsUgv7NLgF";
+            
+            // GANTI DENGAN WEBHOOK ASLI KAMU JIKA MAU DIPAKAI (Tapi ingat jangan sampai terekspos ke publik)
+            const webhookURL = "URL_DISCORD_WEBHOOK_KAMU_DI_SINI";
 
             if (msgInput.value.trim() !== "") {
                 const name = nameInput.value.trim() || "Anonymous Fallen";
@@ -453,16 +511,18 @@
                     message: message,
                     timestamp: firebase.database.ServerValue.TIMESTAMP
                 }).then(() => {
-                    // 2. Send to Discord Webhook
-                    fetch(webhookURL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            username: "Moshpit Bot Blitar",
-                            avatar_url: "blitar.png",
-                            content: `**${name}**:\n> ${message}`
-                        })
-                    });
+                    // 2. Send to Discord Webhook (Hanya akan jalan kalau URL webhook diisi)
+                    if(webhookURL !== "URL_DISCORD_WEBHOOK_KAMU_DI_SINI") {
+                        fetch(webhookURL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                username: "Moshpit Bot Blitar",
+                                avatar_url: "blitar.png",
+                                content: `**${name}**:\n> ${message}`
+                            })
+                        }).catch(e => console.log("Webhook gagal:", e));
+                    }
 
                     msgInput.value = "";
                     setTimeout(() => { sendBtn.disabled = false; sendBtn.innerText = "Kirim"; }, 1500);
@@ -470,16 +530,27 @@
             }
         }
 
-        // Auto-load data from Firebase
+        // Auto-load data from Firebase + Format Waktu
         shoutRef.orderByChild('timestamp').limitToLast(15).on('value', (snapshot) => {
             const shoutbox = document.getElementById('shoutbox');
             shoutbox.innerHTML = "";
             const messages = [];
             snapshot.forEach(child => { messages.push(child.val()); });
+            
             messages.reverse().forEach(data => {
                 const p = document.createElement('p');
                 p.className = 'text-[10px] text-gray-300 border-b border-white/5 pb-1';
-                p.innerHTML = `<span class="text-red-600 font-bold">${data.name}:</span> ${data.message}`;
+                
+                // Format Waktu (Jam:Menit)
+                let timeStr = "";
+                if(data.timestamp) {
+                    const date = new Date(data.timestamp);
+                    const h = String(date.getHours()).padStart(2, '0');
+                    const m = String(date.getMinutes()).padStart(2, '0');
+                    timeStr = `<span class="text-[8px] text-gray-500 ml-1">(${h}:${m})</span>`;
+                }
+
+                p.innerHTML = `<span class="text-red-600 font-bold">${data.name}</span>${timeStr}: ${data.message}`;
                 shoutbox.appendChild(p);
             });
         });
