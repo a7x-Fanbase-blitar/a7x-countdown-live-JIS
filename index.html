@@ -4,11 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>A7X Live Jakarta 2026 - Blitar Raya</title>
-    <meta name="description" content="Countdown Konser Avenged Sevenfold Live at JIS 2026 - Fanbase Blitar Raya">
-    <meta property="og:title" content="A7X Live Jakarta 2026 - Countdown">
-    <meta property="og:image" content="blitar.png">
+    <!-- SEO UTAMA -->
+    <title>A7X Blitar Raya - Fanbase Avenged Sevenfold & Info Konser JIS 2026</title>
+    <meta name="description" content="Komunitas resmi Deathbat Fanbase Avenged Sevenfold (A7X) Blitar Raya. Cek jadwal kopdar, official merchandise, dan countdown konser live at JIS Jakarta 2026.">
+    <meta name="keywords" content="A7X Blitar, Avenged Sevenfold Blitar, Fanbase A7X Blitar, Komunitas Metal Blitar, Konser A7X JIS 2026, Deathbat Blitar Raya, Avenged Sevenfold Indonesia">
+    <meta name="author" content="Deathbat Blitar Raya">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://a7xblitar.web.id/">
     <meta name="theme-color" content="#ef4444">
+
+    <!-- OPEN GRAPH (UNTUK SHARE WA, FB, IG) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://a7xblitar.web.id/">
+    <meta property="og:title" content="A7X Blitar Raya - Fanbase Avenged Sevenfold">
+    <meta property="og:description" content="Komunitas resmi Deathbat Fanbase Avenged Sevenfold (A7X) Blitar Raya. Are you ready for JIS 2026?!">
+    <meta property="og:image" content="https://a7xblitar.web.id/blitar.png">
+
+    <!-- TWITTER CARD -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="A7X Blitar Raya - Fanbase Avenged Sevenfold">
+    <meta name="twitter:description" content="Komunitas resmi Deathbat Fanbase Avenged Sevenfold (A7X) Blitar Raya.">
+    <meta name="twitter:image" content="https://a7xblitar.web.id/blitar.png">
+
+    <!-- SCRIPT SEO SCHEMA.ORG (SENJATA RAHASIA GOOGLE) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MusicEvent",
+      "name": "Avenged Sevenfold Live at Jakarta International Stadium",
+      "startDate": "2026-10-10T20:00:00+07:00",
+      "location": {
+        "@type": "Place",
+        "name": "Jakarta International Stadium (JIS)",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Jakarta",
+          "addressCountry": "ID"
+        }
+      },
+      "performer": {
+        "@type": "MusicGroup",
+        "name": "Avenged Sevenfold"
+      },
+      "organizer": {
+        "@type": "Organization",
+        "name": "A7X Fanbase Blitar Raya",
+        "url": "https://a7xblitar.web.id"
+      }
+    }
+    </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -26,15 +70,9 @@
             color: #fff; font-family: 'Orbitron', sans-serif; overflow-x: hidden;
         }
 
-        /* Container untuk efek bara api */
         #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1; /* Di atas background, di bawah konten */
-            pointer-events: none; /* Agar tidak mengganggu klik tombol */
+            position: fixed; width: 100%; height: 100%; top: 0; left: 0;
+            z-index: 1; pointer-events: none;
         }
 
         #gatekeeper {
@@ -88,9 +126,7 @@
 
         .btn-ticket:hover {
             transform: scale(1.1) translateY(-5px);
-            background: #fff;
-            color: #ff0000;
-            box-shadow: 0 0 50px #ff0000;
+            background: #fff; color: #ff0000; box-shadow: 0 0 50px #ff0000;
         }
 
         .hidden-content { opacity: 0; pointer-events: none; transition: 1.5s ease; }
@@ -109,95 +145,46 @@
             100% { opacity: 0; transform: translate(var(--tw-x), var(--tw-y)) scale(1.8) rotate(var(--tw-r)); }
         }
 
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .animate-marquee { display: inline-block; white-space: nowrap; animation: marquee 8s linear infinite; width: max-content; }
+        .pause-animation { animation-play-state: paused !important; }
 
-        .animate-marquee {
-            display: inline-block;
-            white-space: nowrap;
-            animation: marquee 8s linear infinite;
-            width: max-content;
-        }
-
-        .pause-animation {
-            animation-play-state: paused !important;
-        }
-
-        /* --- STYLING DASHBOARD & DROPDOWN --- */
         .btn-dashboard {
             background: linear-gradient(135deg, #ef4444 0%, #7f1d1d 100%);
             border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            z-index: 60;
+            position: relative; z-index: 60;
         }
 
-        .dropdown-container {
-            position: relative;
-            padding-bottom: 20px;
-            margin-bottom: -20px;
-        }
-
+        .dropdown-container { position: relative; padding-bottom: 20px; margin-bottom: -20px; }
         .dropdown-menu {
-            position: absolute;
-            right: 0;
-            top: 100%;
-            margin-top: 10px;
-            width: 210px;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(239, 68, 68, 0.6);
-            border-radius: 15px;
+            position: absolute; right: 0; top: 100%; margin-top: 10px; width: 210px;
+            background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px);
+            border: 1px solid rgba(239, 68, 68, 0.6); border-radius: 15px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.9);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(15px) scale(0.95);
-            transition: all 0.3s ease;
-            z-index: 100;
-            overflow: hidden;
+            opacity: 0; visibility: hidden; transform: translateY(15px) scale(0.95);
+            transition: all 0.3s ease; z-index: 100; overflow: hidden;
         }
-
-        .dropdown-container:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0) scale(1);
-        }
+        .dropdown-container:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
 
         .dropdown-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            transition: 0.3s;
-            text-transform: uppercase;
-            font-weight: 700;
-            font-size: 11px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            color: #ccc;
+            display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+            transition: 0.3s; text-transform: uppercase; font-weight: 700; font-size: 11px;
+            border-bottom: 1px solid rgba(255,255,255,0.05); color: #ccc;
         }
 
-        /* --- EFEK HOVER KHUSUS --- */
         .gallery-hover:hover { color: #fff !important; text-shadow: 0 0 15px #fff; background: rgba(255, 255, 255, 0.1); padding-left: 22px; }
         .join-hover:hover { color: #22c55e !important; text-shadow: 0 0 15px #22c55e; background: rgba(34, 197, 94, 0.1); padding-left: 22px; }
         .merch-hover:hover { color: #ef4444 !important; text-shadow: 0 0 15px #ef4444; background: rgba(239, 68, 68, 0.1); padding-left: 22px; }
         .meetup-hover:hover { color: #facc15 !important; text-shadow: 0 0 15px #facc15; background: rgba(250, 204, 21, 0.1); padding-left: 22px; }
 
-        /* Social Icons Neon */
-        .social-link {
-            font-size: 1.5rem;
-            color: #666;
-            transition: 0.4s;
-            position: relative; z-index: 10;
-        }
+        .social-link { font-size: 1.5rem; color: #666; transition: 0.4s; position: relative; z-index: 10; }
         .social-link:hover { transform: translateY(-5px); }
         .ig-neon:hover { color: #e1306c; filter: drop-shadow(0 0 8px #e1306c); }
         .fb-neon:hover { color: #1877f2; filter: drop-shadow(0 0 8px #1877f2); }
         .mail-neon:hover { color: #ef4444; filter: drop-shadow(0 0 8px #ef4444); }
 
-        /* ADDED: SHOUTBOX STYLING */
         .shoutbox-container { border-left: 3px solid #ef4444; background: rgba(255,0,0,0.05); position: relative; z-index: 10; }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #ef4444; border-radius: 10px; }
@@ -205,11 +192,11 @@
 </head>
 <body class="flex flex-col items-center justify-center p-4 min-h-screen">
 
-    <!-- EFEK BARA API -->
     <div id="particles-js"></div>
 
     <div id="gatekeeper">
-        <img src="a8x.webp" alt="Logo" class="w-48 h-auto mb-8 animate-pulse object-contain">
+        <!-- SEO GAMBAR: Penambahan alt text yang relevan -->
+        <img src="a8x.webp" alt="Logo Fanbase Avenged Sevenfold Blitar" class="w-48 h-auto mb-8 animate-pulse object-contain">
         <h1 class="a7x-title text-4xl md:text-6xl mb-12 uppercase text-center">ARE YOU READY!!</h1>
         <button onclick="unlockMoshpit()" class="ready-btn tracking-[0.3em] uppercase">YES, I'M READY!</button>
     </div>
@@ -217,7 +204,8 @@
     <nav class="fixed top-0 w-full z-50 p-4 flex justify-between items-center bg-black/60 backdrop-blur-lg border-b border-white/10 hidden-content" id="nav-content">
         <div class="flex items-center gap-2 md:gap-3">
             <div class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-red-600 overflow-hidden shadow-[0_0_15px_red]">
-                <img src="blitar.png" alt="Logo" class="w-full h-full object-cover">
+                <!-- SEO GAMBAR -->
+                <img src="blitar.png" alt="Deathbat Logo A7X Blitar Raya" class="w-full h-full object-cover">
             </div>
             <div class="leading-tight">
                 <h2 class="text-[10px] md:text-xs font-bold text-red-500 tracking-widest uppercase">A7X Blitar Raya</h2>
@@ -231,26 +219,16 @@
             </button>
             
             <div class="dropdown-menu">
-                <a href="galeri.html" class="dropdown-item gallery-hover">
-                    <i class="fas fa-images"></i> Gallery
-                </a>
-                
-                <a href="https://chat.whatsapp.com/F6p4rFx2CDoKu76h1egyML" target="_blank" class="dropdown-item join-hover">
-                    <i class="fab fa-whatsapp"></i> Join Fanbase
-                </a>
-                
-                <a href="merch.html" class="dropdown-item merch-hover">
-                    <i class="fas fa-tshirt"></i> Official Merch
-                </a>
-
-                <a href="jadwal.html" class="dropdown-item meetup-hover">
-                    <i class="fas fa-calendar-alt"></i> Kopdar Schedule
-                </a>
+                <a href="galeri.html" class="dropdown-item gallery-hover"><i class="fas fa-images"></i> Gallery</a>
+                <a href="https://chat.whatsapp.com/F6p4rFx2CDoKu76h1egyML" target="_blank" class="dropdown-item join-hover"><i class="fab fa-whatsapp"></i> Join Fanbase</a>
+                <a href="merch.html" class="dropdown-item merch-hover"><i class="fas fa-tshirt"></i> Official Merch</a>
+                <a href="jadwal.html" class="dropdown-item meetup-hover"><i class="fas fa-calendar-alt"></i> Kopdar Schedule</a>
             </div>
         </div>
     </nav>
 
     <main class="text-center z-10 w-full max-w-4xl mt-16 md:mt-24 hidden-content relative" id="main-content">
+        <!-- Pastikan h1 ini yang terbaca oleh Google sebagai judul konten utama -->
         <h1 class="a7x-title text-4xl sm:text-6xl md:text-8xl mb-0 uppercase px-2">Avenged Sevenfold</h1>
         <p class="a7x-title text-lg sm:text-2xl md:text-4xl mt-0 mb-2 uppercase px-2">LIVE AT</p>
         
@@ -281,7 +259,8 @@
 
         <div class="mt-10 mb-6 flex flex-col items-center relative z-10">
             <a href="https://www.tiket.com/en-id/to-do/avenged-sevenfold-indonesia-2026" target="_blank" 
-               class="btn-ticket inline-flex items-center gap-3 bg-red-600 text-white px-8 py-4 rounded-full font-black text-lg md:text-2xl tracking-tighter uppercase italic border-2 border-white/20">
+               class="btn-ticket inline-flex items-center gap-3 bg-red-600 text-white px-8 py-4 rounded-full font-black text-lg md:text-2xl tracking-tighter uppercase italic border-2 border-white/20"
+               rel="noopener noreferrer">
                 <i class="fas fa-ticket-alt"></i> Amankan Tiketmu!
             </a>
             <p class="text-[10px] text-gray-400 mt-3 animate-pulse uppercase tracking-[0.2em]">Beli Sebelum Kehabisan!</p>
@@ -289,11 +268,11 @@
 
         <div class="mt-8 mb-4 flex flex-col items-center px-4 relative z-10">
             <div class="bg-black/80 backdrop-blur-md px-4 py-3 md:px-6 md:py-4 rounded-full border border-red-600/30 flex items-center gap-4 md:gap-6 w-full max-w-sm overflow-hidden">
-                <button onclick="prevSong()" class="text-gray-400 hover:text-white transition z-10 bg-black/80 pr-2"><i class="fas fa-step-backward text-lg"></i></button>
-                <button onclick="togglePlay()" id="playBtn" class="w-10 h-10 md:w-12 md:h-12 bg-red-600 rounded-full flex items-center justify-center text-black shadow-lg active:scale-90 transition z-10 shrink-0">
+                <button onclick="prevSong()" aria-label="Previous Song" class="text-gray-400 hover:text-white transition z-10 bg-black/80 pr-2"><i class="fas fa-step-backward text-lg"></i></button>
+                <button onclick="togglePlay()" aria-label="Play/Pause" id="playBtn" class="w-10 h-10 md:w-12 md:h-12 bg-red-600 rounded-full flex items-center justify-center text-black shadow-lg active:scale-90 transition z-10 shrink-0">
                     <i id="playIcon" class="fas fa-play ml-1 text-lg"></i>
                 </button>
-                <button onclick="nextSong()" class="text-gray-400 hover:text-white transition z-10 bg-black/80 pl-2"><i class="fas fa-step-forward text-lg"></i></button>
+                <button onclick="nextSong()" aria-label="Next Song" class="text-gray-400 hover:text-white transition z-10 bg-black/80 pl-2"><i class="fas fa-step-forward text-lg"></i></button>
                 <div class="text-left border-l border-white/10 pl-4 overflow-hidden w-full relative">
                     <p id="songTitle" class="text-[9px] md:text-[10px] font-bold text-red-500 uppercase animate-marquee pause-animation">Tap to Play</p>
                     <p class="text-[7px] md:text-[8px] text-gray-500 uppercase tracking-widest">Blitar Playlist</p>
@@ -319,13 +298,13 @@
         </div>
 
         <div class="mt-8 flex justify-center gap-8 border-t border-white/5 pt-6 relative z-10">
-            <a href="https://instagram.com/deathbatblitar" target="_blank" class="social-link ig-neon">
+            <a href="https://instagram.com/deathbatblitar" target="_blank" aria-label="Instagram" rel="noopener noreferrer" class="social-link ig-neon">
                 <i class="fab fa-instagram"></i>
             </a>
-            <a href="mailto:contact@deathbatblitar.com" class="social-link mail-neon">
+            <a href="mailto:contact@deathbatblitar.com" aria-label="Email" class="social-link mail-neon">
                 <i class="fas fa-envelope"></i>
             </a>
-            <a href="https://facebook.com/deathbatblitar" target="_blank" class="social-link fb-neon">
+            <a href="https://facebook.com/deathbatblitar" target="_blank" aria-label="Facebook" rel="noopener noreferrer" class="social-link fb-neon">
                 <i class="fab fa-facebook-f"></i>
             </a>
         </div>
@@ -334,45 +313,20 @@
     </main>
 
     <script>
-        // INIT PARTICLES.JS (EFEK BARA API / EMBERS)
         particlesJS("particles-js", {
             "particles": {
                 "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
                 "color": { "value": ["#ff0000", "#ff5a00", "#ff9a00"] },
                 "shape": { "type": "circle" },
-                "opacity": {
-                    "value": 0.8,
-                    "random": true,
-                    "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false }
-                },
-                "size": {
-                    "value": 4,
-                    "random": true,
-                    "anim": { "enable": true, "speed": 2, "size_min": 0.1, "sync": false }
-                },
-                "line_linked": { "enable": false }, // Tanpa garis penghubung
-                "move": {
-                    "enable": true,
-                    "speed": 1.5,
-                    "direction": "top", // Terbang ke atas seperti bara api
-                    "random": true,
-                    "straight": false,
-                    "out_mode": "out",
-                    "bounce": false,
-                }
+                "opacity": { "value": 0.8, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } },
+                "size": { "value": 4, "random": true, "anim": { "enable": true, "speed": 2, "size_min": 0.1, "sync": false } },
+                "line_linked": { "enable": false },
+                "move": { "enable": true, "speed": 1.5, "direction": "top", "random": true, "straight": false, "out_mode": "out", "bounce": false }
             },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": {
-                    "onhover": { "enable": false },
-                    "onclick": { "enable": false },
-                    "resize": true
-                }
-            },
+            "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": false }, "onclick": { "enable": false }, "resize": true } },
             "retina_detect": true
         });
 
-        // FIREBASE CONFIGURATION
         const firebaseConfig = {
             apiKey: "AIzaSyD6VZW2uZ4XJtH2BiASl7EbbgFsXQlJSvc",
             authDomain: "a7x-fanbase-blitar.firebaseapp.com",
@@ -383,7 +337,6 @@
             appId: "1:772119272472:web:c6e3e222edd59cdb40f76d"
         };
 
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
         const shoutRef = database.ref('moshpit');
@@ -398,14 +351,10 @@
                 const bat = document.createElement('img');
                 bat.src = 'https://www.pngarts.com/files/1/Bat-PNG-Transparent-Image.png'; 
                 bat.className = 'bat-particle';
-                bat.style.left = '50%';
-                bat.style.top = '50%';
-                const moveX = (Math.random() - 0.5) * 1500 + 'px';
-                const moveY = (Math.random() - 0.8) * 1200 + 'px';
-                const rotate = (Math.random() - 0.5) * 400 + 'deg';
-                bat.style.setProperty('--tw-x', moveX);
-                bat.style.setProperty('--tw-y', moveY);
-                bat.style.setProperty('--tw-r', rotate);
+                bat.style.left = '50%'; bat.style.top = '50%';
+                bat.style.setProperty('--tw-x', (Math.random() - 0.5) * 1500 + 'px');
+                bat.style.setProperty('--tw-y', (Math.random() - 0.8) * 1200 + 'px');
+                bat.style.setProperty('--tw-r', (Math.random() - 0.5) * 400 + 'deg');
                 document.body.appendChild(bat);
                 setTimeout(() => { bat.remove(); }, 2500);
             }
@@ -455,82 +404,44 @@
 
         let index = Math.floor(Math.random() * playlist.length);
 
-        function load(i) {
-            player.src = playlist[i].url;
-            songTitle.innerText = playlist[i].title;
-        }
+        function load(i) { player.src = playlist[i].url; songTitle.innerText = playlist[i].title; }
 
         function togglePlay() {
             if (player.paused) { 
-                player.play(); 
-                playIcon.className = 'fas fa-pause text-lg';
-                songTitle.classList.remove('pause-animation');
-            }
-            else { 
-                player.pause(); 
-                playIcon.className = 'fas fa-play ml-1 text-lg';
-                songTitle.classList.add('pause-animation');
+                player.play(); playIcon.className = 'fas fa-pause text-lg'; songTitle.classList.remove('pause-animation');
+            } else { 
+                player.pause(); playIcon.className = 'fas fa-play ml-1 text-lg'; songTitle.classList.add('pause-animation');
             }
         }
 
-        function nextSong() { 
-            index = (index + 1) % playlist.length; 
-            load(index); 
-            player.play(); 
-            playIcon.className = 'fas fa-pause text-lg';
-            songTitle.classList.remove('pause-animation');
-        }
+        function nextSong() { index = (index + 1) % playlist.length; load(index); player.play(); playIcon.className = 'fas fa-pause text-lg'; songTitle.classList.remove('pause-animation'); }
+        function prevSong() { index = (index - 1 + playlist.length) % playlist.length; load(index); player.play(); playIcon.className = 'fas fa-pause text-lg'; songTitle.classList.remove('pause-animation'); }
 
-        function prevSong() { 
-            index = (index - 1 + playlist.length) % playlist.length; 
-            load(index); 
-            player.play(); 
-            playIcon.className = 'fas fa-pause text-lg';
-            songTitle.classList.remove('pause-animation');
-        }
-
-        // FIREBASE + DISCORD SHOUTBOX LOGIC
         function sendShout() {
             const nameInput = document.getElementById('shoutName');
             const msgInput = document.getElementById('shoutInput');
             const sendBtn = document.getElementById('sendBtn');
-            
-            // GANTI DENGAN WEBHOOK ASLI KAMU JIKA MAU DIPAKAI (Tapi ingat jangan sampai terekspos ke publik)
             const webhookURL = "URL_DISCORD_WEBHOOK_KAMU_DI_SINI";
 
             if (msgInput.value.trim() !== "") {
                 const name = nameInput.value.trim() || "Anonymous Fallen";
                 const message = msgInput.value;
 
-                sendBtn.disabled = true;
-                sendBtn.innerHTML = "...";
+                sendBtn.disabled = true; sendBtn.innerHTML = "...";
 
-                // 1. Save to Firebase (Realtime & Permanent)
-                shoutRef.push({
-                    name: name,
-                    message: message,
-                    timestamp: firebase.database.ServerValue.TIMESTAMP
-                }).then(() => {
-                    // 2. Send to Discord Webhook (Hanya akan jalan kalau URL webhook diisi)
+                shoutRef.push({ name: name, message: message, timestamp: firebase.database.ServerValue.TIMESTAMP }).then(() => {
                     if(webhookURL !== "URL_DISCORD_WEBHOOK_KAMU_DI_SINI") {
                         fetch(webhookURL, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                username: "Moshpit Bot Blitar",
-                                avatar_url: "blitar.png",
-                                content: `**${name}**:\n> ${message}`
-                            })
+                            method: 'POST', headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ username: "Moshpit Bot Blitar", avatar_url: "blitar.png", content: `**${name}**:\n> ${message}` })
                         }).catch(e => console.log("Webhook gagal:", e));
                     }
-
                     msgInput.value = "";
                     setTimeout(() => { sendBtn.disabled = false; sendBtn.innerText = "Kirim"; }, 1500);
                 });
             }
         }
 
-        // Auto-load data from Firebase + Format Waktu
         shoutRef.orderByChild('timestamp').limitToLast(15).on('value', (snapshot) => {
             const shoutbox = document.getElementById('shoutbox');
             shoutbox.innerHTML = "";
@@ -540,8 +451,6 @@
             messages.reverse().forEach(data => {
                 const p = document.createElement('p');
                 p.className = 'text-[10px] text-gray-300 border-b border-white/5 pb-1';
-                
-                // Format Waktu (Jam:Menit)
                 let timeStr = "";
                 if(data.timestamp) {
                     const date = new Date(data.timestamp);
@@ -549,19 +458,10 @@
                     const m = String(date.getMinutes()).padStart(2, '0');
                     timeStr = `<span class="text-[8px] text-gray-500 ml-1">(${h}:${m})</span>`;
                 }
-
                 p.innerHTML = `<span class="text-red-600 font-bold">${data.name}</span>${timeStr}: ${data.message}`;
                 shoutbox.appendChild(p);
             });
         });
-
-        function shareWeb() {
-            const text = "Pantau countdown konser A7X Jakarta 2026 dari Fanbase Blitar Raya! 🤘🔥";
-            if (navigator.share) navigator.share({ title: 'A7X Blitar', text: text, url: window.location.href });
-            else alert("Link dicopy!");
-        }
-
-        updateTimer();
     </script>
 </body>
 </html>
