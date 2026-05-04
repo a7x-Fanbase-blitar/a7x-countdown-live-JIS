@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Voting Seragam - Deathbat Blitar Raya</title>
 
-    <!-- SEO & SHARE LINK OPTIMIZATION (Muncul saat share link) -->
+    <!-- SEO & SHARE LINK OPTIMIZATION -->
     <meta property="og:title" content="Voting Seragam Deathbat Blitar Raya">
     <meta property="og:description" content="Tentukan seragam resmi komunitas kita untuk tahun 2026!">
-    <meta property="og:image" content="a7xblitar.png"> <!-- Pastikan file logo.png ada di folder root -->
+    <meta property="og:image" content="a7xblitar.png"> 
     <meta property="og:url" content="https://website-anda.com">
     <meta name="theme-color" content="#ef4444">
     
@@ -29,7 +29,6 @@
         }
         .metal-font { font-family: 'Metal Mania', cursive; }
         
-        /* Animasi Glow Neon */
         .neon-text {
             text-shadow: 0 0 10px #ef4444, 0 0 20px #ef4444, 0 0 30px #7f1d1d;
             animation: pulse 2s infinite;
@@ -47,7 +46,6 @@
             transition: all 0.4s ease;
         }
 
-        /* Efek Hidup Saat Hover */
         .vote-card { cursor: pointer; position: relative; overflow: hidden; }
         .vote-card:hover { 
             transform: translateY(-10px) scale(1.02);
@@ -65,13 +63,11 @@
             box-shadow: 0 0 40px rgba(239, 68, 68, 0.6);
         }
 
-        /* Custom Input Glow */
         input:focus {
             box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
             background: rgba(255,255,255,0.1) !important;
         }
 
-        /* Animasi Tombol */
         #vote-btn:hover {
             letter-spacing: 3px;
             box-shadow: 0 0 30px #ef4444;
@@ -82,7 +78,6 @@
 <body class="p-4 md:p-10 animate__animated animate__fadeIn">
 
     <header class="max-w-5xl mx-auto text-center mb-12">
-        <img src="a7xblitar.png" alt="Logo" class="w-24 mx-auto mb-4 animate__animated animate__zoomIn">
         <h1 class="metal-font text-5xl md:text-7xl text-red-600 mb-4 tracking-wider neon-text">MEMBER'S VOTE</h1>
         <p class="text-xs tracking-[0.4em] uppercase text-gray-400 animate__animated animate__fadeInUp">Pilih Seragam Resmi Deathbat Blitar Raya 2026</p>
     </header>
@@ -106,27 +101,27 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             <!-- DESIGN 1 -->
             <div id="card-1" onclick="selectDesign(1)" class="ultra-glass vote-card rounded-[2rem] p-6 animate__animated animate__fadeInLeft">
-                <img src="aset-gambar/produk-1.jpg" alt="Design 1" class="w-full h-80 object-cover rounded-2xl mb-6">
+                <img src="aset-gambar/produk-1.jpeg" alt="Design 1" class="w-full h-80 object-cover rounded-2xl mb-6">
                 <h3 class="metal-font text-2xl text-red-500 text-center uppercase">Pink Version</h3>
             </div>
             <!-- DESIGN 2 -->
             <div id="card-2" onclick="selectDesign(2)" class="ultra-glass vote-card rounded-[2rem] p-6 animate__animated animate__fadeInUp">
-                <img src="aset-gambar/produk-2.jpg" alt="Design 2" class="w-full h-80 object-cover rounded-2xl mb-6">
+                <img src="aset-gambar/produk-2.jpeg" alt="Design 2" class="w-full h-80 object-cover rounded-2xl mb-6">
                 <h3 class="metal-font text-2xl text-red-500 text-center uppercase">Plat AG V1</h3>
             </div>
             <!-- DESIGN 3 -->
             <div id="card-3" onclick="selectDesign(3)" class="ultra-glass vote-card rounded-[2rem] p-6 animate__animated animate__fadeInRight">
-                <img src="aset-gambar/produk-3.jpg" alt="Design 3" class="w-full h-80 object-cover rounded-2xl mb-6">
+                <img src="aset-gambar/produk-3.jpeg" alt="Design 3" class="w-full h-80 object-cover rounded-2xl mb-6">
                 <h3 class="metal-font text-2xl text-red-500 text-center uppercase">Blitar Koi Version</h3>
             </div>
             <!-- DESIGN 4 -->
             <div id="card-4" onclick="selectDesign(4)" class="ultra-glass vote-card rounded-[2rem] p-6 animate__animated animate__fadeInLeft">
-                <img src="aset-gambar/produk-4.jpg" alt="Design 4" class="w-full h-80 object-cover rounded-2xl mb-6">
+                <img src="aset-gambar/produk-4.jpeg" alt="Design 4" class="w-full h-80 object-cover rounded-2xl mb-6">
                 <h3 class="metal-font text-2xl text-red-500 text-center uppercase">Blitar Art Version</h3>
             </div>
             <!-- DESIGN 5 -->
             <div id="card-5" onclick="selectDesign(5)" class="ultra-glass vote-card rounded-[2rem] p-6 animate__animated animate__fadeInRight">
-                <img src="aset-gambar/produk-5.jpg" alt="Design 5" class="w-full h-80 object-cover rounded-2xl mb-6">
+                <img src="aset-gambar/produk-5.jpeg" alt="Design 5" class="w-full h-80 object-cover rounded-2xl mb-6">
                 <h3 class="metal-font text-2xl text-red-500 text-center uppercase">Plat AG V2</h3>
             </div>
         </div>
@@ -148,7 +143,6 @@
             selectedId = id;
             const selectedCard = document.getElementById(`card-${id}`);
             selectedCard.classList.add('selected');
-            // Tambahkan efek guncang kecil saat dipilih
             selectedCard.classList.add('animate__animated', 'animate__pulse');
             setTimeout(() => selectedCard.classList.remove('animate__pulse'), 500);
         }
