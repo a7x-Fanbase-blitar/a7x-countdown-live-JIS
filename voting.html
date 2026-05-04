@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting Seragam - Deathbat Blitar Raya</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.95)), url('a7x-bg.jpg');
+            background-attachment: fixed;
+            background-size: cover;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            min-height: 100vh;
+        }
+        .metal-font { font-family: 'Metal Mania', cursive; }
+        .ultra-glass {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .vote-card { transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
+        .vote-card:hover { transform: translateY(-5px); border-color: #ef4444; }
+        .vote-card.selected { border: 2px solid #ef4444; background: rgba(239, 68, 68, 0.15); }
+        input::placeholder { color: rgba(156, 163, 175, 0.5); }
+    </style>
+</head>
+<body class="p-4 md:p-10">
+
+    <header class="max-w-5xl mx-auto text-center mb-12">
+        <h1 class="metal-font text-5xl md:text-7xl text-red-600 mb-4 tracking-wider">MEMBER'S VOTE</h1>
+        <p class="text-xs tracking-[0.4em] uppercase text-gray-400">Pilih Seragam Resmi Deathbat Blitar Raya 2026</p>
+    </header>
+
+    <main class="max-w-6xl mx-auto">
+        <!-- FORM DATA MEMBER -->
+        <div class="max-w-md mx-auto mb-12 space-y-4">
+            <div class="relative">
+                <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-red-600"></i>
+                <input type="text" id="input-nama" placeholder="NAMA LENGKAP" 
+                    class="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-xl focus:border-red-600 outline-none transition">
+            </div>
+            <div class="relative">
+                <i class="fas fa-phone absolute left-4 top-1/2 -translate-y-1/2 text-red-600"></i>
+                <input type="tel" id="input-hp" placeholder="NOMOR WHATSAPP" 
+                    class="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-xl focus:border-red-600 outline-none transition">
+            </div>
+        </div>
+
+        <!-- PILIHAN DESAIN -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- DESIGN 1 -->
+            <div id="card-1" onclick="selectDesign(1)" class="ultra-glass vote-card rounded-[2rem] p-6 border border-white/10">
+                <img src="design1.jpg" alt="Design 1" class="w-full h-72 object-cover rounded-2xl mb-4">
+                <h3 class="metal-font text-2xl text-red-500 text-center uppercase">The Revenge</h3>
+            </div>
+            <!-- DESIGN 2 -->
+            <div id="card-2" onclick="selectDesign(2)" class="ultra-glass vote-card rounded-[2rem] p-6 border border-white/10">
+                <img src="design2.jpg" alt="Design 2" class="w-full h-72 object-cover rounded-2xl mb-4">
+                <h3 class="metal-font text-2xl text-red-500 text-center uppercase">Blitar Pride</h3>
+            </div>
+            <!-- DESIGN 3 -->
+            <div id="card-3" onclick="selectDesign(3)" class="ultra-glass vote-card rounded-[2rem] p-6 border border-white/10">
+                <img src="design3.jpg" alt="Design 3" class="w-full h-72 object-cover rounded-2xl mb-4">
+                <h3 class="metal-font text-2xl text-red-500 text-center uppercase">Modern Bat</h3>
+            </div>
+          <!-- DESIGN 4 -->
+            <div id="card-3" onclick="selectDesign(3)" class="ultra-glass vote-card rounded-[2rem] p-6 border border-white/10">
+                <img src="design3.jpg" alt="Design 3" class="w-full h-72 object-cover rounded-2xl mb-4">
+                <h3 class="metal-font text-2xl text-red-500 text-center uppercase">Modern Bat</h3>
+            </div>
+            <!-- DESIGN 5 -->
+            <div id="card-3" onclick="selectDesign(3)" class="ultra-glass vote-card rounded-[2rem] p-6 border border-white/10">
+                <img src="design3.jpg" alt="Design 3" class="w-full h-72 object-cover rounded-2xl mb-4">
+                <h3 class="metal-font text-2xl text-red-500 text-center uppercase">Modern Bat</h3>
+            </div>
+        </div>
+
+        <div class="text-center mt-12">
+            <button id="vote-btn" onclick="submitVote()" 
+                class="bg-red-600 hover:bg-white text-black font-black px-12 py-5 rounded-full transition-all duration-300 uppercase tracking-widest shadow-[0_0_20px_rgba(239,68,68,0.4)]">
+                KIRIM SUARA 🤘
+            </button>
+        </div>
+    </main>
+
+    <script>
+        let selectedId = null;
+        // GANTI DENGAN URL WEB APP DARI GOOGLE APPS SCRIPT ANDA
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxK4JA9U_0wBCv8wtnpSaefSr6eUckVAW0bbTd5KatNCJYUHKfRgRLsnPLH8Hm9ekFCKw/exec"; 
+
+        function selectDesign(id) {
+            document.querySelectorAll('.vote-card').forEach(card => card.classList.remove('selected'));
+            selectedId = id;
+            document.getElementById(`card-${id}`).classList.add('selected');
+        }
+
+        async function submitVote() {
+            const nama = document.getElementById('input-nama').value;
+            const hp = document.getElementById('input-hp').value;
+            const btn = document.getElementById('vote-btn');
+
+            if(!selectedId || !nama || !hp) {
+                alert("LENGKAPI DATA DAN PILIH DESAIN! 🔥");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = "MENGIRIM...";
+
+            const payload = {
+                nama: nama,
+                hp: hp,
+                pilihan: "Desain " + selectedId
+            };
+
+            try {
+                // Menggunakan fetch untuk mengirim data ke Backend GAS
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Penting untuk Apps Script agar tidak error CORS
+                    body: JSON.stringify(payload),
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                alert("SUARA BERHASIL DISIMPAN! A7X FOREVER! 🤘");
+                btn.innerHTML = "BERHASIL ✅";
+                btn.classList.replace('bg-red-600', 'bg-green-600');
+            } catch (error) {
+                alert("Terjadi kesalahan. Coba lagi nanti!");
+                btn.disabled = false;
+                btn.innerHTML = "KIRIM SUARA 🤘";
+            }
+        }
+    </script>
+</body>
+</html>
