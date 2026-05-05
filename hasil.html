@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Result - Deathbat Blitar Raya</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <style>
+        body {
+            background: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.95)), url('a7x-bg.jpg');
+            background-attachment: fixed;
+            background-size: cover;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            min-height: 100vh;
+        }
+        .metal-font { font-family: 'Metal Mania', cursive; }
+        .neon-text { text-shadow: 0 0 15px #ef4444, 0 0 30px #ff0000; }
+        
+        .ultra-glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-card {
+            border-left: 4px solid #ef4444;
+            transition: all 0.4s ease;
+        }
+
+        .stat-card:hover {
+            background: rgba(239, 68, 68, 0.1);
+            transform: translateX(10px);
+        }
+
+        .preview-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid #ef4444;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #ef4444; border-radius: 10px; }
+    </style>
+</head>
+<body class="p-4 md:p-10 animate__animated animate__fadeIn">
+
+    <header class="max-w-5xl mx-auto text-center mb-12">
+        <h1 class="metal-font text-5xl md:text-7xl text-red-600 mb-2 neon-text tracking-widest">BATTLE REPORT</h1>
+        <p class="text-[10px] md:text-xs tracking-[0.4em] uppercase text-gray-400">Klasemen Identitas Deathbat Blitar Raya 2026</p>
+    </header>
+
+    <main class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- CHART SECTION -->
+        <div class="lg:col-span-2 ultra-glass rounded-[2.5rem] p-6 md:p-10">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-lg font-bold tracking-widest uppercase flex items-center">
+                    <i class="fas fa-chart-line mr-3 text-red-600"></i> Power Stats
+                </h2>
+                <button onclick="fetchData()" class="text-[10px] bg-red-600 hover:bg-red-700 px-4 py-2 rounded-full transition-all">
+                    <i class="fas fa-sync-alt mr-1"></i> REFRESH
+                </button>
+            </div>
+            <div class="relative h-[300px] md:h-[450px]">
+                <canvas id="voteChart"></canvas>
+            </div>
+        </div>
+
+        <!-- LEADERBOARD SECTION WITH VISUAL -->
+        <div class="flex flex-col gap-6">
+            <div class="ultra-glass rounded-[2.5rem] p-6 flex-1">
+                <h2 class="text-lg font-bold tracking-widest uppercase mb-6 border-b border-gray-800 pb-4">
+                    <i class="fas fa-trophy mr-3 text-yellow-500"></i> Top Design
+                </h2>
+                
+                <div id="stats-container" class="space-y-4">
+                    <!-- Data Loading -->
+                    <p class="text-center text-gray-600 py-10 animate-pulse">Memanggil jiwa pemilih...</p>
+                </div>
+            </div>
+
+            <div class="ultra-glass rounded-[2rem] p-6 text-center border-t-4 border-red-600">
+                <p class="text-gray-500 text-[10px] tracking-widest uppercase mb-1">Total Souls</p>
+                <span id="total-votes" class="text-5xl font-bold text-white metal-font neon-text">0</span>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyesYqr-rmEGNXQOOlmctVccJYpjKYRpx20ZoMDCNO8uVrY5PV9pVelRRbV4SoM0lyHDw/exec";
+        
+        // Pemetaan Nama Desain ke File Gambar (Pastikan nama case-sensitive sesuai di Spreadsheet)
+        const designImages = {
+            "Desain 1": "aset-gambar/produk-1.jpeg",
+            "Desain 2": "aset-gambar/produk-2.jpeg",
+            "Desain 3": "aset-gambar/produk-3.jpeg",
+            "Desain 5": "aset-gambar/produk-5.jpeg",
+            "Desain 6": "aset-gambar/produk-6.jpeg",
+            "Pink Version": "aset-gambar/produk-1.jpeg", // Antisipasi jika label berbeda
+            "Plat AG V1": "aset-gambar/produk-2.jpeg",
+            "Koi Version": "aset-gambar/produk-3.jpeg",
+            "Blitar Art": "aset-gambar/produk-5.jpeg",
+            "Plat AG V2": "aset-gambar/produk-6.jpeg"
+        };
+
+        let voteChart;
+
+        async function fetchData() {
+            try {
+                const response = await fetch(SCRIPT_URL, { method: 'GET', redirect: 'follow' });
+                const data = await response.json();
+                const labels = Object.keys(data);
+                const values = Object.values(data);
+                const total = values.reduce((a, b) => a + b, 0);
+
+                document.getElementById('total-votes').innerText = total;
+
+                // Render Leaderboard dengan Gambar
+                const container = document.getElementById('stats-container');
+                container.innerHTML = '';
+
+                const sorted = labels.map((l, i) => ({ label: l, value: values[i] }))
+                                     .sort((a, b) => b.value - a.value);
+
+                sorted.forEach(item => {
+                    const pct = ((item.value / total) * 100).toFixed(1);
+                    const imgSrc = designImages[item.label] || "aset-gambar/default.jpg";
+                    
+                    container.innerHTML += `
+                        <div class="stat-card p-3 ultra-glass rounded-xl flex items-center gap-4 animate__animated animate__fadeInRight">
+                            <img src="${imgSrc}" class="preview-img" onerror="this.src='https://via.placeholder.com/60?text=A7X'">
+                            <div class="flex-1">
+                                <p class="text-[10px] text-red-500 font-bold uppercase">${item.label}</p>
+                                <p class="text-sm font-black text-white">${item.value} VOTES</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-lg font-bold">${pct}%</p>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                renderChart(labels, values);
+            } catch (e) {
+                document.getElementById('stats-container').innerHTML = "<p class='text-red-500 text-xs text-center'>Gagal koneksi ke pusat data.</p>";
+            }
+        }
+
+        function renderChart(labels, values) {
+            const ctx = document.getElementById('voteChart').getContext('2d');
+            if (voteChart) voteChart.destroy();
+            voteChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: values,
+                        backgroundColor: 'rgba(239, 68, 68, 0.5)',
+                        borderColor: '#ef4444',
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#666' } },
+                        x: { ticks: { color: '#fff', font: { family: 'Orbitron', size: 9 } } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        fetchData();
+        setInterval(fetchData, 60000);
+    </script>
+</body>
+</html>
