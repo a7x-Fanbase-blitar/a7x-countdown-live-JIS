@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Deathbat Design Showdown - A7X Style</title>
     <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Permanent+Marker&display=swap" rel="stylesheet">
     <style>
@@ -10,6 +10,12 @@
             --fire-color: #ff4500;
             --fire-light: #ffba08;
             --dark-red: #800000;
+        }
+
+        /* --- GLOBAL FIX UNTUK RESPONSIVE --- */
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body, html {
@@ -44,6 +50,7 @@
             font-size: 3rem;
             font-family: 'Metal Mania', cursive;
             cursor: pointer;
+            text-align: center;
             text-shadow: 0 0 20px var(--fire-color);
             box-shadow: 0 0 30px rgba(255, 69, 0, 0.5), inset 0 0 20px rgba(255, 69, 0, 0.5);
             transition: 0.3s;
@@ -59,18 +66,19 @@
 
         /* --- BACKGROUND UTAMA --- */
         #main-content {
-            display: none; /* Disembunyikan sampai user klik ENTER */
+            display: none;
             flex-direction: column;
             align-items: center;
             background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), 
                         url('wood.jpg!d');
+            background-size: cover;
+            background-attachment: fixed;
             min-height: 100vh;
             padding-bottom: 50px;
             position: relative;
             z-index: 1;
         }
 
-        /* Full Screen Ember (Partikel Api Berterbangan) */
         #particles-js {
             position: fixed;
             width: 100%;
@@ -89,9 +97,9 @@
             text-align: center;
             animation: flicker 2s infinite, slideDown 1s ease-out forwards;
             z-index: 10;
+            padding: 0 15px;
         }
 
-        /* Animasi Muncul dari Bawah/Atas */
         @keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes pulse-fire { 0% { box-shadow: 0 0 20px #ff4500; } 100% { box-shadow: 0 0 50px #ffba08; } }
@@ -109,6 +117,7 @@
             position: relative;
             z-index: 20;
             animation: slideUp 1.2s ease-out forwards;
+            text-align: center;
         }
 
         .voter-info input {
@@ -119,7 +128,6 @@
             border: 1px solid var(--fire-color);
             color: #fff;
             font-family: 'Permanent Marker', cursive;
-            box-sizing: border-box;
             border-radius: 4px;
             transition: 0.3s;
         }
@@ -148,6 +156,7 @@
             padding: 15px;
             text-align: center;
             flex: 1;
+            width: 100%;
             transition: 0.5s;
             clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 50% 100%, 0% 90%);
         }
@@ -158,7 +167,7 @@
             box-shadow: 0 15px 40px rgba(255, 69, 0, 0.6);
         }
 
-        .design-image { width: 100%; border: 1px solid #222; margin-bottom: 15px; }
+        .design-image { width: 100%; border: 1px solid #222; margin-bottom: 15px; border-radius: 5px; }
 
         /* --- VS 3D --- */
         .vs-wrapper {
@@ -169,6 +178,7 @@
             justify-content: center;
             align-items: center;
             z-index: 15;
+            flex-shrink: 0;
         }
 
         .vs-image-3d {
@@ -195,8 +205,7 @@
             cursor: pointer;
             transition: 0.3s;
             margin-top: 10px;
-            position: relative;
-            overflow: hidden;
+            border-radius: 5px;
         }
 
         .vote-btn:hover:not(:disabled) {
@@ -207,23 +216,69 @@
 
         .vote-btn:disabled { background: #222; border-color: #555; color: #777; cursor: not-allowed; }
 
-        #status-msg { margin: 20px; font-family: 'Permanent Marker', cursive; color: #00ff00; display: none; font-size: 1.5rem; z-index: 20; text-shadow: 0 0 10px #00ff00;}
+        #status-msg { margin: 20px; font-family: 'Permanent Marker', cursive; color: #00ff00; display: none; font-size: 1.5rem; z-index: 20; text-shadow: 0 0 10px #00ff00; text-align: center;}
 
-        @media (max-width: 768px) {
-            .showdown-container { flex-direction: column; }
-            h1 { font-size: 2.5rem; }
-            .vs-wrapper { height: 200px; margin: -10px 0; }
+        /* =========================================
+           PENGATURAN RESPONSIVE UNTUK LAYAR HP
+           ========================================= */
+        @media screen and (max-width: 768px) {
+            .enter-btn {
+                font-size: 1.8rem;
+                padding: 15px 30px;
+                width: 80%;
+            }
+
+            h1 { 
+                font-size: 2.2rem; 
+                letter-spacing: 2px;
+                margin-top: 30px;
+            }
+
+            .showdown-container { 
+                flex-direction: column; 
+                gap: 10px;
+            }
+
+            .voter-info {
+                padding: 15px;
+                width: 95%;
+            }
+
+            .voter-info label {
+                font-size: 1rem !important;
+            }
+
+            /* Mengecilkan Logo VS agar pas di tengah versi vertikal */
+            .vs-wrapper { 
+                height: 150px; 
+                width: 150px;
+                margin: 5px 0; 
+            }
+
+            .vs-image-3d {
+                max-width: 120px;
+            }
+
+            .design-card {
+                clip-path: none; /* Menghilangkan bentuk potongan agar lebih rapi di HP */
+                border-radius: 10px;
+                padding: 10px;
+            }
+
+            .design-card h3 {
+                font-size: 1.5rem !important;
+            }
         }
     </style>
 </head>
 <body>
 
     <audio id="bg-music" loop>
-        <source src="music.mp3" type="audio/mpeg">
+        <source src="https://raw.githubusercontent.com/a7x-Fanbase-blitar/aset-music/main/Avenged_Sevenfold_-_Remenissions.mp3" type="audio/mpeg">
     </audio>
 
     <div id="gatekeeper">
-        <button class="enter-btn" onclick="enterTheFire()">ENTER THE FIRE</button>
+        <button class="enter-btn" onclick="enterTheFire()">VOTING PILIHAN MU </button>
     </div>
 
     <div id="main-content">
@@ -232,7 +287,7 @@
         <h1>DEATHBAT SHOWDOWN</h1>
 
         <div class="voter-info">
-            <label style="font-size: 1.2rem; text-shadow: 0 0 5px red;">MASUKKAN IDENTITASMU, SOLDIER!</label>
+            <label style="font-size: 1.2rem; text-shadow: 0 0 5px red; display: block; margin-bottom: 10px;">MASUKKAN IDENTITASMU !</label>
             <input type="text" id="nama" placeholder="NAMA LENGKAP..." required>
             <input type="number" id="wa" placeholder="NOMOR WHATSAPP (CONTOH: 0812...)" required>
         </div>
@@ -283,7 +338,7 @@
         // 2. Generator Partikel Api (Embers) Penuh di Layar
         function createFireParticles() {
             const container = document.getElementById('particles-js');
-            const particleCount = 50; // Jumlah percikan api
+            const particleCount = 40; // Kurangi sedikit agar ringan di HP
 
             for (let i = 0; i < particleCount; i++) {
                 let particle = document.createElement('div');
@@ -317,7 +372,7 @@
         document.head.appendChild(style);
 
         // 3. Logika Voting (Google Sheets)
-        const scriptURL = 'URL_APPS_SCRIPT_ANDA'; // JANGAN LUPA GANTI INI!
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbySGV4Pzmlqk0aUcj11cDnzvMChop3eg0G_6eE_TLiJ-tMVHUX6C7fmAhuIuaN08ABaog/exec'; // JANGAN LUPA GANTI INI!
 
         function submitVote(pilihan) {
             const nama = document.getElementById('nama').value;
