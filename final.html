@@ -104,6 +104,44 @@
         @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes pulse-fire { 0% { box-shadow: 0 0 20px #ff4500; } 100% { box-shadow: 0 0 50px #ffba08; } }
 
+        /* --- COUNTDOWN & LOCK SCREEN STYLES --- */
+        #countdown-container {
+            font-size: 2rem;
+            color: var(--fire-light);
+            text-shadow: 0 0 15px var(--fire-color);
+            margin-bottom: 20px;
+            text-align: center;
+            z-index: 10;
+            background: rgba(0,0,0,0.6);
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--fire-color);
+            animation: slideDown 1.2s ease-out forwards;
+        }
+
+        #lock-screen {
+            display: none;
+            text-align: center;
+            z-index: 30;
+            padding: 40px 20px;
+            margin-top: 50px;
+            animation: slideUp 1s ease-out forwards;
+        }
+
+        #lock-screen h2 {
+            font-size: 4rem;
+            color: #fff;
+            text-shadow: 0 0 20px #ff0000, 0 0 40px #ff4500, 0 0 60px #ffba08;
+            animation: pulse-fire-intense 0.8s infinite alternate;
+            letter-spacing: 3px;
+            line-height: 1.2;
+        }
+
+        @keyframes pulse-fire-intense {
+            0% { text-shadow: 0 0 20px #ff0000, 0 0 40px #ff4500; transform: scale(1); }
+            100% { text-shadow: 0 0 40px #ff4500, 0 0 80px #ffba08, 0 0 120px #fff; transform: scale(1.05); }
+        }
+
         /* Form Input Section */
         .voter-info {
             background: rgba(10, 0, 0, 0.9);
@@ -222,59 +260,24 @@
            PENGATURAN RESPONSIVE UNTUK LAYAR HP
            ========================================= */
         @media screen and (max-width: 768px) {
-            .enter-btn {
-                font-size: 1.8rem;
-                padding: 15px 30px;
-                width: 80%;
-            }
-
-            h1 { 
-                font-size: 2.2rem; 
-                letter-spacing: 2px;
-                margin-top: 30px;
-            }
-
-            .showdown-container { 
-                flex-direction: column; 
-                gap: 10px;
-            }
-
-            .voter-info {
-                padding: 15px;
-                width: 95%;
-            }
-
-            .voter-info label {
-                font-size: 1rem !important;
-            }
-
-            /* Mengecilkan Logo VS agar pas di tengah versi vertikal */
-            .vs-wrapper { 
-                height: 150px; 
-                width: 150px;
-                margin: 5px 0; 
-            }
-
-            .vs-image-3d {
-                max-width: 120px;
-            }
-
-            .design-card {
-                clip-path: none; /* Menghilangkan bentuk potongan agar lebih rapi di HP */
-                border-radius: 10px;
-                padding: 10px;
-            }
-
-            .design-card h3 {
-                font-size: 1.5rem !important;
-            }
+            .enter-btn { font-size: 1.8rem; padding: 15px 30px; width: 80%; }
+            h1 { font-size: 2.2rem; letter-spacing: 2px; margin-top: 30px; }
+            #countdown-container { font-size: 1.5rem; }
+            #lock-screen h2 { font-size: 2.2rem; }
+            .showdown-container { flex-direction: column; gap: 10px; }
+            .voter-info { padding: 15px; width: 95%; }
+            .voter-info label { font-size: 1rem !important; }
+            .vs-wrapper { height: 150px; width: 150px; margin: 5px 0; }
+            .vs-image-3d { max-width: 120px; }
+            .design-card { clip-path: none; border-radius: 10px; padding: 10px; }
+            .design-card h3 { font-size: 1.5rem !important; }
         }
     </style>
 </head>
 <body>
 
     <audio id="bg-music" loop>
-        <source src="https://raw.githubusercontent.com/a7x-Fanbase-blitar/aset-music/main/Avenged_Sevenfold_-_Remenissions.mp3" type="audio/mpeg">
+        <source src="https://raw.githubusercontent.com/a7x-Fanbase-blitar/aset-music/refs/heads/main/Remenissions.mp3" type="audio/mpeg">
     </audio>
 
     <div id="gatekeeper">
@@ -285,6 +288,11 @@
         <div id="particles-js"></div>
 
         <h1>DEATHBAT SHOWDOWN</h1>
+
+        <div id="countdown-container">
+            VOTING DITUTUP DALAM:<br>
+            <span id="countdown-timer">00:00:00</span>
+        </div>
 
         <div class="voter-info">
             <label style="font-size: 1.2rem; text-shadow: 0 0 5px red; display: block; margin-bottom: 10px;">MASUKKAN IDENTITASMU !</label>
@@ -310,6 +318,10 @@
             </div>
         </div>
 
+        <div id="lock-screen">
+            <h2>TERIMAKASIH PARA MEMBERS TELAH MEMBERIKAN SUARA KALIAN \m/</h2>
+        </div>
+
         <div id="status-msg">VOTE BERHASIL! WELCOME TO THE FAMILY! \m/</div>
     </div>
 
@@ -320,25 +332,23 @@
             const main = document.getElementById('main-content');
             const music = document.getElementById('bg-music');
 
-            // Coba mainkan musik
-            music.volume = 0.6; // Set volume 60%
+            music.volume = 0.6; 
             music.play().catch(e => console.log("Musik diblokir browser, abaikan saja."));
 
-            // Animasi transisi layar
             gate.style.transform = 'scale(1.5)';
             gate.style.opacity = '0';
             
             setTimeout(() => {
                 gate.style.display = 'none';
                 main.style.display = 'flex';
-                createFireParticles(); // Mulai hujanan api
+                createFireParticles(); 
             }, 1000);
         }
 
-        // 2. Generator Partikel Api (Embers) Penuh di Layar
+        // 2. Generator Partikel Api
         function createFireParticles() {
             const container = document.getElementById('particles-js');
-            const particleCount = 40; // Kurangi sedikit agar ringan di HP
+            const particleCount = 40; 
 
             for (let i = 0; i < particleCount; i++) {
                 let particle = document.createElement('div');
@@ -352,7 +362,6 @@
                 particle.style.boxShadow = '0 0 10px #ff4500, 0 0 20px #ff0000';
                 particle.style.opacity = Math.random();
                 
-                // Durasi & Delay acak
                 let duration = Math.random() * 3 + 2; 
                 let delay = Math.random() * 5;
                 
@@ -361,7 +370,6 @@
             }
         }
 
-        // Keyframe untuk partikel dimasukkan lewat JS agar dinamis
         const style = document.createElement('style');
         style.innerHTML = `
             @keyframes flyUp {
@@ -371,8 +379,47 @@
         `;
         document.head.appendChild(style);
 
-        // 3. Logika Voting (Google Sheets)
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbySGV4Pzmlqk0aUcj11cDnzvMChop3eg0G_6eE_TLiJ-tMVHUX6C7fmAhuIuaN08ABaog/exec'; // JANGAN LUPA GANTI INI!
+        // 3. Logika Countdown Timer
+        function startCountdown() {
+            // Mengatur target ke jam 19:00:00 (7 malam) pada hari ini
+            const targetTime = new Date();
+            targetTime.setHours(19, 0, 0, 0);
+            const target = targetTime.getTime();
+
+            const timerInterval = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = target - now;
+
+                if (distance <= 0) {
+                    // Waktu Habis! Kunci Website
+                    clearInterval(timerInterval);
+                    document.getElementById('countdown-container').style.display = 'none';
+                    document.querySelector('.voter-info').style.display = 'none';
+                    document.querySelector('.showdown-container').style.display = 'none';
+                    document.getElementById('status-msg').style.display = 'none'; // Sembunyikan pesan sukses jika ada
+                    
+                    // Munculkan tulisan berapi-api
+                    document.getElementById('lock-screen').style.display = 'block';
+                } else {
+                    // Kalkulasi waktu berjalan
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    // Update UI
+                    document.getElementById('countdown-timer').innerText = 
+                        String(hours).padStart(2, '0') + ":" + 
+                        String(minutes).padStart(2, '0') + ":" + 
+                        String(seconds).padStart(2, '0');
+                }
+            }, 1000);
+        }
+        
+        // Jalankan countdown saat halaman dimuat
+        startCountdown();
+
+        // 4. Logika Voting (Google Sheets)
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbySGV4Pzmlqk0aUcj11cDnzvMChop3eg0G_6eE_TLiJ-tMVHUX6C7fmAhuIuaN08ABaog/exec'; 
 
         function submitVote(pilihan) {
             const nama = document.getElementById('nama').value;
@@ -399,7 +446,7 @@
                 document.getElementById('status-msg').style.display = 'block';
                 document.querySelector('.voter-info').style.opacity = '0.3';
                 btns.forEach(b => {
-                    b.innerText = 'VOTED \m/';
+                    b.innerText = 'VOTED \\m/';
                     b.style.background = "#111";
                 });
             })
