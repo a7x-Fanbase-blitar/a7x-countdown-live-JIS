@@ -142,6 +142,19 @@
         .shoutbox-container { border-left: 3px solid #ef4444; background: rgba(255,0,0,0.05); position: relative; z-index: 10; }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #ef4444; border-radius: 10px; }
+
+        /* MODIFIKASI KHUSUS HP (TIDAK MENGUBAH KODE ASLI, HANYA OVERRIDE CSS) */
+        @media (max-width: 640px) {
+            .a7x-title { font-size: 2.5rem !important; line-height: 1.1; }
+            #gatekeeper h1 { font-size: 2rem !important; }
+            .ready-btn { padding: 15px 30px; font-size: 0.8rem; }
+            nav h2 { font-size: 8px !important; }
+            .btn-dashboard { padding: 8px 12px !important; font-size: 8px !important; }
+            .dropdown-menu { width: 160px; right: -10px; }
+            .ultra-glass { padding: 15px !important; }
+            #days, #hours, #minutes, #seconds { font-size: 1.5rem !important; }
+            .btn-ticket { font-size: 1rem !important; padding: 12px 20px !important; }
+        }
     </style>
 </head>
 <body class="flex flex-col items-center justify-center p-4 min-h-screen">
