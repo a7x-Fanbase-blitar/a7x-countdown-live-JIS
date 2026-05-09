@@ -15,8 +15,18 @@
         .glass { background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.03); }
         .active-song { background: linear-gradient(90deg, rgba(239, 68, 68, 0.1) 0%, transparent 100%); border-left: 4px solid #ef4444; color: white; }
         ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 10px; }
         .tab-active { color: #ef4444; border-bottom: 2px solid #ef4444; }
+
+        /* PERBAIKAN SCROLL MOBILE */
+        @media (max-width: 768px) {
+            #playlistContainer {
+                max-height: 45vh; /* Batasi tinggi agar tidak menutupi player */
+                overflow-y: auto !important;
+                -webkit-overflow-scrolling: touch; /* Scroll halus iOS */
+            }
+        }
     </style>
 </head>
 <body>
@@ -26,8 +36,9 @@
     <div class="relative z-10 flex flex-col md:flex-row h-screen">
         
         <!-- SIDEBAR -->
-        <div class="w-full md:w-96 glass flex flex-col border-r border-white/5">
-            <div class="p-6">
+        <div class="w-full md:w-96 glass flex flex-col border-r border-white/5 overflow-hidden">
+            <!-- Bagian Atas Sidebar (Tetap diam) -->
+            <div class="p-6 flex-none">
                 <div class="mb-6">
                     <h1 class="text-2xl font-orbitron font-black text-red-600 tracking-tighter">DEATHBAT</h1>
                     <p class="text-[10px] text-zinc-500 tracking-[0.3em] font-bold">COMMUNITY PLAYER</p>
@@ -47,7 +58,7 @@
                 </div>
             </div>
 
-            <!-- LIST AREA -->
+            <!-- AREA LIST (Bisa di-scroll) -->
             <div class="flex-1 overflow-y-auto px-2 pb-32" id="playlistContainer">
                 <!-- Content via JS -->
             </div>
@@ -59,10 +70,10 @@
                 <div class="relative inline-block mb-10 group">
                     <div class="absolute -inset-10 bg-red-600 rounded-full blur-[100px] opacity-10 group-hover:opacity-20 transition duration-1000"></div>
                     <img id="diskCover" src="https://raw.githubusercontent.com/a7x-Fanbase-blitar/a7x-countdown-live-JIS/main/a7xblitar.png" 
-                         class="relative w-64 h-64 md:w-80 md:h-80 rounded-full object-cover border-[12px] border-zinc-900 shadow-2xl animate-[spin_15s_linear_infinite] [animation-play-state:paused]">
+                         class="relative w-48 h-48 md:w-80 md:h-80 rounded-full object-cover border-[12px] border-zinc-900 shadow-2xl animate-[spin_15s_linear_infinite] [animation-play-state:paused]">
                 </div>
                 
-                <h2 id="songTitle" class="text-3xl md:text-5xl font-black mb-2 text-white truncate font-orbitron uppercase tracking-tighter">Ready?</h2>
+                <h2 id="songTitle" class="text-2xl md:text-5xl font-black mb-2 text-white truncate font-orbitron uppercase tracking-tighter">Ready?</h2>
                 <p id="songArtist" class="text-red-500 font-bold tracking-[0.5em] text-xs uppercase">Avenged Sevenfold</p>
                 
                 <div class="mt-8">
@@ -78,16 +89,14 @@
     <div class="fixed bottom-0 left-0 right-0 glass border-t border-white/5 p-6 z-50">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-6">
             
-            <!-- Info (Desktop) -->
             <div class="hidden md:flex items-center w-1/4">
                 <img id="miniCover" src="https://raw.githubusercontent.com/a7x-Fanbase-blitar/a7x-countdown-live-JIS/main/a7xblitar.png" class="w-12 h-12 rounded-lg mr-4">
                 <div class="truncate">
                     <p id="miniTitle" class="text-sm font-bold text-white truncate">Pilih Lagu</p>
-                    <p class="text-[10px] text-zinc-500 font-bold">NOW PLAYING</p>
+                    <p class="text-[10px] text-zinc-500 font-bold uppercase">Now Playing</p>
                 </div>
             </div>
 
-            <!-- Controls -->
             <div class="flex-1 w-full flex flex-col items-center">
                 <div class="flex items-center space-x-8 mb-4">
                     <button onclick="prev()" class="text-zinc-500 hover:text-white transition"><i class="fas fa-step-backward text-xl"></i></button>
@@ -103,7 +112,6 @@
                 </div>
             </div>
 
-            <!-- Volume -->
             <div class="hidden md:flex items-center justify-end w-1/4 space-x-3">
                 <i class="fas fa-volume-down text-zinc-600"></i>
                 <input type="range" id="volumeSlider" min="0" max="100" value="80" class="w-24 h-1 bg-zinc-800 appearance-none rounded-full accent-red-600">
@@ -127,7 +135,6 @@
         const playIcon = document.getElementById('playIcon');
         const disk = document.getElementById('diskCover');
 
-        // PARTICLES
         particlesJS("particles-js", {
             "particles": {
                 "number": { "value": 50 },
@@ -209,28 +216,20 @@
             player.src = song.url;
             document.getElementById('songTitle').innerText = song.title;
             document.getElementById('miniTitle').innerText = song.title;
-            
             updateFavBtnStatus(song.id);
             renderPlaylist();
-            
             if(autostart) play();
         }
 
-        // FAVORITES LOGIC
         function toggleFavorite(id) {
-            if(favorites.includes(id)) {
-                favorites = favorites.filter(f => f !== id);
-            } else {
-                favorites.push(id);
-            }
+            if(favorites.includes(id)) { favorites = favorites.filter(f => f !== id); } 
+            else { favorites.push(id); }
             localStorage.setItem('a7x_favs', JSON.stringify(favorites));
             renderPlaylist();
             updateFavBtnStatus(allSongs[currentIndex].id);
         }
 
-        function toggleFavoriteCurrent() {
-            toggleFavorite(allSongs[currentIndex].id);
-        }
+        function toggleFavoriteCurrent() { toggleFavorite(allSongs[currentIndex].id); }
 
         function updateFavBtnStatus(id) {
             const isFav = favorites.includes(id);
@@ -244,7 +243,6 @@
             renderPlaylist();
         }
 
-        // CONTROLS
         function togglePlay() { player.paused ? play() : pause(); }
         function play() { player.play(); playIcon.className = "fas fa-pause"; disk.style.animationPlayState = "running"; }
         function pause() { player.pause(); playIcon.className = "fas fa-play ml-1"; disk.style.animationPlayState = "paused"; }
