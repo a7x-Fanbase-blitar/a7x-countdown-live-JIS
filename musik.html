@@ -10,10 +10,8 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap');
         :root { --glass: rgba(255, 255, 255, 0.05); --glass-border: rgba(255, 255, 255, 0.15); }
-        /* Background diubah menjadi Hitam Murni */
         body { background: #000; font-family: 'Inter', sans-serif; overflow-x: hidden; color: #fff; height: 100vh; }
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        /* Menghilangkan gradasi lingkaran agar hanya hitam dan bara api */
         #particles-js { position: fixed; width: 100%; height: 100%; z-index: 0; background: #000; }
         .glass-panel { background: rgba(18, 18, 18, 0.5); backdrop-filter: blur(40px); border: 1px solid var(--glass-border); border-radius: 32px; }
         .sidebar-glass { background: rgba(8, 8, 8, 0.4); backdrop-filter: blur(20px); border-right: 1px solid var(--glass-border); }
@@ -28,11 +26,10 @@
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .tab-active { color: #ef4444; border-bottom: 2px solid #ef4444; }
         
-        /* Memperbesar tombol menu HP */
         .mobile-menu-btn { 
             position: fixed; top: 1.5rem; left: 1.5rem; z-index: 100;
             width: 55px; height: 55px; background: rgba(220, 38, 38, 0.8); 
-            border-radius: 15px; display: flex; items-center: center; justify-content: center;
+            border-radius: 15px; display: flex; align-items: center; justify-content: center;
             box-shadow: 0 0 15px rgba(220, 38, 38, 0.5); border: 1px solid rgba(255,255,255,0.2);
         }
 
@@ -46,7 +43,6 @@
     <div id="particles-js"></div>
     <canvas id="visualizer"></canvas>
     
-    <!-- Tombol Menu HP yang lebih besar -->
     <button onclick="toggleSidebar()" class="lg:hidden mobile-menu-btn">
         <i class="fas fa-bars text-white text-2xl"></i>
     </button>
@@ -88,7 +84,6 @@
         </div>
     </div>
 
-    <!-- Player Controls -->
     <div class="fixed bottom-0 left-0 right-0 glass-panel !rounded-none border-t border-white/10 p-4 md:p-6 z-50">
         <div class="max-w-7xl mx-auto flex items-center gap-4">
             <div class="hidden sm:flex items-center w-1/4">
@@ -114,36 +109,28 @@
     <script>
         const GITHUB_USER = "a7x-Fanbase-blitar";
         const GITHUB_REPO = "aset-music";
-        let allSongs = [], favorites = JSON.parse(localStorage.getItem('a7x_favs')) || [], currentIndex = 0, currentTab = 'all';
+        let allSongs = [], favorites = JSON.parse(localStorage.getItem('a7x_favs')) || [], currentTab = 'all';
         const player = document.getElementById('audioPlayer');
 
         let audioCtx, analyser, source, canvas, ctx, bassFilter, midFilter, trebleFilter;
         
-        // Perbaikan Inisialisasi Audio
         function initAudio() {
             if (audioCtx) {
                 if (audioCtx.state === 'suspended') audioCtx.resume();
                 return;
             }
-            
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             analyser = audioCtx.createAnalyser();
             analyser.fftSize = 256; 
-
             source = audioCtx.createMediaElementSource(player);
-            
-            // Equalizer Nodes
             bassFilter = audioCtx.createBiquadFilter(); bassFilter.type = "lowshelf"; bassFilter.frequency.value = 200;
             midFilter = audioCtx.createBiquadFilter(); midFilter.type = "peaking"; midFilter.frequency.value = 1000; midFilter.Q.value = 1;
             trebleFilter = audioCtx.createBiquadFilter(); trebleFilter.type = "highshelf"; trebleFilter.frequency.value = 3000;
-            
-            // Routing: Source -> EQ -> Analyser -> Destination
             source.connect(bassFilter);
             bassFilter.connect(midFilter);
             midFilter.connect(trebleFilter);
             trebleFilter.connect(analyser);
             analyser.connect(audioCtx.destination);
-            
             canvas = document.getElementById("visualizer"); 
             ctx = canvas.getContext("2d");
             drawVisualizer();
@@ -154,11 +141,9 @@
             const bufferLength = analyser.frequencyBinCount;
             const dataArray = new Uint8Array(bufferLength);
             analyser.getByteFrequencyData(dataArray);
-            
             canvas.width = window.innerWidth;
             const cHeight = canvas.height; 
             ctx.clearRect(0, 0, canvas.width, cHeight);
-            
             const barWidth = (canvas.width / bufferLength) * 2.5;
             let x = 0;
             for(let i = 0; i < bufferLength; i++) {
@@ -179,7 +164,10 @@
                 const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/`);
                 const files = await res.json();
                 allSongs = files.filter(f => f.name.endsWith('.mp3')).map(f => ({
-                    id: f.sha, title: f.name.replace('.mp3', '').replace(/-/g, ' '), url: `https://cdn.jsdelivr.net/gh/${GITHUB_USER}/${GITHUB_REPO}/${f.name}`
+                    id: f.sha, 
+                    fileName: f.name,
+                    title: f.name.replace('.mp3', '').replace(/-/g, ' '), 
+                    url: `https://cdn.jsdelivr.net/gh/${GITHUB_USER}/${GITHUB_REPO}/${f.name}`
                 }));
                 renderPlaylist();
                 if(allSongs.length > 0) loadSong(allSongs[0].url, false);
@@ -189,21 +177,32 @@
         function renderPlaylist() {
             const container = document.getElementById('playlistContainer');
             const list = currentTab === 'all' ? allSongs : allSongs.filter(s => favorites.includes(s.id));
-            container.innerHTML = list.map((s) => `
-                <div onclick="loadSong('${s.url}', true)" class="flex items-center p-3 mb-2 cursor-pointer transition hover:bg-white/5 ${player.src === s.url ? 'active-song' : ''}">
+            container.innerHTML = "";
+            
+            list.forEach((s) => {
+                const isFav = favorites.includes(s.id);
+                // Deteksi lagu aktif berdasarkan ID sha agar lebih akurat dibanding URL string
+                const isActive = player.src.includes(encodeURIComponent(s.fileName)) || player.src.includes(s.fileName);
+                
+                const div = document.createElement('div');
+                div.className = `flex items-center p-3 mb-2 cursor-pointer transition hover:bg-white/5 ${isActive ? 'active-song' : ''}`;
+                div.onclick = () => loadSong(s.url, true);
+                div.innerHTML = `
                     <img src="https://raw.githubusercontent.com/a7x-Fanbase-blitar/a7x-countdown-live-JIS/main/a7xblitar.png" class="w-10 h-10 rounded-lg mr-3">
-                    <div class="flex-1 truncate"><p class="text-sm font-bold text-white truncate text-left">${s.title}</p><p class="text-[10px] text-zinc-500 text-left">Avenged Sevenfold</p></div>
-                    <i class="${favorites.includes(s.id) ? 'fas text-red-500' : 'far text-zinc-700'} fa-heart text-xs"></i>
-                </div>`).join('');
+                    <div class="flex-1 truncate text-left"><p class="text-sm font-bold text-white truncate">${s.title}</p><p class="text-[10px] text-zinc-500">Avenged Sevenfold</p></div>
+                    <i class="${isFav ? 'fas text-red-500' : 'far text-zinc-700'} fa-heart text-xs"></i>
+                `;
+                container.appendChild(div);
+            });
         }
 
         function loadSong(url, auto) {
-            const song = allSongs.find(s => s.url === url);
+            const song = allSongs.find(s => url.includes(s.fileName));
             if(!song) return;
             player.src = url;
             document.getElementById('songTitle').innerText = song.title;
             document.getElementById('miniTitle').innerText = song.title;
-            document.getElementById('waRequest').href = `https://wa.me/6281234567890?text=Request:%20${song.title}`;
+            document.getElementById('waRequest').href = `https://wa.me/628175118886?text=Request:%20${song.title}`;
             updateFavBtnStatus(song.id);
             renderPlaylist();
             if(auto) { initAudio(); play(); }
@@ -216,7 +215,7 @@
         }
 
         function play() { 
-            player.play().catch(e => console.log("User interaction needed")); 
+            player.play().catch(e => console.log("Play failed")); 
             document.getElementById('playIcon').className = "fas fa-pause"; 
             document.getElementById('diskCover').classList.remove('paused'); 
         }
@@ -229,29 +228,40 @@
         
         function next() {
             const list = currentTab === 'all' ? allSongs : allSongs.filter(s => favorites.includes(s.id));
-            let idx = list.findIndex(s => s.url === player.src);
+            let idx = list.findIndex(s => player.src.includes(s.fileName));
             const nextIdx = (idx + 1) % list.length;
             loadSong(list[nextIdx].url, true);
         }
 
         function prev() {
             const list = currentTab === 'all' ? allSongs : allSongs.filter(s => favorites.includes(s.id));
-            let idx = list.findIndex(s => s.url === player.src);
+            let idx = list.findIndex(s => player.src.includes(s.fileName));
             const prevIdx = (idx - 1 + list.length) % list.length;
             loadSong(list[prevIdx].url, true);
         }
 
         function toggleFavoriteCurrent() {
-            const song = allSongs.find(s => s.url === player.src);
+            // Gunakan fileName untuk mencari lagu yang sedang diputar
+            const currentFileName = decodeURIComponent(player.src.split('/').pop());
+            const song = allSongs.find(s => s.fileName === currentFileName || player.src.includes(s.fileName));
+            
             if(!song) return;
-            favorites = favorites.includes(song.id) ? favorites.filter(f => f !== song.id) : [...favorites, song.id];
+            
+            const index = favorites.indexOf(song.id);
+            if (index > -1) {
+                favorites.splice(index, 1);
+            } else {
+                favorites.push(song.id);
+            }
+            
             localStorage.setItem('a7x_favs', JSON.stringify(favorites));
-            updateFavBtnStatus(song.id); renderPlaylist();
+            updateFavBtnStatus(song.id); 
+            renderPlaylist();
         }
 
         function updateFavBtnStatus(id) {
             const isFav = favorites.includes(id);
-            document.getElementById('favBtnMain').innerHTML = `<i class="${isFav ? 'fas text-red-500' : 'far text-zinc-500'} fa-heart"></i>`;
+            document.getElementById('favBtnMain').innerHTML = `<i class="${isFav ? 'fas text-red-500' : 'far fa-heart'}"></i>`;
         }
 
         function switchTab(tab) {
@@ -262,10 +272,21 @@
         }
 
         function shareSong() {
-            const song = allSongs.find(s => s.url === player.src);
+            const currentFileName = decodeURIComponent(player.src.split('/').pop());
+            const song = allSongs.find(s => s.fileName === currentFileName);
+            if(!song) return;
             const text = `Lagi dengerin "${song.title}" di Deathbat Player! 🔥`;
             if (navigator.share) navigator.share({ title: 'Deathbat Player', text: text, url: window.location.href });
             else { navigator.clipboard.writeText(text + " " + window.location.href); alert("Link disalin!"); }
+        }
+
+        function searchMusic() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const items = document.querySelectorAll('#playlistContainer > div');
+            items.forEach(item => {
+                const title = item.querySelector('p').innerText.toLowerCase();
+                item.style.display = title.includes(query) ? 'flex' : 'none';
+            });
         }
 
         player.ontimeupdate = () => {
@@ -280,7 +301,6 @@
         document.getElementById('volumeSlider').oninput = (e) => { player.volume = e.target.value/100; };
         player.onended = next;
 
-        // Background Bara Api Tanpa Garis
         particlesJS("particles-js", {
             "particles": {
                 "number": { "value": 150, "density": { "enable": true, "value_area": 800 } },
