@@ -10,9 +10,11 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap');
         :root { --glass: rgba(255, 255, 255, 0.05); --glass-border: rgba(255, 255, 255, 0.15); }
+        /* Background diubah menjadi Hitam Murni */
         body { background: #000; font-family: 'Inter', sans-serif; overflow-x: hidden; color: #fff; height: 100vh; }
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        #particles-js { position: fixed; width: 100%; height: 100%; z-index: 0; background: radial-gradient(circle at center, #220000 0%, #000 100%); }
+        /* Menghilangkan gradasi lingkaran agar hanya hitam dan bara api */
+        #particles-js { position: fixed; width: 100%; height: 100%; z-index: 0; background: #000; }
         .glass-panel { background: rgba(18, 18, 18, 0.5); backdrop-filter: blur(40px); border: 1px solid var(--glass-border); border-radius: 32px; }
         .sidebar-glass { background: rgba(8, 8, 8, 0.4); backdrop-filter: blur(20px); border-right: 1px solid var(--glass-border); }
         .active-song { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 16px; }
@@ -25,8 +27,17 @@
         .paused { animation-play-state: paused; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .tab-active { color: #ef4444; border-bottom: 2px solid #ef4444; }
+        
+        /* Memperbesar tombol menu HP */
+        .mobile-menu-btn { 
+            position: fixed; top: 1.5rem; left: 1.5rem; z-index: 100;
+            width: 55px; height: 55px; background: rgba(220, 38, 38, 0.8); 
+            border-radius: 15px; display: flex; items-center: center; justify-content: center;
+            box-shadow: 0 0 15px rgba(220, 38, 38, 0.5); border: 1px solid rgba(255,255,255,0.2);
+        }
+
         @media (max-width: 1024px) {
-            .sidebar-glass { position: absolute; width: 100%; height: 100%; z-index: 40; transform: translateX(-100%); transition: 0.3s; }
+            .sidebar-glass { position: absolute; width: 100%; height: 100%; z-index: 90; transform: translateX(-100%); transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
             .sidebar-open { transform: translateX(0); }
         }
     </style>
@@ -34,7 +45,11 @@
 <body>
     <div id="particles-js"></div>
     <canvas id="visualizer"></canvas>
-    <button onclick="toggleSidebar()" class="lg:hidden fixed top-5 left-5 z-[50] w-10 h-10 bg-white/10 rounded-full flex items-center justify-center border border-white/20"><i class="fas fa-bars text-white"></i></button>
+    
+    <!-- Tombol Menu HP yang lebih besar -->
+    <button onclick="toggleSidebar()" class="lg:hidden mobile-menu-btn">
+        <i class="fas fa-bars text-white text-2xl"></i>
+    </button>
 
     <div class="relative z-10 flex h-screen overflow-hidden">
         <div id="sidebar" class="w-80 sidebar-glass flex flex-col lg:flex">
@@ -73,6 +88,7 @@
         </div>
     </div>
 
+    <!-- Player Controls -->
     <div class="fixed bottom-0 left-0 right-0 glass-panel !rounded-none border-t border-white/10 p-4 md:p-6 z-50">
         <div class="max-w-7xl mx-auto flex items-center gap-4">
             <div class="hidden sm:flex items-center w-1/4">
@@ -102,44 +118,72 @@
         const player = document.getElementById('audioPlayer');
 
         let audioCtx, analyser, source, canvas, ctx, bassFilter, midFilter, trebleFilter;
+        
+        // Perbaikan Inisialisasi Audio
         function initAudio() {
-            if (audioCtx) return;
+            if (audioCtx) {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                return;
+            }
+            
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 256; 
+
             source = audioCtx.createMediaElementSource(player);
+            
+            // Equalizer Nodes
             bassFilter = audioCtx.createBiquadFilter(); bassFilter.type = "lowshelf"; bassFilter.frequency.value = 200;
             midFilter = audioCtx.createBiquadFilter(); midFilter.type = "peaking"; midFilter.frequency.value = 1000; midFilter.Q.value = 1;
             trebleFilter = audioCtx.createBiquadFilter(); trebleFilter.type = "highshelf"; trebleFilter.frequency.value = 3000;
-            source.connect(bassFilter); bassFilter.connect(midFilter); midFilter.connect(trebleFilter); trebleFilter.connect(analyser); analyser.connect(audioCtx.destination);
-            canvas = document.getElementById("visualizer"); ctx = canvas.getContext("2d");
+            
+            // Routing: Source -> EQ -> Analyser -> Destination
+            source.connect(bassFilter);
+            bassFilter.connect(midFilter);
+            midFilter.connect(trebleFilter);
+            trebleFilter.connect(analyser);
+            analyser.connect(audioCtx.destination);
+            
+            canvas = document.getElementById("visualizer"); 
+            ctx = canvas.getContext("2d");
             drawVisualizer();
         }
 
         function drawVisualizer() {
             requestAnimationFrame(drawVisualizer);
-            const dataArray = new Uint8Array(analyser.frequencyBinCount);
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
             analyser.getByteFrequencyData(dataArray);
+            
             canvas.width = window.innerWidth;
-            const cHeight = canvas.height; ctx.clearRect(0, 0, canvas.width, cHeight);
-            const barWidth = (canvas.width / 128) * 2.2;
+            const cHeight = canvas.height; 
+            ctx.clearRect(0, 0, canvas.width, cHeight);
+            
+            const barWidth = (canvas.width / bufferLength) * 2.5;
             let x = 0;
-            for(let i = 0; i < 128; i++) {
+            for(let i = 0; i < bufferLength; i++) {
                 let barHeight = (dataArray[i] / 255) * cHeight;
                 const grad = ctx.createLinearGradient(0, cHeight, 0, cHeight - barHeight);
-                grad.addColorStop(0, 'rgba(185, 28, 28, 0.9)'); grad.addColorStop(1, 'rgba(249, 115, 22, 0.5)');
-                ctx.fillStyle = grad; ctx.fillRect(x, cHeight - barHeight, barWidth, barHeight); x += barWidth + 1;
+                grad.addColorStop(0, 'rgba(185, 28, 28, 0.8)'); 
+                grad.addColorStop(1, 'rgba(249, 115, 22, 0.4)');
+                ctx.fillStyle = grad; 
+                ctx.fillRect(x, cHeight - barHeight, barWidth, barHeight); 
+                x += barWidth + 1;
             }
         }
 
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('sidebar-open'); }
+        
         async function fetchMusic() {
-            const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/`);
-            const files = await res.json();
-            allSongs = files.filter(f => f.name.endsWith('.mp3')).map(f => ({
-                id: f.sha, title: f.name.replace('.mp3', '').replace(/-/g, ' '), url: `https://cdn.jsdelivr.net/gh/${GITHUB_USER}/${GITHUB_REPO}/${f.name}`
-            }));
-            renderPlaylist();
-            if(allSongs.length > 0) loadSong(allSongs[0].url, false);
+            try {
+                const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/`);
+                const files = await res.json();
+                allSongs = files.filter(f => f.name.endsWith('.mp3')).map(f => ({
+                    id: f.sha, title: f.name.replace('.mp3', '').replace(/-/g, ' '), url: `https://cdn.jsdelivr.net/gh/${GITHUB_USER}/${GITHUB_REPO}/${f.name}`
+                }));
+                renderPlaylist();
+                if(allSongs.length > 0) loadSong(allSongs[0].url, false);
+            } catch (e) { console.error("Gagal ambil lagu", e); }
         }
 
         function renderPlaylist() {
@@ -162,22 +206,34 @@
             document.getElementById('waRequest').href = `https://wa.me/6281234567890?text=Request:%20${song.title}`;
             updateFavBtnStatus(song.id);
             renderPlaylist();
-            if(auto) play();
+            if(auto) { initAudio(); play(); }
             if(window.innerWidth < 1024) document.getElementById('sidebar').classList.remove('sidebar-open');
         }
 
-        function togglePlay() { initAudio(); if(audioCtx.state === 'suspended') audioCtx.resume(); player.paused ? play() : pause(); }
-        function play() { player.play(); document.getElementById('playIcon').className = "fas fa-pause"; document.getElementById('diskCover').classList.remove('paused'); }
-        function pause() { player.pause(); document.getElementById('playIcon').className = "fas fa-play ml-1"; document.getElementById('diskCover').classList.add('paused'); }
+        function togglePlay() { 
+            initAudio(); 
+            player.paused ? play() : pause(); 
+        }
+
+        function play() { 
+            player.play().catch(e => console.log("User interaction needed")); 
+            document.getElementById('playIcon').className = "fas fa-pause"; 
+            document.getElementById('diskCover').classList.remove('paused'); 
+        }
+
+        function pause() { 
+            player.pause(); 
+            document.getElementById('playIcon').className = "fas fa-play ml-1"; 
+            document.getElementById('diskCover').classList.add('paused'); 
+        }
         
-        // LOGIKA NEXT/PREV BERDASARKAN TAB AKTIF
         function next() {
             const list = currentTab === 'all' ? allSongs : allSongs.filter(s => favorites.includes(s.id));
             let idx = list.findIndex(s => s.url === player.src);
-            if(idx === -1) idx = -1;
             const nextIdx = (idx + 1) % list.length;
             loadSong(list[nextIdx].url, true);
         }
+
         function prev() {
             const list = currentTab === 'all' ? allSongs : allSongs.filter(s => favorites.includes(s.id));
             let idx = list.findIndex(s => s.url === player.src);
@@ -219,24 +275,27 @@
             document.getElementById('currentTime').innerText = fmt(player.currentTime);
             document.getElementById('durationTime').innerText = fmt(player.duration);
         };
+
         document.getElementById('progressBar').oninput = (e) => { player.currentTime = (e.target.value/100)*player.duration; };
         document.getElementById('volumeSlider').oninput = (e) => { player.volume = e.target.value/100; };
         player.onended = next;
 
-        // ANIMASI PERCIKAN BARA API
+        // Background Bara Api Tanpa Garis
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 120, "density": { "enable": true, "value_area": 800 } },
+                "number": { "value": 150, "density": { "enable": true, "value_area": 800 } },
                 "color": { "value": ["#ff4400", "#ffcc00", "#ff0000"] },
                 "shape": { "type": "circle" },
-                "opacity": { "value": 0.6, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1 } },
+                "opacity": { "value": 0.8, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1 } },
                 "size": { "value": 3, "random": true, "anim": { "enable": true, "speed": 4, "size_min": 0.5 } },
-                "move": { "enable": true, "speed": 4, "direction": "top", "random": true, "straight": false, "out_mode": "out" }
+                "move": { "enable": true, "speed": 5, "direction": "top", "random": true, "straight": false, "out_mode": "out" }
             }
         });
+
         document.getElementById('bassGain').oninput = (e) => { if(bassFilter) bassFilter.gain.value = e.target.value; };
         document.getElementById('midGain').oninput = (e) => { if(midFilter) midFilter.gain.value = e.target.value; };
         document.getElementById('trebleGain').oninput = (e) => { if(trebleFilter) trebleFilter.gain.value = e.target.value; };
+        
         fetchMusic();
     </script>
 </body>
