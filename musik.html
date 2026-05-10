@@ -10,21 +10,35 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap');
         :root { --glass: rgba(255, 255, 255, 0.05); --glass-border: rgba(255, 255, 255, 0.15); }
-        body { background: #000; font-family: 'Inter', sans-serif; overflow-x: hidden; color: #fff; height: 100vh; }
+        body { 
+            background: #000; 
+            /* Tambahan Background Image */
+            background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1514525253361-bee8718a34e1?q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden; 
+            color: #fff; 
+            height: 100vh; 
+        }
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        #particles-js { position: fixed; width: 100%; height: 100%; z-index: 0; background: #000; }
-        .glass-panel { background: rgba(18, 18, 18, 0.5); backdrop-filter: blur(40px); border: 1px solid var(--glass-border); border-radius: 32px; }
-        .sidebar-glass { background: rgba(8, 8, 8, 0.4); backdrop-filter: blur(20px); border-right: 1px solid var(--glass-border); }
+        #particles-js { position: fixed; width: 100%; height: 100%; z-index: 0; }
+        .glass-panel { background: rgba(18, 18, 18, 0.7); backdrop-filter: blur(40px); border: 1px solid var(--glass-border); border-radius: 32px; }
+        .sidebar-glass { background: rgba(8, 8, 8, 0.6); backdrop-filter: blur(20px); border-right: 1px solid var(--glass-border); }
         .active-song { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 16px; }
         input[type="range"] { -webkit-appearance: none; background: rgba(255,255,255,0.08); height: 4px; border-radius: 2px; outline: none; }
-        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: #fff; border-radius: 50%; cursor: pointer; border: 2px solid #000; }
-        .eq-slider { transform: rotate(-90deg); width: 80px !important; height: 4px; margin: 30px -25px; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: #ef4444; border-radius: 50%; cursor: pointer; border: 2px solid #000; }
+        
+        /* EQ Slider Styling */
+        .eq-slider { transform: rotate(-90deg); width: 60px !important; height: 4px; margin: 25px -20px; }
+        
         #visualizer { position: absolute; bottom: 0; left: 0; width: 100%; height: 55vh; z-index: 1; pointer-events: none; opacity: 0.8; }
         .btn-request { background: linear-gradient(90deg, #dc2626, #f97316); box-shadow: 0 5px 20px rgba(239, 68, 68, 0.4); }
         .spin { animation: spin 20s linear infinite; }
         .paused { animation-play-state: paused; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .tab-active { color: #ef4444; border-bottom: 2px solid #ef4444; }
+        .btn-active { color: #ef4444 !important; }
         
         .mobile-menu-btn { 
             position: fixed; top: 1.5rem; left: 1.5rem; z-index: 100;
@@ -55,13 +69,18 @@
                     <h1 class="text-2xl font-orbitron font-black text-white">DEATHBAT</h1>
                 </div>
                 <a id="waRequest" href="#" target="_blank" class="btn-request flex items-center justify-center gap-3 text-white text-xs font-bold py-4 rounded-2xl mb-8 transition hover:scale-105"><i class="fab fa-whatsapp text-xl"></i> REQUEST LAGU</a>
+                
+                <!-- Expanded 5-Band Equalizer -->
                 <div class="glass-panel p-4 mb-6 border border-white/5">
-                    <div class="flex justify-around items-center h-24">
-                        <div class="flex flex-col items-center"><input type="range" id="bassGain" min="-10" max="10" value="0" class="eq-slider"><span class="text-[9px] mt-10 text-zinc-400">BASS</span></div>
-                        <div class="flex flex-col items-center"><input type="range" id="midGain" min="-10" max="10" value="0" class="eq-slider"><span class="text-[9px] mt-10 text-zinc-400">MID</span></div>
-                        <div class="flex flex-col items-center"><input type="range" id="trebleGain" min="-10" max="10" value="0" class="eq-slider"><span class="text-[9px] mt-10 text-zinc-400">TREB</span></div>
+                    <div class="flex justify-between items-center h-28 px-1">
+                        <div class="flex flex-col items-center"><input type="range" id="eq-60" min="-12" max="12" value="0" class="eq-slider"><span class="text-[8px] mt-10 text-zinc-400 uppercase">60Hz</span></div>
+                        <div class="flex flex-col items-center"><input type="range" id="eq-310" min="-12" max="12" value="0" class="eq-slider"><span class="text-[8px] mt-10 text-zinc-400 uppercase">310Hz</span></div>
+                        <div class="flex flex-col items-center"><input type="range" id="eq-1k" min="-12" max="12" value="0" class="eq-slider"><span class="text-[8px] mt-10 text-zinc-400 uppercase">1kHz</span></div>
+                        <div class="flex flex-col items-center"><input type="range" id="eq-6k" min="-12" max="12" value="0" class="eq-slider"><span class="text-[8px] mt-10 text-zinc-400 uppercase">6kHz</span></div>
+                        <div class="flex flex-col items-center"><input type="range" id="eq-14k" min="-12" max="12" value="0" class="eq-slider"><span class="text-[8px] mt-10 text-zinc-400 uppercase">14kHz</span></div>
                     </div>
                 </div>
+
                 <div class="flex space-x-6 text-[11px] font-bold uppercase tracking-widest mb-6 border-b border-white/5">
                     <button onclick="switchTab('all')" id="tab-all" class="pb-2 tab-active transition">Semua</button>
                     <button onclick="switchTab('fav')" id="tab-fav" class="pb-2 text-zinc-500 hover:text-white transition">Favorit</button>
@@ -92,9 +111,13 @@
             </div>
             <div class="flex-1 flex flex-col items-center">
                 <div class="flex items-center gap-6 md:gap-10 mb-2">
+                    <!-- Added Repeat Button -->
+                    <button onclick="toggleRepeat()" id="repeatBtn" class="text-zinc-500 hover:text-white transition text-lg"><i class="fas fa-redo-alt"></i></button>
                     <button onclick="prev()" class="text-white hover:text-red-500 transition text-xl"><i class="fas fa-step-backward"></i></button>
                     <button onclick="togglePlay()" class="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center transition hover:scale-110 shadow-xl"><i id="playIcon" class="fas fa-play ml-1 text-lg"></i></button>
                     <button onclick="next()" class="text-white hover:text-red-500 transition text-xl"><i class="fas fa-step-forward"></i></button>
+                    <!-- Visual Shuffle Indicator (Always ON by request) -->
+                    <button class="text-red-500 transition text-lg cursor-default"><i class="fas fa-random"></i></button>
                 </div>
                 <div class="w-full flex items-center gap-3 text-[9px] font-mono text-zinc-500">
                     <span id="currentTime">0:00</span><input type="range" id="progressBar" value="0" class="flex-1"><span id="durationTime">0:00</span>
@@ -110,9 +133,10 @@
         const GITHUB_USER = "a7x-Fanbase-blitar";
         const GITHUB_REPO = "aset-music";
         let allSongs = [], favorites = JSON.parse(localStorage.getItem('a7x_favs')) || [], currentTab = 'all';
+        let isRepeat = false;
         const player = document.getElementById('audioPlayer');
 
-        let audioCtx, analyser, source, canvas, ctx, bassFilter, midFilter, trebleFilter;
+        let audioCtx, analyser, source, canvas, ctx, eqNodes = {};
         
         function initAudio() {
             if (audioCtx) {
@@ -123,13 +147,23 @@
             analyser = audioCtx.createAnalyser();
             analyser.fftSize = 256; 
             source = audioCtx.createMediaElementSource(player);
-            bassFilter = audioCtx.createBiquadFilter(); bassFilter.type = "lowshelf"; bassFilter.frequency.value = 200;
-            midFilter = audioCtx.createBiquadFilter(); midFilter.type = "peaking"; midFilter.frequency.value = 1000; midFilter.Q.value = 1;
-            trebleFilter = audioCtx.createBiquadFilter(); trebleFilter.type = "highshelf"; trebleFilter.frequency.value = 3000;
-            source.connect(bassFilter);
-            bassFilter.connect(midFilter);
-            midFilter.connect(trebleFilter);
-            trebleFilter.connect(analyser);
+
+            // Professional 5-Band EQ
+            const freqs = [60, 310, 1000, 6000, 14000];
+            let lastNode = source;
+
+            freqs.forEach(freq => {
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = (freq <= 60) ? "lowshelf" : (freq >= 14000) ? "highshelf" : "peaking";
+                filter.frequency.value = freq;
+                filter.Q.value = 1;
+                filter.gain.value = 0;
+                lastNode.connect(filter);
+                lastNode = filter;
+                eqNodes[freq] = filter;
+            });
+
+            lastNode.connect(analyser);
             analyser.connect(audioCtx.destination);
             canvas = document.getElementById("visualizer"); 
             ctx = canvas.getContext("2d");
@@ -181,7 +215,6 @@
             
             list.forEach((s) => {
                 const isFav = favorites.includes(s.id);
-                // Deteksi lagu aktif berdasarkan ID sha agar lebih akurat dibanding URL string
                 const isActive = player.src.includes(encodeURIComponent(s.fileName)) || player.src.includes(s.fileName);
                 
                 const div = document.createElement('div');
@@ -197,7 +230,7 @@
         }
 
         function loadSong(url, auto) {
-            const song = allSongs.find(s => url.includes(s.fileName));
+            const song = allSongs.find(s => url.includes(encodeURIComponent(s.fileName)) || url.includes(s.fileName));
             if(!song) return;
             player.src = url;
             document.getElementById('songTitle').innerText = song.title;
@@ -226,34 +259,53 @@
             document.getElementById('diskCover').classList.add('paused'); 
         }
         
-        function next() {
+        function toggleRepeat() {
+            isRepeat = !isRepeat;
+            document.getElementById('repeatBtn').classList.toggle('btn-active', isRepeat);
+        }
+
+        function shuffleNext() {
+            if (isRepeat) {
+                player.currentTime = 0;
+                play();
+                return;
+            }
             const list = currentTab === 'all' ? allSongs : allSongs.filter(s => favorites.includes(s.id));
-            let idx = list.findIndex(s => player.src.includes(s.fileName));
-            const nextIdx = (idx + 1) % list.length;
+            if (list.length === 0) return;
+            
+            // Logika Shuffle: Pilih index random yang berbeda dari lagu sekarang
+            let currentFileName = decodeURIComponent(player.src.split('/').pop());
+            let currentIdx = list.findIndex(s => s.fileName === currentFileName);
+            
+            let nextIdx;
+            if (list.length > 1) {
+                do {
+                    nextIdx = Math.floor(Math.random() * list.length);
+                } while (nextIdx === currentIdx);
+            } else {
+                nextIdx = 0;
+            }
+            
             loadSong(list[nextIdx].url, true);
         }
 
+        function next() { shuffleNext(); }
+
         function prev() {
             const list = currentTab === 'all' ? allSongs : allSongs.filter(s => favorites.includes(s.id));
+            if (list.length === 0) return;
             let idx = list.findIndex(s => player.src.includes(s.fileName));
             const prevIdx = (idx - 1 + list.length) % list.length;
             loadSong(list[prevIdx].url, true);
         }
 
         function toggleFavoriteCurrent() {
-            // Gunakan fileName untuk mencari lagu yang sedang diputar
             const currentFileName = decodeURIComponent(player.src.split('/').pop());
             const song = allSongs.find(s => s.fileName === currentFileName || player.src.includes(s.fileName));
-            
             if(!song) return;
-            
             const index = favorites.indexOf(song.id);
-            if (index > -1) {
-                favorites.splice(index, 1);
-            } else {
-                favorites.push(song.id);
-            }
-            
+            if (index > -1) { favorites.splice(index, 1); } 
+            else { favorites.push(song.id); }
             localStorage.setItem('a7x_favs', JSON.stringify(favorites));
             updateFavBtnStatus(song.id); 
             renderPlaylist();
@@ -299,22 +351,27 @@
 
         document.getElementById('progressBar').oninput = (e) => { player.currentTime = (e.target.value/100)*player.duration; };
         document.getElementById('volumeSlider').oninput = (e) => { player.volume = e.target.value/100; };
-        player.onended = next;
+        
+        // AUTO SHUFFLE ON END
+        player.onended = shuffleNext;
 
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 150, "density": { "enable": true, "value_area": 800 } },
+                "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
                 "color": { "value": ["#ff4400", "#ffcc00", "#ff0000"] },
                 "shape": { "type": "circle" },
-                "opacity": { "value": 0.8, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1 } },
-                "size": { "value": 3, "random": true, "anim": { "enable": true, "speed": 4, "size_min": 0.5 } },
-                "move": { "enable": true, "speed": 5, "direction": "top", "random": true, "straight": false, "out_mode": "out" }
+                "opacity": { "value": 0.5, "random": true },
+                "size": { "value": 2, "random": true },
+                "move": { "enable": true, "speed": 3, "direction": "top", "random": true, "out_mode": "out" }
             }
         });
 
-        document.getElementById('bassGain').oninput = (e) => { if(bassFilter) bassFilter.gain.value = e.target.value; };
-        document.getElementById('midGain').oninput = (e) => { if(midFilter) midFilter.gain.value = e.target.value; };
-        document.getElementById('trebleGain').oninput = (e) => { if(trebleFilter) trebleFilter.gain.value = e.target.value; };
+        // EQ Listeners
+        document.getElementById('eq-60').oninput = (e) => { if(eqNodes[60]) eqNodes[60].gain.value = e.target.value; };
+        document.getElementById('eq-310').oninput = (e) => { if(eqNodes[310]) eqNodes[310].gain.value = e.target.value; };
+        document.getElementById('eq-1k').oninput = (e) => { if(eqNodes[1000]) eqNodes[1000].gain.value = e.target.value; };
+        document.getElementById('eq-6k').oninput = (e) => { if(eqNodes[6000]) eqNodes[6000].gain.value = e.target.value; };
+        document.getElementById('eq-14k').oninput = (e) => { if(eqNodes[14000]) eqNodes[14000].gain.value = e.target.value; };
         
         fetchMusic();
     </script>
