@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A7X BLITAR | TRIVIA SYSTEM v3.0</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=Metal+Mania&display=swap" rel="stylesheet">
-    
     <style>
         :root {
             --neon-red: #ff0000;
@@ -13,14 +12,10 @@
             --panel-bg: rgba(0, 0, 0, 0.92);
             --border-glow: 1px solid rgba(255, 0, 0, 0.4);
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             background-color: #0a0a0a;
-            /* Pastikan file wood.jpg tersedia atau gunakan URL Unsplash jika ingin online */
-            background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.9)), 
-                              url('wood.jpg!d');
+            background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.9)), url('wood.jpg!d');
             background-size: cover;
             background-attachment: fixed;
             color: #fff;
@@ -28,125 +23,26 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
-
-        /* Responsive Header */
-        header { padding: clamp(20px, 8vh, 45px) 20px; text-align: center; }
-
-        .glitch-text {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(1.8rem, 8vw, 3.5rem);
-            font-weight: 900;
-            color: #fff;
-            text-transform: uppercase;
-            text-shadow: 0 0 10px var(--neon-red);
-            animation: shadow-glitch 2s infinite;
-            line-height: 1.2;
-        }
-
-        @keyframes shadow-glitch {
-            0% { text-shadow: 3px 3px var(--neon-red), -3px -3px #000; }
-            50% { text-shadow: -3px 3px var(--neon-red), 3px -3px #444; }
-            100% { text-shadow: 3px -3px var(--neon-red), -3px 3px #000; }
-        }
-
-        .metal-subtitle {
-            font-family: 'Metal Mania', cursive;
-            color: var(--neon-red);
-            font-size: clamp(1rem, 4vw, 1.6rem);
-            letter-spacing: 5px;
-            margin-top: 5px;
-            text-transform: uppercase;
-        }
-
-        /* Layout Grid Responsive */
-        .main-container {
-            display: grid;
-            grid-template-columns: 1fr 1.6fr;
-            gap: 20px;
-            width: 95%;
-            max-width: 1200px;
-            margin: 0 auto 30px auto;
-        }
-
-        /* Tablet & Mobile Layout */
-        @media (max-width: 900px) {
-            .main-container {
-                grid-template-columns: 1fr; /* Stack panel ke bawah */
-            }
-            .main-container aside {
-                order: 2; /* Leaderboard pindah ke bawah di HP */
-            }
-            .main-container main {
-                order: 1; /* Kuis tetap di atas di HP */
-            }
-        }
-
-        .panel {
-            background: var(--panel-bg);
-            border: var(--border-glow);
-            border-radius: 20px;
-            padding: clamp(20px, 4vw, 35px);
-            backdrop-filter: blur(15px);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.7);
-            height: fit-content;
-        }
-
-        .panel-header {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--neon-red);
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-            border-left: 5px solid var(--neon-red);
-            padding-left: 15px;
-        }
-
-        .btn-metal {
-            width: 100%; padding: 18px;
-            background: linear-gradient(45deg, #8b0000, #ff0000);
-            color: #fff; border: none; border-radius: 12px;
-            font-family: 'Orbitron', sans-serif; font-weight: 900;
-            cursor: pointer; transition: 0.3s; text-transform: uppercase;
-            font-size: 0.9rem;
-        }
-
+        header { padding: 45px 20px; text-align: center; }
+        .glitch-text { font-family: 'Orbitron', sans-serif; font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 900; text-shadow: 0 0 10px var(--neon-red); animation: shadow-glitch 2s infinite; text-transform: uppercase; }
+        @keyframes shadow-glitch { 0% { text-shadow: 3px 3px var(--neon-red), -3px -3px #000; } 50% { text-shadow: -3px 3px var(--neon-red), 3px -3px #444; } 100% { text-shadow: 3px -3px var(--neon-red), -3px 3px #000; } }
+        .metal-subtitle { font-family: 'Metal Mania', cursive; color: var(--neon-red); font-size: 1.6rem; letter-spacing: 5px; margin-top: -10px; text-transform: uppercase; }
+        .main-container { display: grid; grid-template-columns: 1fr 1.6fr; gap: 30px; width: 95%; max-width: 1300px; margin: 0 auto 50px auto; }
+        .panel { background: var(--panel-bg); border: var(--border-glow); border-radius: 20px; padding: clamp(20px, 5vw, 35px); backdrop-filter: blur(15px); box-shadow: 0 10px 40px rgba(0,0,0,0.7); height: fit-content; }
+        .panel-header { font-family: 'Orbitron', sans-serif; color: var(--neon-red); font-size: 1.1rem; margin-bottom: 25px; border-left: 5px solid var(--neon-red); padding-left: 15px; }
+        .btn-metal { width: 100%; padding: 18px; background: linear-gradient(45deg, #8b0000, #ff0000); color: #fff; border: none; border-radius: 12px; font-family: 'Orbitron', sans-serif; font-weight: 900; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
         .btn-metal:hover { transform: translateY(-2px); box-shadow: 0 0 25px var(--neon-red); }
-
-        .btn-redeem {
-            background: transparent; border: 2px solid gold; color: gold;
-            padding: 15px; width: 100%; border-radius: 12px;
-            font-family: 'Orbitron'; font-weight: bold; cursor: pointer;
-            transition: 0.3s; text-transform: uppercase; margin-top: 15px;
-            font-size: 0.8rem;
-        }
-
-        .leader-item {
-            display: flex; justify-content: space-between;
-            padding: 12px 18px; background: rgba(255,255,255,0.03);
-            margin-bottom: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);
-            font-size: 0.9rem;
-        }
-
-        .option-card {
-            background: rgba(255,255,255,0.04); border: 1px solid #222;
-            padding: clamp(15px, 3vw, 20px); border-radius: 12px; margin-bottom: 12px;
-            cursor: pointer; transition: 0.2s; font-size: 1rem;
-        }
-
-        .option-card:hover { border-color: var(--neon-red); background: rgba(255,0,0,0.15); }
-
-        #timer-wrap { width: 100%; height: 6px; background: #111; margin: 15px 0; border-radius: 10px; overflow: hidden; }
+        .btn-redeem { background: transparent; border: 2px solid gold; color: gold; padding: 15px; width: 100%; border-radius: 12px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; margin-top: 15px; }
+        .btn-redeem:hover { background: gold; color: black; }
+        .leader-item { display: flex; justify-content: space-between; padding: 12px 18px; background: rgba(255,255,255,0.03); margin-bottom: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
+        .option-card { background: rgba(255,255,255,0.04); border: 1px solid #222; padding: 20px; border-radius: 12px; margin-bottom: 12px; cursor: pointer; transition: 0.2s; }
+        .option-card:hover { border-color: var(--neon-red); background: rgba(255,0,0,0.15); transform: translateX(5px); }
+        #timer-wrap { width: 100%; height: 5px; background: #111; margin: 20px 0; border-radius: 10px; overflow: hidden; }
         #timer-bar { width: 100%; height: 100%; background: var(--neon-red); transition: width 0.1s linear; }
-
-        input {
-            width: 100%; padding: 16px; margin-bottom: 12px;
-            background: #000; border: 1px solid #333; color: white; border-radius: 12px;
-            font-family: inherit; font-size: 1rem;
-        }
-
-        #q-text { font-size: clamp(1.2rem, 4vw, 1.6rem); margin-bottom: 20px; line-height: 1.4; }
-
+        input { width: 100%; padding: 18px; margin-bottom: 15px; background: #0a0a0a; border: 1px solid #333; color: white; border-radius: 12px; font-family: inherit; }
         section { display: none; }
         section.active { display: block; }
+        @media (max-width: 1000px) { .main-container { grid-template-columns: 1fr; } .main-container aside { order: 2; } .main-container main { order: 1; } }
     </style>
 </head>
 <body>
@@ -159,41 +55,37 @@
 <div class="main-container">
     <aside class="panel">
         <h3 class="panel-header">LEADERBOARD</h3>
-        <div id="leaderboard-list">
-            <p style="color:#444; text-align: center;">Fetching souls...</p>
+        <div id="leaderboard-list"><p style="color:#444; text-align: center;">Fetching souls...</p></div>
+        <div style="margin-top: 30px; border-top: 1px solid #222; padding-top: 20px;">
+            <h3 class="panel-header" style="color: gold; border-color: gold; font-size: 0.9rem;">ELITE REWARDS</h3>
+            <button class="btn-redeem" onclick="window.location.href='redem.html'">REDEEM XP POINTS</button>
         </div>
-       <div style="margin-top: 30px; border-top: 1px solid #222; padding-top: 20px;">
-    <h3 class="panel-header" style="color: gold; border-color: gold; font-size: 0.9rem;">ELITE REWARDS</h3>
-    <!-- Ganti alert menjadi window.location.href -->
-    <button class="btn-redem" onclick="window.location.href='redeem.html'">REDEEM XP POINTS</button>
-</div>
     </aside>
 
     <main class="panel">
         <section id="view-gate" class="active">
             <h3 class="panel-header">GATEKEEPER ACCESS</h3>
-            <p style="font-size: 0.9rem; color:#666; margin-bottom: 20px;">1 Mission per Day. 10 Random Questions.</p>
+            <p style="font-size: 0.9rem; color:#666; margin-bottom: 20px;">Mission: 10 Unique Questions / Day.</p>
             <input type="text" id="username" placeholder="NAMA / NICKNAME">
             <input type="email" id="useremail" placeholder="EMAIL TERDAFTAR">
             <button class="btn-metal" onclick="checkDailyLimit()">START DAILY MISSION</button>
         </section>
 
         <section id="view-quiz">
-            <div style="display: flex; justify-content: space-between; font-family: 'Orbitron'; font-size: 0.7rem; color: #555;">
+            <div style="display: flex; justify-content: space-between; font-family: 'Orbitron'; font-size: 0.75rem; color: #555;">
                 <span id="q-count">QUEST 01/10</span>
                 <span id="q-score" style="color: gold;">XP: 0</span>
             </div>
             <div id="timer-wrap"><div id="timer-bar"></div></div>
-            <h2 id="q-text">...</h2>
+            <h2 id="q-text" style="font-size: 1.5rem; margin-bottom: 25px; line-height: 1.4;">...</h2>
             <div id="options-box"></div>
         </section>
 
         <section id="view-result">
             <h3 class="panel-header">MISSION ACCOMPLISHED</h3>
-            <div style="text-align: center; padding: 20px 0;">
-                <p style="font-family:'Orbitron'; color:#444; font-size:0.8rem; margin-bottom:10px;">TOTAL XP GAINED</p>
-                <h1 id="final-points" style="font-size: clamp(4rem, 15vw, 6rem); color: var(--neon-red); line-height: 1;">0</h1>
-                <p id="sync-status" style="color: #00ff00; font-size: 0.8rem; margin: 25px 0;">DATA SYNCHRONIZED</p>
+            <div style="text-align: center; padding: 25px 0;">
+                <h1 id="final-points" style="font-size: 5.5rem; color: var(--neon-red);">0</h1>
+                <p id="sync-status" style="color: #00ff00; font-size: 0.85rem; margin-bottom: 35px;">DATA SYNCHRONIZED</p>
                 <button class="btn-metal" onclick="location.reload()">DASHBOARD</button>
             </div>
         </section>
@@ -201,65 +93,59 @@
 </div>
 
 <script>
-    // --- KONFIGURASI SCRIPT (TETAP SAMA) ---
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzO1dCvBbgm2rW0LIza2TDOAV9zWfvvMcyl4ee4gNZ9hrnINwcWzMm9HVZzOKQew97-mg/exec'; 
 
     const database50 = [
-        // Paket 1
-        { q: "Siapa vokalis utama Avenged Sevenfold?", a: ["M. Shadows", "Synyster Gates", "The Rev", "Zacky Vengeance"], c: 0 },
-        { q: "Lagu terpanjang A7X (15 menit)?", a: ["Exist", "ALPOH", "Save Me", "The Stage"], c: 0 },
-        { q: "Kota asal A7X?", a: ["Huntington Beach", "Los Angeles", "San Diego", "San Francisco"], c: 0 },
-        { q: "Album rilis tahun 2023?", a: ["Life Is But A Dream...", "The Stage", "HTTK", "Nightmare"], c: 0 },
-        { q: "Drummer di album 'Nightmare'?", a: ["Mike Portnoy", "Arin Ilejay", "Brooks Wackerman", "The Rev"], c: 0 },
-        { q: "Lagu tentang kematian The Rev?", a: ["So Far Away", "Dear God", "Buried Alive", "Fiction"], c: 0 },
-        { q: "Gitaris kidal A7X?", a: ["Zacky Vengeance", "Synyster Gates", "Johnny Christ", "M. Shadows"], c: 0 },
-        { q: "Lagu 'Afterlife' ada di album?", a: ["Self-Titled", "City of Evil", "Nightmare", "The Stage"], c: 0 },
-        { q: "Instrumen Johnny Christ?", a: ["Bass", "Gitar", "Drum", "Piano"], c: 0 },
-        { q: "Lagu A7X di Black Ops II?", a: ["Carry On", "Not Ready to Die", "Mad Hatter", "Shepherd of Fire"], c: 0 },
-        // Paket 2
-        { q: "Nama panggung James Sullivan?", a: ["The Rev", "Johnny Christ", "Zacky V", "M. Shadows"], c: 0 },
-        { q: "Tahun rilis 'City of Evil'?", a: ["2005", "2003", "2007", "2009"], c: 0 },
-        { q: "Siapa Jimmy 'The Rev' Sullivan?", a: ["Drummer", "Vokalis", "Gitaris", "Bassist"], c: 0 },
-        { q: "Lagu 'Dear God' bergenre?", a: ["Country Rock", "Heavy Metal", "Hardcore", "Punk"], c: 0 },
-        { q: "Nama fans A7X?", a: ["A7X Nation", "The Fallen", "Deathbat Family", "Semua Benar"], c: 3 },
-        { q: "Debut album A7X (2001)?", a: ["ST7T", "Waking the Fallen", "City of Evil", "Nightmare"], c: 0 },
-        { q: "Drummer saat ini (2026)?", a: ["Brooks Wackerman", "The Rev", "Arin Ilejay", "Mike Portnoy"], c: 0 },
-        { q: "Judul lagu instrumental di album City of Evil?", a: ["Sidewinder", "Betrayed", "The Wicked End", "M.I.A."], c: 3 },
-        { q: "Siapa Brian Haner Jr?", a: ["Synyster Gates", "M. Shadows", "Zacky V", "Johnny Christ"], c: 0 },
-        { q: "Lambang ikonik A7X?", a: ["Deathbat", "Skull", "Winged Serpent", "Pentagram"], c: 0 },
-        // Paket 3
-        { q: "Siapa produser album Life Is But A Dream...?", a: ["Joe Barresi", "Mike Elizondo", "Andy Wallace", "Rick Rubin"], c: 0 },
-        { q: "Lagu 'Acid Rain' ada di album?", a: ["Hail to the King", "Nightmare", "The Stage", "A7X"], c: 0 },
-        { q: "Siapa yang mengisi vokal di 'Fiction'?", a: ["M. Shadows & The Rev", "Syn & Zacky", "The Rev saja", "M. Shadows saja"], c: 0 },
-        { q: "Gitar signature Synyster Gates?", a: ["Schecter", "Gibson", "Fender", "Ibanez"], c: 0 },
-        { q: "Apa nama DVD City Of evil?", a: ["Live in the LBC", "All Excess", "Live at JIS", "The Stage World Tour"], c: 0 },
-        { q: "Lagu 'Warmness on the Soul' menonjolkan?", a: ["Piano", "Gitar Distorsi", "Double Pedal", "Growl"], c: 0 },
-        { q: "Personel termuda A7X?", a: ["Johnny Christ", "Synyster Gates", "Zacky V", "M. Shadows"], c: 0 },
-        { q: "Warna gitar ikonik Zacky V?", a: ["Hitam Putih", "Merah", "Emas", "Biru"], c: 0 },
-        { q: "Apa tema album The Stage?", a: ["Kecerdasan Buatan", "Cinta", "Kematian", "Perang"], c: 0 },
-        { q: "Lagu 'Beast and the Harlot' bercerita tentang?", a: ["Babylon", "Rome", "London", "Hollywood"], c: 0 },
-        // Paket 4
-        { q: "Siapa drummer di album Hail to the King?", a: ["Arin Ilejay", "Brooks Wackerman", "The Rev", "Mike Portnoy"], c: 0 },
-        { q: "Lagu 'God Hates Us' memiliki gaya?", a: ["Screamo/Metalcore", "Balada", "Classic Rock", "Country"], c: 0 },
-        { q: "Siapa 'Papa Gates'?", a: ["Ayah Synyster Gates", "Ayah M. Shadows", "Manager Band", "Produser"], c: 0 },
-        { q: "Album 'Waking the Fallen' rilis tahun?", a: ["2003", "2001", "2005", "2007"], c: 0 },
-        { q: "Lagu 'Sieze the Day' ada di album?", a: ["City of Evil", "Nightmare", "A7X", "The Stage"], c: 0 },
-        { q: "Berapa jumlah personel aktif A7X?", a: ["5", "4", "6", "3"], c: 0 },
-        { q: "Siapa yang menulis lagu ALPOH?", a: ["The Rev", "M. Shadows", "Syn Gates", "Zacky V"], c: 0 },
-        { q: "Apa judul lagu pembuka di album Nightmare?", a: ["Nightmare", "Welcome to the Family", "Buried Alive", "Danger Line"], c: 0 },
-        { q: "Lagu 'The Fight' ada di album?", a: ["Diamonds in the Rough", "A7X", "Nightmare", "City of Evil"], c: 0 },
-        { q: "Apa inspirasi nama 'Avenged Sevenfold'?", a: ["Alkitab", "Buku Sejarah", "Film Horror", "Puisi"], c: 0 },
-        // Paket 5
-        { q: "Siapa yang main biola di album City of Evil?", a: ["Musisi Tambahan", "Synyster Gates", "M. Shadows", "The Rev"], c: 0 },
-        { q: "Apa judul lagu penutup di album Self-Titled?", a: ["Dear God", "ALPOH", "Lost", "Unbound"], c: 0 },
-        { q: "Genre utama A7X saat debut?", a: ["Metalcore", "Progressive Metal", "Heavy Metal", "Hard Rock"], c: 0 },
-        { q: "Siapa bassist sebelum Johnny Christ?", a: ["Dameon Ash", "Justin Sane", "Matt Wendt", "Semua Benar"], c: 3 },
-        { q: "Lagu 'Nobody' rilis tahun?", a: ["2023", "2022", "2021", "2024"], c: 0 },
-        { q: "Apa arti '661' bagi A7X?", a: ["Kode Area", "Nomor Keberuntungan", "Tanggal Berdiri", "Jumlah Lagu"], c: 0 },
-        { q: "Lagu 'Natural Born Killer' dikenal karena?", a: ["Double Pedal Cepat", "Solo Gitar Panjang", "Vokal Melengking", "Orkestra"], c: 0 },
-        { q: "Di JIS 2024, A7X membawakan lagu 'Dear God'?", a: ["Ya", "Tidak", "Hanya Musik", "Hanya Reff"], c: 0 },
-        { q: "Lagu 'Victim' menceritakan tentang?", a: ["Kehilangan", "Politik", "Horror", "Zombi"], c: 0 },
-        { q: "Siapa yang membuat artwork Deathbat?", a: ["Micah Montague", "M. Shadows", "The Rev", "Syn Gates"], c: 0 }
+        { id: 1, q: "Siapa vokalis utama Avenged Sevenfold?", a: ["M. Shadows", "Synyster Gates", "The Rev", "Zacky Vengeance"], c: 0 },
+        { id: 2, q: "Lagu terpanjang A7X (15 menit)?", a: ["Exist", "ALPOH", "Save Me", "The Stage"], c: 0 },
+        { id: 3, q: "Kota asal A7X?", a: ["Huntington Beach", "Los Angeles", "San Diego", "San Francisco"], c: 0 },
+        { id: 4, q: "Album rilis tahun 2023?", a: ["Life Is But A Dream...", "The Stage", "HTTK", "Nightmare"], c: 0 },
+        { id: 5, q: "Drummer di album 'Nightmare'?", a: ["Mike Portnoy", "Arin Ilejay", "Brooks Wackerman", "The Rev"], c: 0 },
+        { id: 6, q: "Lagu tentang kematian The Rev?", a: ["So Far Away", "Dear God", "Buried Alive", "Fiction"], c: 0 },
+        { id: 7, q: "Gitaris kidal A7X?", a: ["Zacky Vengeance", "Synyster Gates", "Johnny Christ", "M. Shadows"], c: 0 },
+        { id: 8, q: "Lagu 'Afterlife' ada di album?", a: ["Self-Titled", "City of Evil", "Nightmare", "The Stage"], c: 0 },
+        { id: 9, q: "Instrumen Johnny Christ?", a: ["Bass", "Gitar", "Drum", "Piano"], c: 0 },
+        { id: 10, q: "Lagu A7X di Black Ops II?", a: ["Carry On", "Not Ready to Die", "Mad Hatter", "Shepherd of Fire"], c: 0 },
+        { id: 11, q: "Nama panggung James Sullivan?", a: ["The Rev", "Johnny Christ", "Zacky V", "M. Shadows"], c: 0 },
+        { id: 12, q: "Tahun rilis 'City of Evil'?", a: ["2005", "2003", "2007", "2009"], c: 0 },
+        { id: 13, q: "Siapa Jimmy 'The Rev' Sullivan?", a: ["Drummer", "Vokalis", "Gitaris", "Bassist"], c: 0 },
+        { id: 14, q: "Lagu 'Dear God' bergenre?", a: ["Country Rock", "Heavy Metal", "Hardcore", "Punk"], c: 0 },
+        { id: 15, q: "Nama fans A7X?", a: ["A7X Nation", "The Fallen", "Deathbat Family", "Semua Benar"], c: 3 },
+        { id: 16, q: "Debut album A7X (2001)?", a: ["ST7T", "Waking the Fallen", "City of Evil", "Nightmare"], c: 0 },
+        { id: 17, q: "Drummer saat ini (2026)?", a: ["Brooks Wackerman", "The Rev", "Arin Ilejay", "Mike Portnoy"], c: 0 },
+        { id: 18, q: "Judul lagu instrumental di album City of Evil?", a: ["Sidewinder", "Betrayed", "The Wicked End", "M.I.A."], c: 3 },
+        { id: 19, q: "Siapa Brian Haner Jr?", a: ["Synyster Gates", "M. Shadows", "Zacky V", "Johnny Christ"], c: 0 },
+        { id: 20, q: "Lambang ikonik A7X?", a: ["Deathbat", "Skull", "Winged Serpent", "Pentagram"], c: 0 },
+        { id: 21, q: "Siapa produser album Life Is But A Dream...?", a: ["Joe Barresi", "Mike Elizondo", "Andy Wallace", "Rick Rubin"], c: 0 },
+        { id: 22, q: "Lagu 'Acid Rain' ada di album?", a: ["Hail to the King", "Nightmare", "The Stage", "A7X"], c: 0 },
+        { id: 23, q: "Siapa yang mengisi vokal di 'Fiction'?", a: ["M. Shadows & The Rev", "Syn & Zacky", "The Rev saja", "M. Shadows saja"], c: 0 },
+        { id: 24, q: "Gitar signature Synyster Gates?", a: ["Schecter", "Gibson", "Fender", "Ibanez"], c: 0 },
+        { id: 25, q: "Apa nama DVD City Of evil?", a: ["Live in the LBC", "All Excess", "Live at JIS", "The Stage World Tour"], c: 0 },
+        { id: 26, q: "Lagu 'Warmness on the Soul' menonjolkan?", a: ["Piano", "Gitar Distorsi", "Double Pedal", "Growl"], c: 0 },
+        { id: 27, q: "Personel termuda A7X?", a: ["Johnny Christ", "Synyster Gates", "Zacky V", "M. Shadows"], c: 0 },
+        { id: 28, q: "Warna gitar ikonik Zacky V?", a: ["Hitam Putih", "Merah", "Emas", "Biru"], c: 0 },
+        { id: 29, q: "Apa tema album The Stage?", a: ["Kecerdasan Buatan", "Cinta", "Kematian", "Perang"], c: 0 },
+        { id: 30, q: "Lagu 'Beast and the Harlot' bercerita tentang?", a: ["Babylon", "Rome", "London", "Hollywood"], c: 0 },
+        { id: 31, q: "Siapa drummer di album Hail to the King?", a: ["Arin Ilejay", "Brooks Wackerman", "The Rev", "Mike Portnoy"], c: 0 },
+        { id: 32, q: "Lagu 'God Hates Us' memiliki gaya?", a: ["Screamo/Metalcore", "Balada", "Classic Rock", "Country"], c: 0 },
+        { id: 33, q: "Siapa 'Papa Gates'?", a: ["Ayah Synyster Gates", "Ayah M. Shadows", "Manager Band", "Produser"], c: 0 },
+        { id: 34, q: "Album 'Waking the Fallen' rilis tahun?", a: ["2003", "2001", "2005", "2007"], c: 0 },
+        { id: 35, q: "Lagu 'Sieze the Day' ada di album?", a: ["City of Evil", "Nightmare", "A7X", "The Stage"], c: 0 },
+        { id: 36, q: "Berapa jumlah personel aktif A7X?", a: ["5", "4", "6", "3"], c: 0 },
+        { id: 37, q: "Siapa yang menulis lagu ALPOH?", a: ["The Rev", "M. Shadows", "Syn Gates", "Zacky V"], c: 0 },
+        { id: 38, q: "Apa judul lagu pembuka di album Nightmare?", a: ["Nightmare", "Welcome to the Family", "Buried Alive", "Danger Line"], c: 0 },
+        { id: 39, q: "Lagu 'The Fight' ada di album?", a: ["Diamonds in the Rough", "A7X", "Nightmare", "City of Evil"], c: 0 },
+        { id: 40, q: "Apa inspirasi nama 'Avenged Sevenfold'?", a: ["Alkitab", "Buku Sejarah", "Film Horror", "Puisi"], c: 0 },
+        { id: 41, q: "Siapa yang main biola di album City of Evil?", a: ["Musisi Tambahan", "Synyster Gates", "M. Shadows", "The Rev"], c: 0 },
+        { id: 42, q: "Apa judul lagu penutup di album Self-Titled?", a: ["Dear God", "ALPOH", "Lost", "Unbound"], c: 0 },
+        { id: 43, q: "Genre utama A7X saat debut?", a: ["Metalcore", "Progressive Metal", "Heavy Metal", "Hard Rock"], c: 0 },
+        { id: 44, q: "Siapa bassist sebelum Johnny Christ?", a: ["Dameon Ash", "Justin Sane", "Matt Wendt", "Semua Benar"], c: 3 },
+        { id: 45, q: "Lagu 'Nobody' rilis tahun?", a: ["2023", "2022", "2021", "2024"], c: 0 },
+        { id: 46, q: "Apa arti '661' bagi A7X?", a: ["Kode Area", "Nomor Keberuntungan", "Tanggal Berdiri", "Jumlah Lagu"], c: 0 },
+        { id: 47, q: "Lagu 'Natural Born Killer' dikenal karena?", a: ["Double Pedal Cepat", "Solo Gitar Panjang", "Vokal Melengking", "Orkestra"], c: 0 },
+        { id: 48, q: "Di JIS 2024, A7X membawakan lagu 'Dear God'?", a: ["Ya", "Tidak", "Hanya Musik", "Hanya Reff"], c: 0 },
+        { id: 49, q: "Lagu 'Victim' menceritakan tentang?", a: ["Kehilangan", "Politik", "Horror", "Zombi"], c: 0 },
+        { id: 50, q: "Siapa yang membuat artwork Deathbat?", a: ["Micah Montague", "M. Shadows", "The Rev", "Syn Gates"], c: 0 }
     ];
 
     let user = { name: "", email: "" };
@@ -285,10 +171,29 @@
         if(localStorage.getItem(`a7x_daily_${e}`) === today) {
             return alert("Mission already completed today!");
         }
+
+        // --- SISTEM ANTI-REPEAT SOAL ---
+        let usedIds = JSON.parse(localStorage.getItem(`a7x_used_q_${e}`)) || [];
         
+        // Filter soal yang belum pernah dikerjakan
+        let available = database50.filter(q => !usedIds.includes(q.id));
+        
+        // Reset jika semua 50 soal sudah dikerjakan (siklus 5 hari selesai)
+        if(available.length < 10) {
+            alert("All mission packs completed! Resetting question cycle.");
+            usedIds = [];
+            available = [...database50];
+        }
+
         user = { name: n, email: e };
-        const shuffled = [...database50].sort(() => Math.random() - 0.5);
+        // Ambil 10 soal acak dari yang tersedia
+        const shuffled = available.sort(() => Math.random() - 0.5);
         activeQuestions = shuffled.slice(0, 10);
+        
+        // Simpan ID soal yang akan dikerjakan ke list 'sudah dipakai'
+        const currentIds = activeQuestions.map(q => q.id);
+        localStorage.setItem(`a7x_used_q_${e}`, JSON.stringify([...usedIds, ...currentIds]));
+
         showView('view-quiz');
         loadQuestion();
     }
