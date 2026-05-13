@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELITE REWARDS | A7X BLITAR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@500;700&family=Metal+Mania&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --neon-red: #ff0000;
+            --bg-dark: #050505;
+            --panel-bg: rgba(0, 0, 0, 0.92);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), 
+                              url('https://images.unsplash.com/photo-1541123437800-1bb1317badc2?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-attachment: fixed;
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Tombol Back Metal Style */
+        .btn-back {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 100;
+        }
+
+        .btn-back:hover {
+            background: var(--neon-red);
+            box-shadow: 0 0 15px var(--neon-red);
+            border-color: #fff;
+        }
+
+        /* Header Responsive */
+        header {
+            padding: clamp(60px, 12vh, 100px) 20px;
+            text-align: center;
+            background: rgba(0,0,0,0.6);
+            border-bottom: 1px solid rgba(255,0,0,0.2);
+        }
+
+        .elite-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.8rem, 6vw, 2.8rem);
+            letter-spacing: clamp(5px, 2.5vw, 12px);
+            font-weight: 900;
+            text-shadow: 0 0 15px var(--neon-red);
+            margin-bottom: 10px;
+        }
+
+        .elite-subtitle {
+            font-family: 'Metal Mania', cursive;
+            font-size: clamp(1rem, 3.5vw, 1.4rem);
+            color: var(--neon-red);
+            letter-spacing: 3px;
+        }
+
+        /* Catalog Grid */
+        .catalog {
+            max-width: 1200px;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .item-card {
+            background: var(--panel-bg);
+            border: 1px solid rgba(255,0,0,0.2);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            backdrop-filter: blur(10px);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .item-card:hover { border-color: var(--neon-red); transform: translateY(-8px); }
+
+        .sold-out {
+            position: absolute;
+            top: 25px; left: -35px;
+            background: var(--neon-red);
+            color: white;
+            padding: 5px 45px;
+            transform: rotate(-45deg);
+            font-family: 'Orbitron';
+            font-size: 0.7rem;
+            font-weight: 900;
+            box-shadow: 0 0 15px rgba(255,0,0,0.8);
+            z-index: 10;
+        }
+
+        .item-img-container {
+            width: 100%;
+            background: #000;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border: 1px solid #222;
+        }
+
+        .item-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        .stock-info {
+            font-size: 0.85rem;
+            color: #777;
+            margin-top: 5px;
+            font-family: 'Orbitron';
+        }
+
+        .btn-redeem {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(45deg, #8b0000, #ff0000);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-family: 'Orbitron';
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        .btn-redeem:disabled { background: #222; color: #555; cursor: not-allowed; transform: none; }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.96);
+            z-index: 1000;
+            align-items: center; justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            background: #0a0a0a;
+            padding: clamp(25px, 6vw, 45px);
+            border-radius: 25px;
+            border: 2px solid var(--neon-red);
+            text-align: center;
+            width: 100%;
+            max-width: 480px;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-overlay.active { display: flex; }
+        .modal-overlay.active .modal-box { transform: scale(1); opacity: 1; }
+
+        input {
+            width: 100%;
+            padding: 18px;
+            margin: 15px 0;
+            background: #000;
+            border: 1px solid #333;
+            color: white;
+            border-radius: 12px;
+            font-family: inherit;
+            text-align: center;
+        }
+
+        input:focus { border-color: var(--neon-red); outline: none; }
+
+        #voucher-display {
+            font-family: 'Orbitron';
+            font-size: clamp(1.2rem, 6vw, 2.2rem);
+            color: gold;
+            background: #000;
+            padding: 25px;
+            margin: 25px 0;
+            border: 2px dashed var(--neon-red);
+            letter-spacing: 4px;
+            word-break: break-all;
+        }
+
+        /* Notifikasi Toast */
+        #toast {
+            visibility: hidden;
+            min-width: 280px;
+            background-color: #1a1a1a;
+            color: #fff;
+            text-align: center;
+            border-radius: 10px;
+            border: 1px solid var(--neon-red);
+            padding: 16px;
+            position: fixed;
+            z-index: 2000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-family: 'Orbitron';
+            font-size: 0.9rem;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+        }
+
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
+        @media (max-width: 600px) {
+            .btn-back { top: 15px; left: 15px; padding: 8px 15px; font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Notifikasi Toast -->
+<div id="toast"></div>
+
+<!-- Tombol Back -->
+<a href="kuis.html" class="btn-back">
+    <span>&lsaquo;</span> BACK
+</a>
+
+<header>
+    <h1 class="elite-title">ELITE REWARDS</h1>
+    <p class="elite-subtitle">Tukarkan XP Loyalitasmu dengan Hadiah Eksklusif</p>
+</header>
+
+<div class="catalog" id="item-grid">
+    <!-- Item dimuat otomatis dari Google Sheets -->
+</div>
+
+<!-- Modal Identitas -->
+<div id="redeem-modal" class="modal-overlay">
+    <div class="modal-box">
+        <h2 style="font-family:'Orbitron'; color:var(--neon-red); letter-spacing: 2px;">IDENTITY CHECK</h2>
+        <p style="margin-top:15px; color:#777; font-size: 0.95rem;">Sinkronisasi XP memerlukan email terdaftar Anda.</p>
+        <input type="email" id="email-verify" placeholder="Masukkan Email Terdaftar">
+        <button class="btn-redeem" onclick="executeRedeem()">KONFIRMASI PENUKARAN</button>
+        <p onclick="closeModal('redeem-modal')" style="color:#444; margin-top:20px; cursor:pointer; font-size: 0.85rem; font-family: 'Orbitron';">BATAL</p>
+    </div>
+</div>
+
+<!-- Modal Voucher -->
+<div id="voucher-modal" class="modal-overlay">
+    <div class="modal-box">
+        <h2 style="font-family:'Orbitron'; color:gold; letter-spacing: 2px;">REDEEM SUCCESSFUL!</h2>
+        <p style="margin-top:15px; font-size: 0.95rem; color: #888;">Gunakan kode unik ini untuk klaim hadiah:</p>
+        <div id="voucher-display">XXXXX</div>
+        <p style="margin-bottom: 25px; font-size: 0.8rem; color: #555;">(Screenshot layar ini sebagai bukti)</p>
+        <button class="btn-redeem" onclick="location.reload()">KEMBALI KE KATALOG</button>
+    </div>
+</div>
+
+<script>
+    // --- KONFIGURASI FIX (JANGAN DIRUBAH) ---
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz6eV5F2e8LdaJY5v3vgasyQKAcpSOMS9igHInFmXV1ZqAenekrLshwsSgg2TTjMip-eA/exec';
+    let selectedItemId = null;
+
+    // Fungsi Notifikasi
+    function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.innerText = message;
+        toast.className = "show";
+        setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+    }
+
+    async function loadItems() {
+        try {
+            const res = await fetch(SCRIPT_URL + '?action=getItems');
+            const items = await res.json();
+            const grid = document.getElementById('item-grid');
+            
+            grid.innerHTML = items.map(item => `
+                <div class="item-card">
+                    ${item[3] <= 0 ? '<div class="sold-out">SOLD OUT</div>' : ''}
+                    <div class="item-img-container">
+                        <img src="${item[4]}" class="item-img" alt="Reward Image">
+                    </div>
+                    <h3 style="font-family:'Orbitron'; font-size: 1.1rem; letter-spacing: 1px;">${item[1]}</h3>
+                    <p style="color:gold; font-weight:bold; margin: 10px 0; font-family:'Orbitron'; font-size: 1.2rem;">${item[2]} XP</p>
+                    <p class="stock-info">AVAILABLE: ${item[3] <= 0 ? '0' : item[3]}</p>
+                    <button class="btn-redeem" ${item[3] <= 0 ? 'disabled' : ''} onclick="openRedeem('${item[0]}')">
+                        ${item[3] <= 0 ? 'HABIS' : 'REDEEM NOW'}
+                    </button>
+                </div>
+            `).join('');
+        } catch (e) {
+            console.error("Gagal sinkronisasi katalog hadiah.");
+        }
+    }
+
+    function openRedeem(id) {
+        selectedItemId = id;
+        document.getElementById('redeem-modal').classList.add('active');
+    }
+
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    async function executeRedeem() {
+        const email = document.getElementById('email-verify').value;
+        if (!email) return alert("Email wajib diisi untuk verifikasi poin!");
+
+        // Notifikasi sedang memproses login/verifikasi
+        showToast("VERIFIKASI DATA... SILAHKAN TUNGGU");
+
+        try {
+            const res = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({ email: email, itemId: selectedItemId })
+            });
+            const result = await res.json();
+
+            if (result.status === "success") {
+                // Notifikasi Sukses
+                showToast("VERIFIKASI BERHASIL! MEMPROSES REDEEM...");
+                
+                setTimeout(() => {
+                    closeModal('redeem-modal');
+                    document.getElementById('voucher-display').innerText = result.code;
+                    document.getElementById('voucher-modal').classList.add('active');
+                }, 1000);
+            } else {
+                alert("Gagal: " + result.message);
+            }
+        } catch (e) {
+            alert("Terjadi kesalahan sinkronisasi data dengan server.");
+        }
+    }
+
+    window.onload = loadItems;
+</script>
+</body>
+</html>
