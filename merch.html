@@ -10,7 +10,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
-            /* Latar belakang kayu gelap yang tetap tajam di semua resolusi */
             background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.95)), 
                         url('https://www.transparenttextures.com/patterns/dark-wood.png'), #0a0a0a;
             background-attachment: fixed;
@@ -47,7 +46,6 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
         }
 
-        /* Animasi mengambang untuk elemen visual */
         .preview-animate {
             animation: float 5s ease-in-out infinite;
         }
@@ -64,7 +62,6 @@
         }
         input:focus { border-color: #ef4444 !important; box-shadow: 0 0 15px rgba(239,68,68,0.4); background: rgba(239,68,68,0.05) !important; }
         
-        /* Custom SweetAlert agar tetap garang */
         .swal2-popup {
             background: #0a0a0a !important;
             border: 2px solid #ef4444 !important;
@@ -83,7 +80,7 @@
 
     <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
         
-        <!-- PREVIEW PRODUK (PC: Kiri, HP: Atas) -->
+        <!-- PREVIEW PRODUK -->
         <div class="space-y-6 lg:sticky lg:top-12">
             <div class="ultra-glass p-3 sm:p-5 rounded-[2rem] sm:rounded-[3rem] relative group preview-animate">
                 <img src="pre-order.jpeg" alt="Kaos Blitar Merch" class="w-full aspect-[3/4] object-cover rounded-[1.5rem] sm:rounded-[2.5rem] shadow-2xl transition-all duration-700">
@@ -100,7 +97,7 @@
             </div>
         </div>
 
-        <!-- FORM ORDER (PC: Kanan, HP: Bawah) -->
+        <!-- FORM ORDER -->
         <div class="ultra-glass p-6 sm:p-10 rounded-[2.5rem] sm:rounded-[4rem]">
             <form id="orderForm" class="space-y-6">
                 <div class="flex items-center gap-4 mb-4">
@@ -153,39 +150,28 @@
 
     <script>
         const HARGA_DASAR = 185000;
-        const DAFTAR_KUPON = {
-            "A7XBLITAR": 0.20,
-            "DEATHBAT2026": 0.20,
-            "THEFALLEN": 0.25
-        };
 
+        // Validasi kupon kini hanya memberikan notifikasi bahwa pengecekan akan dilakukan saat submit.
+        // Daftar kupon di frontend telah dihapus total.
         function cekKupon() {
-            const code = document.getElementById('kupon').value.toUpperCase();
-            const display = document.getElementById('displayHarga');
-            
-            if (DAFTAR_KUPON[code]) {
-                const diskon = DAFTAR_KUPON[code];
-                const hargaSetelahDiskon = HARGA_DASAR - (HARGA_DASAR * diskon);
-                
-                display.innerText = "Rp " + hargaSetelahDiskon.toLocaleString('id-ID');
-                display.classList.add('text-red-500', 'scale-110');
-                
-                Swal.fire({
-                    title: 'ROCK ON! 🤘',
-                    text: `Kupon valid! Potongan ${(diskon * 100)}% aktif.`,
-                    icon: 'success',
-                    confirmButtonText: 'HELL YEAH!'
-                });
-            } else {
-                display.innerText = "Rp " + HARGA_DASAR.toLocaleString('id-ID');
-                display.classList.remove('text-red-500', 'scale-110');
-                Swal.fire({ title: 'DAMN! 💀', text: 'Kupon tidak terdaftar.', icon: 'error' });
+            const code = document.getElementById('kupon').value.trim();
+            if (code === "") {
+                Swal.fire({ title: 'DAMN! 💀', text: 'Masukkan kode kupon.', icon: 'warning' });
+                return;
             }
+            Swal.fire({
+                title: 'COUPON ENTERED 🤘',
+                text: 'Kupon akan divalidasi oleh sistem saat Anda mengirim pesanan.',
+                icon: 'info',
+                confirmButtonText: 'UNDERSTOOD'
+            });
         }
 
         document.getElementById('orderForm').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btnSubmit');
+            const originalBtnText = btn.innerHTML;
+            
             btn.innerHTML = '<i class="fas fa-skull fa-spin mr-2"></i> BURNING...'; 
             btn.disabled = true;
 
@@ -196,11 +182,11 @@
                 ukuran: document.getElementById('ukuran').value,
                 metode: document.getElementById('metode').value,
                 pembayaran: document.getElementById('pembayaran').value,
-                kupon: document.getElementById('kupon').value.toUpperCase()
+                kupon: document.getElementById('kupon').value.toUpperCase().trim()
             };
 
             try {
-                const response = await fetch("https://script.google.com/macros/s/AKfycbxP7mJ7-Kv7JKxEOEo3vhSmEju1VxgErlbsQAI67Zo6TQdshuYfrvuh22Ash6a9FeJZ/exec", { 
+                const response = await fetch("https://script.google.com/macros/s/AKfycbwdnyJU5XKdped6XomgBQ__qxzh4TqPDou90O6jt3cWww32EK2mUw0Hpc0LMeEISv0W/exec", { 
                     method: 'POST', 
                     body: JSON.stringify(formData) 
                 });
@@ -215,11 +201,15 @@
                         window.open(`https://wa.me/6287753855074?text=${encodeURIComponent(msgWA)}`, '_blank');
                         location.reload();
                     }, 2000);
+                } else {
+                    Swal.fire('ERROR!', result.message || 'Gagal memproses pesanan.', 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = originalBtnText;
                 }
             } catch (error) { 
                 Swal.fire('ERROR!', 'Gagal terhubung ke server.', 'error');
                 btn.disabled = false;
-                btn.innerText = "KIRIM PESANAN SEKARANG 🤘";
+                btn.innerHTML = originalBtnText;
             }
         };
     </script>
