@@ -18,6 +18,7 @@
 
         body {
             background-color: #0a0a0a;
+            /* Pastikan file wood.jpg tersedia atau gunakan URL Unsplash jika ingin online */
             background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.9)), 
                               url('wood.jpg!d');
             background-size: cover;
@@ -28,14 +29,18 @@
             overflow-x: hidden;
         }
 
+        /* Responsive Header */
+        header { padding: clamp(20px, 8vh, 45px) 20px; text-align: center; }
+
         .glitch-text {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-size: clamp(1.8rem, 8vw, 3.5rem);
             font-weight: 900;
             color: #fff;
             text-transform: uppercase;
             text-shadow: 0 0 10px var(--neon-red);
             animation: shadow-glitch 2s infinite;
+            line-height: 1.2;
         }
 
         @keyframes shadow-glitch {
@@ -47,37 +52,50 @@
         .metal-subtitle {
             font-family: 'Metal Mania', cursive;
             color: var(--neon-red);
-            font-size: 1.6rem;
+            font-size: clamp(1rem, 4vw, 1.6rem);
             letter-spacing: 5px;
-            margin-top: -10px;
+            margin-top: 5px;
             text-transform: uppercase;
         }
 
-        header { padding: 45px 20px; text-align: center; }
-
+        /* Layout Grid Responsive */
         .main-container {
             display: grid;
             grid-template-columns: 1fr 1.6fr;
-            gap: 30px;
+            gap: 20px;
             width: 95%;
-            max-width: 1300px;
-            margin: 0 auto 50px auto;
+            max-width: 1200px;
+            margin: 0 auto 30px auto;
+        }
+
+        /* Tablet & Mobile Layout */
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr; /* Stack panel ke bawah */
+            }
+            .main-container aside {
+                order: 2; /* Leaderboard pindah ke bawah di HP */
+            }
+            .main-container main {
+                order: 1; /* Kuis tetap di atas di HP */
+            }
         }
 
         .panel {
             background: var(--panel-bg);
             border: var(--border-glow);
             border-radius: 20px;
-            padding: clamp(20px, 5vw, 35px);
+            padding: clamp(20px, 4vw, 35px);
             backdrop-filter: blur(15px);
             box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+            height: fit-content;
         }
 
         .panel-header {
             font-family: 'Orbitron', sans-serif;
             color: var(--neon-red);
             font-size: 1.1rem;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             border-left: 5px solid var(--neon-red);
             padding-left: 15px;
         }
@@ -88,6 +106,7 @@
             color: #fff; border: none; border-radius: 12px;
             font-family: 'Orbitron', sans-serif; font-weight: 900;
             cursor: pointer; transition: 0.3s; text-transform: uppercase;
+            font-size: 0.9rem;
         }
 
         .btn-metal:hover { transform: translateY(-2px); box-shadow: 0 0 25px var(--neon-red); }
@@ -97,36 +116,37 @@
             padding: 15px; width: 100%; border-radius: 12px;
             font-family: 'Orbitron'; font-weight: bold; cursor: pointer;
             transition: 0.3s; text-transform: uppercase; margin-top: 15px;
+            font-size: 0.8rem;
         }
-
-        .btn-redeem:hover { background: gold; color: black; }
 
         .leader-item {
             display: flex; justify-content: space-between;
             padding: 12px 18px; background: rgba(255,255,255,0.03);
             margin-bottom: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.9rem;
         }
 
         .option-card {
             background: rgba(255,255,255,0.04); border: 1px solid #222;
-            padding: 20px; border-radius: 12px; margin-bottom: 12px;
-            cursor: pointer; transition: 0.2s;
+            padding: clamp(15px, 3vw, 20px); border-radius: 12px; margin-bottom: 12px;
+            cursor: pointer; transition: 0.2s; font-size: 1rem;
         }
 
-        .option-card:hover { border-color: var(--neon-red); background: rgba(255,0,0,0.15); transform: translateX(5px); }
+        .option-card:hover { border-color: var(--neon-red); background: rgba(255,0,0,0.15); }
 
-        #timer-wrap { width: 100%; height: 5px; background: #111; margin: 20px 0; border-radius: 10px; overflow: hidden; }
+        #timer-wrap { width: 100%; height: 6px; background: #111; margin: 15px 0; border-radius: 10px; overflow: hidden; }
         #timer-bar { width: 100%; height: 100%; background: var(--neon-red); transition: width 0.1s linear; }
 
         input {
-            width: 100%; padding: 18px; margin-bottom: 15px;
-            background: #0a0a0a; border: 1px solid #333; color: white; border-radius: 12px;
+            width: 100%; padding: 16px; margin-bottom: 12px;
+            background: #000; border: 1px solid #333; color: white; border-radius: 12px;
+            font-family: inherit; font-size: 1rem;
         }
+
+        #q-text { font-size: clamp(1.2rem, 4vw, 1.6rem); margin-bottom: 20px; line-height: 1.4; }
 
         section { display: none; }
         section.active { display: block; }
-
-        @media (max-width: 1000px) { .main-container { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -138,14 +158,15 @@
 
 <div class="main-container">
     <aside class="panel">
-        <h3 class="panel-header">LEADERBOARD </h3>
+        <h3 class="panel-header">LEADERBOARD</h3>
         <div id="leaderboard-list">
             <p style="color:#444; text-align: center;">Fetching souls...</p>
         </div>
-        <div style="margin-top: 45px; border-top: 1px solid #222; padding-top: 25px;">
-            <h3 class="panel-header" style="color: gold; border-color: gold;">ELITE REWARDS</h3>
-            <button class="btn-redeem" onclick="alert('Sinkronisasi diperlukan. Minimal 1000 XP!')">REDEEM XP POINTS</button>
-        </div>
+       <div style="margin-top: 30px; border-top: 1px solid #222; padding-top: 20px;">
+    <h3 class="panel-header" style="color: gold; border-color: gold; font-size: 0.9rem;">ELITE REWARDS</h3>
+    <!-- Ganti alert menjadi window.location.href -->
+    <button class="btn-redem" onclick="window.location.href='redeem.html'">REDEEM XP POINTS</button>
+</div>
     </aside>
 
     <main class="panel">
@@ -158,20 +179,21 @@
         </section>
 
         <section id="view-quiz">
-            <div style="display: flex; justify-content: space-between; font-family: 'Orbitron'; font-size: 0.75rem; color: #555;">
+            <div style="display: flex; justify-content: space-between; font-family: 'Orbitron'; font-size: 0.7rem; color: #555;">
                 <span id="q-count">QUEST 01/10</span>
                 <span id="q-score" style="color: gold;">XP: 0</span>
             </div>
             <div id="timer-wrap"><div id="timer-bar"></div></div>
-            <h2 id="q-text" style="font-size: 1.5rem; margin-bottom: 25px; line-height: 1.4;">...</h2>
+            <h2 id="q-text">...</h2>
             <div id="options-box"></div>
         </section>
 
         <section id="view-result">
             <h3 class="panel-header">MISSION ACCOMPLISHED</h3>
-            <div style="text-align: center; padding: 25px 0;">
-                <h1 id="final-points" style="font-size: 5.5rem; color: var(--neon-red);">0</h1>
-                <p id="sync-status" style="color: #00ff00; font-size: 0.85rem; margin-bottom: 35px;">DATA SYNCHRONIZED</p>
+            <div style="text-align: center; padding: 20px 0;">
+                <p style="font-family:'Orbitron'; color:#444; font-size:0.8rem; margin-bottom:10px;">TOTAL XP GAINED</p>
+                <h1 id="final-points" style="font-size: clamp(4rem, 15vw, 6rem); color: var(--neon-red); line-height: 1;">0</h1>
+                <p id="sync-status" style="color: #00ff00; font-size: 0.8rem; margin: 25px 0;">DATA SYNCHRONIZED</p>
                 <button class="btn-metal" onclick="location.reload()">DASHBOARD</button>
             </div>
         </section>
@@ -179,6 +201,7 @@
 </div>
 
 <script>
+    // --- KONFIGURASI SCRIPT (TETAP SAMA) ---
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzO1dCvBbgm2rW0LIza2TDOAV9zWfvvMcyl4ee4gNZ9hrnINwcWzMm9HVZzOKQew97-mg/exec'; 
 
     const database50 = [
@@ -264,11 +287,8 @@
         }
         
         user = { name: n, email: e };
-        
-        // Logika Soal Acak: Ambil 10 soal acak dari database 50 soal
         const shuffled = [...database50].sort(() => Math.random() - 0.5);
         activeQuestions = shuffled.slice(0, 10);
-        
         showView('view-quiz');
         loadQuestion();
     }
@@ -334,7 +354,7 @@
             target.innerHTML = data.slice(0, 10).map((row, i) => `
                 <div class="leader-item">
                     <span><strong style="color:gold">#${i+1}</strong> ${row[0]}</span>
-                    <span style="color:var(--neon-red); font-family:'Orbitron';">${row[2]} XP</span>
+                    <span style="color:var(--neon-red); font-family:'Orbitron'; font-weight:bold;">${row[2]} XP</span>
                 </div>
             `).join('');
         } catch(e) { target.innerHTML = "<p style='color:#333; text-align:center;'>Database Offline.</p>"; }
