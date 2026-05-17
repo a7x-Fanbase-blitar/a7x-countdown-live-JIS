@@ -89,7 +89,21 @@
         <p class="text-[8px] sm:text-[10px] tracking-[0.3em] sm:tracking-[0.5em] text-red-500 font-black mt-4 uppercase"> • Blitar Nation Merch • </p>
     </header>
 
-    <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+    <div id="countdownPanel" class="max-w-3xl mx-auto text-center my-12 p-8 ultra-glass rounded-[2rem] border-b-4 border-red-600">
+        <div class="text-red-600 drop-shadow-[0_0_15px_rgba(239,68,68,0.7)] mb-4 text-4xl animate-bounce">
+            <i class="fas fa-skull-crossbones"></i>
+        </div>
+        <h2 class="text-xl sm:text-2xl font-black text-red-500 tracking-widest uppercase mb-6">THE REVELATION IS COMING</h2>
+        <div class="grid grid-cols-4 gap-3 max-w-xl mx-auto">
+            <div class="bg-black/60 p-4 rounded-xl"><h3 id="days" class="text-xl sm:text-3xl font-black text-white">00</h3><p class="text-[8px] text-gray-500 uppercase font-bold mt-1">Hari</p></div>
+            <div class="bg-black/60 p-4 rounded-xl"><h3 id="hours" class="text-xl sm:text-3xl font-black text-white">00</h3><p class="text-[8px] text-gray-500 uppercase font-bold mt-1">Jam</p></div>
+            <div class="bg-black/60 p-4 rounded-xl"><h3 id="minutes" class="text-xl sm:text-3xl font-black text-white">00</h3><p class="text-[8px] text-gray-500 uppercase font-bold mt-1">Menit</p></div>
+            <div class="bg-black/60 p-4 rounded-xl"><h3 id="seconds" class="text-xl sm:text-3xl font-black text-emerald-400">00</h3><p class="text-[8px] text-gray-500 uppercase font-bold mt-1">Detik</p></div>
+        </div>
+        <p class="text-[9px] text-gray-400 uppercase font-bold tracking-widest mt-6 animate-pulse"><i class="fas fa-lock mr-2"></i> Form Pre-Order Terkunci Sampai Hitungan Mundur Selesai</p>
+    </div>
+
+    <main id="mainWebsite" class="hidden max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
         
         <div class="space-y-6 lg:sticky lg:top-12">
             <div class="ultra-glass p-3 sm:p-5 rounded-[2rem] sm:rounded-[3rem] relative group preview-animate">
@@ -165,7 +179,36 @@
         
         let diskonAktif = 0;
 
-        // Fungsi Cek Kupon dengan Metode Jalur Parameter Aman
+        // ==========================================
+        // LOGIKA KONTROL COUNTDOWN & PEMBUKA GEMBOK
+        // ==========================================
+        // Untuk mencoba langsung ganti ke tanggal kemarin: "May 16, 2026 00:00:00"
+        const targetDate = new Date("June 5, 2026 00:00:00").getTime();
+
+        const countdownFunction = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+
+            // Jika hitungan mundur habis / sudah lewat target rilis
+            if (distance <= 0) {
+                clearInterval(countdownFunction);
+                document.getElementById("countdownPanel").style.display = "none";
+                document.getElementById("mainWebsite").classList.remove("hidden");
+            }
+        }, 1000);
+
+
+        // Fungsi Cek Kupon dengan Metode Jalur Parameter Aman (Bypass CORS)
         async function cekKupon() {
             const code = document.getElementById('kupon').value.trim().toUpperCase();
             const btnCheck = document.getElementById('btnCheckKupon');
@@ -218,7 +261,7 @@
             }
         }
 
-        // Fungsi Kirim Form - Menggunakan Metode NO-CORS (Pasti Berhasil Masuk)
+        // Fungsi Kirim Form - VERSI REVISI TOTAL (ANTI-BLOKIR BROWSER LOKAL)
         document.getElementById('orderForm').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btnSubmit');
@@ -238,19 +281,11 @@
                 kupon: document.getElementById('kupon').value.toUpperCase().trim()
             };
 
-            try {
-                // Menggunakan mode no-cors menjamin form terkirim sukses tanpa interupsi browser lokal
-                await fetch(APPS_SCRIPT_URL, { 
-                    method: 'POST', 
-                    mode: 'no-cors',
-                    body: JSON.stringify(formData) 
-                });
-                
-                const hargaFinal = HARGA_DASAR - (HARGA_DASAR * diskonAktif);
-                const tglSaja = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
-                
-                // Formasi Teks WhatsApp Keren & Profesional
-                const msgWA = `*DEATHBAT MERCH - PRE-ORDER CONFIRMATION* 💀🔥
+            const hargaFinal = HARGA_DASAR - (HARGA_DASAR * diskonAktif);
+            const tglSaja = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            
+            // Formasi Teks WhatsApp Keren & Profesional (Anti-Bug Tanda Tanya)
+            const msgWA = `*DEATHBAT MERCH - PRE-ORDER CONFIRMATION* 💀🔥
 --------------------------------------------------
 Halo Admin Deathbat Blitar Raya,
 Saya ingin mengonfirmasi pesanan Pre-Order baju dengan rincian data sebagai berikut:
@@ -275,12 +310,20 @@ Berikut saya lampirkan bukti transfer terlampir untuk segera diverifikasi.
 
 Terima kasih, Salam Persaudaraan! 🤘`;
 
-                // TRICK ANTI-BLOCK: Eksekusi window.open secara instan sebelum melakukan pembersihan reload
-                window.open(`https://wa.me/6287753855074?text=${encodeURIComponent(msgWA)}`, '_blank');
+            // 🔥 STRATEGI MUTLAK: Eksekusi window.open seketika di sini agar lolos proteksi browser 100%
+            window.open(`https://wa.me/6287753855074?text=${encodeURIComponent(msgWA)}`, '_blank');
 
+            try {
+                // Proses pengiriman ke Google Sheets berjalan mandiri di latar belakang
+                await fetch(APPS_SCRIPT_URL, { 
+                    method: 'POST', 
+                    mode: 'no-cors',
+                    body: JSON.stringify(formData) 
+                });
+                
                 Swal.fire({ 
                     title: 'SUCCESS! 🤘', 
-                    text: 'Data terkirim! Menuju WhatsApp...', 
+                    text: 'Data terkirim dan WhatsApp berhasil dibuka!', 
                     icon: 'success', 
                     timer: 2000, 
                     showConfirmButton: false 
@@ -291,7 +334,7 @@ Terima kasih, Salam Persaudaraan! 🤘`;
                 }, 1800);
                 
             } catch (error) { 
-                Swal.fire('ERROR!', 'Gagal terhubung ke server.', 'error');
+                Swal.fire('ERROR!', 'Gagal terhubung ke spreadsheet server.', 'error');
                 btn.disabled = false;
                 btn.innerHTML = originalBtnText;
             }
