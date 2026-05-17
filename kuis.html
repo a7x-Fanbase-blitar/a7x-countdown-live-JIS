@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A7X BLITAR | TRIVIA SYSTEM v3.0</title>
+    <title>A7X BLITAR | TRIVIA & LYRICS SYSTEM v4.0</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=Metal+Mania&display=swap" rel="stylesheet">
     <style>
         :root {
             --neon-red: #ff0000;
-            --dark-red: #8b0000;
-            --panel-bg: rgba(0, 0, 0, 0.92);
-            --border-glow: 1px solid rgba(255, 0, 0, 0.4);
+            --dark-red: #660000;
+            --panel-bg: rgba(5, 5, 5, 0.95);
+            --border-glow: 1px solid rgba(255, 0, 0, 0.6);
+            --gold: #ffcc00;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: #0a0a0a;
-            background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.9)), url('wood.jpg!d');
+            background-color: #030303;
+            /* Efek overlay radial gelap dikombinasikan dengan gambar latar bertema metal */
+            background-image: radial-gradient(circle, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.95) 100%), url('wood.jpg!d');
             background-size: cover;
             background-attachment: fixed;
             color: #fff;
@@ -23,23 +25,99 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
-        header { padding: 45px 20px; text-align: center; }
-        .glitch-text { font-family: 'Orbitron', sans-serif; font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 900; text-shadow: 0 0 10px var(--neon-red); animation: shadow-glitch 2s infinite; text-transform: uppercase; }
-        @keyframes shadow-glitch { 0% { text-shadow: 3px 3px var(--neon-red), -3px -3px #000; } 50% { text-shadow: -3px 3px var(--neon-red), 3px -3px #444; } 100% { text-shadow: 3px -3px var(--neon-red), -3px 3px #000; } }
-        .metal-subtitle { font-family: 'Metal Mania', cursive; color: var(--neon-red); font-size: 1.6rem; letter-spacing: 5px; margin-top: -10px; text-transform: uppercase; }
+        header { 
+            padding: 50px 20px 30px 20px; 
+            text-align: center; 
+            position: relative;
+        }
+        /* Ornamen Deathbat fiktif menggunakan CSS border untuk memperkuat vibe A7X */
+        header::after {
+            content: '';
+            display: block;
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-red), transparent);
+            margin: 15px auto 0 auto;
+        }
+        .glitch-text { 
+            font-family: 'Orbitron', sans-serif; 
+            font-size: clamp(2.5rem, 8vw, 4.5rem); 
+            font-weight: 900; 
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px var(--neon-red); 
+            animation: shadow-glitch 1.5s infinite; 
+            text-transform: uppercase; 
+        }
+        @keyframes shadow-glitch { 
+            0% { text-shadow: 3px 3px var(--neon-red), -3px -3px #000; } 
+            25% { text-shadow: -2px 3px #ff3333, 2px -3px #222; }
+            50% { text-shadow: -3px -3px var(--neon-red), 3px 3px #444; } 
+            75% { text-shadow: 2px -2px #ff3333, -2px 2px #111; }
+            100% { text-shadow: 3px 3px var(--neon-red), -3px -3px #000; } 
+        }
+        .metal-subtitle { 
+            font-family: 'Metal Mania', cursive; 
+            color: #cccccc; 
+            font-size: 1.8rem; 
+            letter-spacing: 6px; 
+            margin-top: 5px; 
+            text-transform: uppercase; 
+            text-shadow: 0 0 8px #000;
+        }
         .main-container { display: grid; grid-template-columns: 1fr 1.6fr; gap: 30px; width: 95%; max-width: 1300px; margin: 0 auto 50px auto; }
-        .panel { background: var(--panel-bg); border: var(--border-glow); border-radius: 20px; padding: clamp(20px, 5vw, 35px); backdrop-filter: blur(15px); box-shadow: 0 10px 40px rgba(0,0,0,0.7); height: fit-content; }
-        .panel-header { font-family: 'Orbitron', sans-serif; color: var(--neon-red); font-size: 1.1rem; margin-bottom: 25px; border-left: 5px solid var(--neon-red); padding-left: 15px; }
-        .btn-metal { width: 100%; padding: 18px; background: linear-gradient(45deg, #8b0000, #ff0000); color: #fff; border: none; border-radius: 12px; font-family: 'Orbitron', sans-serif; font-weight: 900; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
-        .btn-metal:hover { transform: translateY(-2px); box-shadow: 0 0 25px var(--neon-red); }
-        .btn-redeem { background: transparent; border: 2px solid gold; color: gold; padding: 15px; width: 100%; border-radius: 12px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; margin-top: 15px; }
-        .btn-redeem:hover { background: gold; color: black; }
-        .leader-item { display: flex; justify-content: space-between; padding: 12px 18px; background: rgba(255,255,255,0.03); margin-bottom: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
-        .option-card { background: rgba(255,255,255,0.04); border: 1px solid #222; padding: 20px; border-radius: 12px; margin-bottom: 12px; cursor: pointer; transition: 0.2s; }
-        .option-card:hover { border-color: var(--neon-red); background: rgba(255,0,0,0.15); transform: translateX(5px); }
-        #timer-wrap { width: 100%; height: 5px; background: #111; margin: 20px 0; border-radius: 10px; overflow: hidden; }
+        .panel { 
+            background: var(--panel-bg); 
+            border: var(--border-glow); 
+            border-radius: 12px; 
+            padding: clamp(20px, 5vw, 35px); 
+            backdrop-filter: blur(20px); 
+            box-shadow: 0 0 30px rgba(255,0,0,0.15), inset 0 0 20px rgba(0,0,0,0.9); 
+            height: fit-content; 
+        }
+        .panel-header { 
+            font-family: 'Orbitron', sans-serif; 
+            color: var(--neon-red); 
+            font-size: 1.2rem; 
+            margin-bottom: 25px; 
+            border-left: 5px solid var(--neon-red); 
+            padding-left: 15px; 
+            text-shadow: 0 0 5px rgba(255,0,0,0.5);
+            letter-spacing: 1px;
+        }
+        .btn-metal { 
+            width: 100%; 
+            padding: 18px; 
+            background: linear-gradient(135deg, var(--dark-red), #b30000); 
+            color: #fff; 
+            border: 1px solid var(--neon-red); 
+            border-radius: 8px; 
+            font-family: 'Orbitron', sans-serif; 
+            font-weight: 900; 
+            cursor: pointer; 
+            transition: 0.3s all ease; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .btn-metal:hover { transform: translateY(-2px); box-shadow: 0 0 25px var(--neon-red); background: linear-gradient(135deg, #b30000, #ff0000); }
+        .btn-lyric {
+            background: linear-gradient(135deg, #111, #222);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            margin-top: 15px;
+        }
+        .btn-lyric:hover { transform: translateY(-2px); box-shadow: 0 0 25px var(--gold); background: linear-gradient(135deg, #cc9900, var(--gold)); color: #000; }
+        .btn-redeem { background: transparent; border: 2px solid var(--gold); color: var(--gold); padding: 15px; width: 100%; border-radius: 8px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; margin-top: 15px; }
+        .btn-redeem:hover { background: var(--gold); color: black; box-shadow: 0 0 15px var(--gold); }
+        .leader-item { display: flex; justify-content: space-between; padding: 12px 18px; background: rgba(255,255,255,0.02); margin-bottom: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); transition: 0.2s; }
+        .leader-item:hover { background: rgba(255,0,0,0.05); border-color: rgba(255,0,0,0.2); }
+        .option-card { background: rgba(255,255,255,0.03); border: 1px solid #222; padding: 20px; border-radius: 8px; margin-bottom: 12px; cursor: pointer; transition: 0.2s; font-size: 1.1rem; }
+        .option-card:hover { border-color: var(--neon-red); background: rgba(255,0,0,0.12); transform: translateX(5px); }
+        .lyric-mode .option-card:hover { border-color: var(--gold); background: rgba(255,204,0,0.1); }
+        #timer-wrap { width: 100%; height: 6px; background: #111; margin: 20px 0; border-radius: 10px; overflow: hidden; border: 1px solid #222; }
         #timer-bar { width: 100%; height: 100%; background: var(--neon-red); transition: width 0.1s linear; }
-        input { width: 100%; padding: 18px; margin-bottom: 15px; background: #0a0a0a; border: 1px solid #333; color: white; border-radius: 12px; font-family: inherit; }
+        input { width: 100%; padding: 18px; margin-bottom: 15px; background: #050505; border: 1px solid #333; color: white; border-radius: 8px; font-family: inherit; font-size: 1.1rem; }
+        input:focus { outline: none; border-color: var(--neon-red); box-shadow: 0 0 10px rgba(255,0,0,0.3); }
         section { display: none; }
         section.active { display: block; }
         @media (max-width: 1000px) { .main-container { grid-template-columns: 1fr; } .main-container aside { order: 2; } .main-container main { order: 1; } }
@@ -57,35 +135,36 @@
         <h3 class="panel-header">LEADERBOARD</h3>
         <div id="leaderboard-list"><p style="color:#444; text-align: center;">Fetching souls...</p></div>
         <div style="margin-top: 30px; border-top: 1px solid #222; padding-top: 20px;">
-            <h3 class="panel-header" style="color: gold; border-color: gold; font-size: 0.9rem;">ELITE REWARDS</h3>
+            <h3 class="panel-header" style="color: var(--gold); border-color: var(--gold); font-size: 0.9rem;">ELITE REWARDS</h3>
             <button class="btn-redeem" onclick="window.location.href='redem.html'">REDEEM XP POINTS</button>
         </div>
     </aside>
 
-    <main class="panel">
+    <main class="panel" id="main-panel">
         <section id="view-gate" class="active">
             <h3 class="panel-header">GATEKEEPER ACCESS</h3>
-            <p style="font-size: 0.9rem; color:#666; margin-bottom: 20px;">Mission: 10 Unique Questions / Day.</p>
+            <p style="font-size: 1rem; color:#888; margin-bottom: 20px;">Pilih misi harian Anda. Setiap misi berisi 10 soal acak tanpa pengulangan.</p>
             <input type="text" id="username" placeholder="NAMA / NICKNAME">
             <input type="email" id="useremail" placeholder="EMAIL TERDAFTAR">
-            <button class="btn-metal" onclick="checkDailyLimit()">START DAILY MISSION</button>
+            <button class="btn-metal" onclick="checkDailyLimit('trivia')">START TRIVIA MISSION (10 XP)</button>
+            <button class="btn-metal btn-lyric" onclick="checkDailyLimit('lyric')">START LYRICS MISSION (20 XP)</button>
         </section>
 
         <section id="view-quiz">
-            <div style="display: flex; justify-content: space-between; font-family: 'Orbitron'; font-size: 0.75rem; color: #555;">
+            <div style="display: flex; justify-content: space-between; font-family: 'Orbitron'; font-size: 0.85rem; color: #777;">
                 <span id="q-count">QUEST 01/10</span>
-                <span id="q-score" style="color: gold;">XP: 0</span>
+                <span id="q-score" style="color: var(--gold);">XP: 0</span>
             </div>
             <div id="timer-wrap"><div id="timer-bar"></div></div>
-            <h2 id="q-text" style="font-size: 1.5rem; margin-bottom: 25px; line-height: 1.4;">...</h2>
+            <h2 id="q-text" style="font-size: 1.6rem; margin-bottom: 25px; line-height: 1.4; font-weight: 500;">...</h2>
             <div id="options-box"></div>
         </section>
 
         <section id="view-result">
-            <h3 class="panel-header">MISSION ACCOMPLISHED</h3>
+            <h3 class="panel-header" id="result-header">MISSION ACCOMPLISHED</h3>
             <div style="text-align: center; padding: 25px 0;">
                 <h1 id="final-points" style="font-size: 5.5rem; color: var(--neon-red);">0</h1>
-                <p id="sync-status" style="color: #00ff00; font-size: 0.85rem; margin-bottom: 35px;">DATA SYNCHRONIZED</p>
+                <p id="sync-status" style="color: #00ff00; font-size: 0.9rem; margin-bottom: 35px;">DATA SYNCHRONIZED</p>
                 <button class="btn-metal" onclick="location.reload()">DASHBOARD</button>
             </div>
         </section>
@@ -95,6 +174,7 @@
 <script>
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzvFAVo9rxkc9i_x86NR_TFSp_pG2ZIAUBCcUW5okBAa49Uq2dAb5pWbBwJW9mfnCRyfg/exec'; 
 
+    // --- DATABASE TRIVIA (KODE ASLI) ---
     const database50 = [
         { id: 1, q: "Siapa vokalis band 'Successful Failure', proyek sampingan personil A7X di masa lalu?", a: ["M. Shadows", "The Rev", "Zacky Vengeance", "Johnny Christ"], c: 2 },
         { id: 2, q: "Lagu 'Save Me' memiliki durasi 10:57. Apa 'working title' lagu ini saat proses demo?", a: ["L-7", "The Bridge", "Fiction", "Victim"], c: 0 },
@@ -148,12 +228,78 @@
         { id: 50, q: "Siapa seniman yang mengerjakan artwork album 'Nightmare'?", a: ["Travis Smith", "Cam Rackam", "Wes Benscoter", "Micah Montague"], c: 0 }
     ];
 
+    // --- DATABASE SAMBUNG LIRIK BARU (60 SOAL) ---
+    const databaseLyrics60 = [
+        { id: 101, q: "Dear God: 'Dear God the only thing I ask of you is to...'", a: ["take care of the one I love", "hold her when I'm not around", "show her the way back home", "save me from this lonely road"], c: 0 },
+        { id: 102, q: "A Little Piece of Heaven: 'Before the story begins, is it such a sin...'", a: ["To take what's mine", "To cause a crying shame", "To love too much", "To look back in time"], c: 1 },
+        { id: 103, q: "Nightmare: 'Nightmare! Now your nightmare comes to...'", a: ["Life", "Die", "Light", "End"], c: 0 },
+        { id: 104, q: "Afterlife: 'I don't belong here, I gotta move on dear, escape from this...'", a: ["Hellhole", "Afterlife", "Prison cell", "Madness"], c: 1 },
+        { id: 105, q: "Bat Country: 'He who makes a beast of himself gets rid of the pain of being a...'", a: ["Monster", "Human", "Sinner", "Man"], c: 3 },
+        { id: 106, q: "So Far Away: 'How do I live without the ones I love? Time still turns the...'", a: ["Pages of the book", "Clock upon the wall", "Leaves of the tree", "World into the dark"], c: 0 },
+        { id: 107, q: "Hail to the King: 'Hail to the king, hail to the...'", a: ["One", "Crown", "Throne", "Lord"], c: 0 },
+        { id: 108, q: "Seize the Day: 'Seize the day or die regretting the time you...'", a: ["Lost", "Wasted", "Spent", "Had"], c: 0 },
+        { id: 109, q: "Buried Alive: 'Take the chain of your life, 'cause you're...'", a: ["Buried alive", "Gonna fall down", "Left behind", "Trapped inside"], c: 0 },
+        { id: 110, q: "Almost Easy: 'I feel insane, every time I still...'", a: ["Hear your voice", "See your face", "Call your name", "Remember us"], c: 2 },
+        { id: 111, q: "Unholy Confessions: 'I'll try, she said as he walked away. It's too late for...'", a: ["Regrets", "Goodbyes", "Apologies", "Remorse"], c: 1 },
+        { id: 112, q: "Critical Acclaim: 'Shhh, be quiet, you might...'", a: ["Wake the dead", "Piss them off", "Start a war", "Lose your mind"], c: 1 },
+        { id: 113, q: "Save Me: 'Tonight we all die young, tonight we...'", a: ["Burn in hell", "Sail away", "All die young", "Fade to black"], c: 2 },
+        { id: 114, q: "Gunslinger: 'Yeah, I'm reaching home, but I'm...'", a: ["Still alone", "Not the same", "On my knees", "Gonna leave again"], c: 0 },
+        { id: 115, q: "Beast and the Harlot: 'She's a dwelling place for demons, she's a cage for every...'", a: ["Sinner", "Evil spirit", "Unclean spirit", "Vile creature"], c: 2 },
+        { id: 116, q: "Welcome to the Family: 'Hey, nobody said that life was gonna be...'", a: ["Fair", "Perfect", "Easy", "Kind"], c: 1 },
+        { id: 117, q: "This Means War: 'This means war, this means war, this means...'", a: ["Death", "Blood", "War", "Pain"], c: 2 },
+        { id: 118, q: "Fiction: 'Now I think I understand, how this world can...'", a: ["Break a man", "Fall apart", "Turn so cold", "End tonight"], c: 0 },
+        { id: 119, q: "The Stage: 'Who is the crowd that peers through the...'", a: ["Window", "Cage", "Curtain", "Darkness"], c: 1 },
+        { id: 120, q: "Nobody: 'I am the sun, I am the...'", a: ["Moon", "One", "Dark", "Star"], c: 1 },
+        { id: 121, q: "M.I.A.: 'I watch the clouds change color with my weapon in my...'", a: ["Hand", "Pocket", "Grip", "Arm"], c: 0 },
+        { id: 122, q: "Victim: 'We're all victims of a crime that has no...'", a: ["Name", "Reason", "Face", "End"], c: 0 },
+        { id: 123, q: "Shepherd of Fire: 'Let me guide you through your darkest years, I am the...'", a: ["Devil's son", "Shepherd of fire", "King of hell", "Master of puppets"], c: 1 },
+        { id: 124, q: "God Damn: 'God damn, the world is going...'", a: ["To hell", "Underground", "Insane", "Silent"], c: 2 },
+        { id: 125, q: "Cosmic: 'Left the world alone, now I'm...'", a: ["Floating free", "Heading home", "In the stars", "Gone for good"], c: 1 },
+        { id: 126, q: "Scream: 'Scream, scream, scream, the way you...'", a: ["Love me", "Want it", "Do it", "Scream"], c: 1 },
+        { id: 127, q: "Danger Line: 'I never thought I'd die on the...'", a: ["Frontline", "Battlefield", "Danger line", "Border"], c: 2 },
+        { id: 128, q: "Brompton Cocktail: 'I dynamic my pulse, I'm...'", a: ["Fading away", "Ready to go", "Sinking deep", "Losing control"], c: 1 },
+        { id: 129, q: "Sidewinder: 'I can hear you breathe, I can...'", a: ["Feel your fear", "See you shake", "Watch you fall", "Sense your presence"], c: 0 },
+        { id: 130, q: "Strength of the World: 'Strength of the world, is on my...'", a: ["Shoulders", "Hands", "Side", "Mind"], c: 2 },
+        { id: 131, q: "I Won't See You Tonight Part 1: 'Sorrow, sank deep inside my...'", a: ["Heart", "Soul", "Veins", "Mind"], c: 1 },
+        { id: 132, q: "Warmness on the Soul: 'Your soul is guarded by the...'", a: ["Angels above", "Love in my heart", "Light of day", "Power of God"], c: 0 },
+        { id: 133, q: "Acid Rain: 'Our eco-system in the night, we are the...'", a: ["Last ones", "Chosen few", "Children of the sun", "Dust in the wind"], c: 2 },
+        { id: 134, q: "We Love You: 'More power, more pace, more money, more...'", a: ["Greed", "Fame", "Taste", "Space"], c: 2 },
+        { id: 135, q: "Mattel: 'Now I know this might sound strange, but I believe it's...'", a: ["Time to change", "All a game", "Just a phase", "Out of range"], c: 1 },
+        { id: 136, q: "Game Over: 'As the rope grows tight, I close my...'", a: ["Eyes", "Mouth", "Mind", "Heart"], c: 0 },
+        { id: 137, q: "Coming Home: 'I've fallen from grace, but I'm...'", a: ["Coming home", "Back in place", "Still alive", "Finding my way"], c: 0 },
+        { id: 138, q: "Planets: 'Planets collide, isolating the...'", a: ["Human race", "Stars", "Sun", "Darkness"], c: 0 },
+        { id: 139, q: "St. James: 'Shed your tears for the one who...'", a: ["Died today", "Left us all", "Stood so tall", "Saved our souls"], c: 2 },
+        { id: 140, q: "Not Ready to Die: 'I'll swallow your soul, alter your...'", a: ["Mind", "Destiny", "State", "Life"], c: 2 },
+        { id: 141, q: "Carry On: 'Carry on, my wayward son' - No wait, actual A7X Carry On: 'Carry on, the time will...'", a: ["Tell", "Heal", "Come", "Pass"], c: 0 },
+        { id: 142, q: "Lost: 'With peace of mind so hard to find, we're...'", a: ["Running blind", "Left behind", "Losing time", "Far behind"], c: 1 },
+        { id: 143, q: "Gunslinger: 'At home the warfare, the image...'", a: ["Fades away", "Stays clear", "In my head", "Of your face"], c: 3 },
+        { id: 144, q: "The Wicked End: 'Dust the apple off, clean each...'", a: ["Corner", "Bite", "Piece", "Side"], c: 1 },
+        { id: 145, q: "Eternal Rest: 'Eternal rest, in time you'll...'", a: ["Find", "See", "Die", "Be"], c: 0 },
+        { id: 146, q: "Second Heartbeat: 'We all need a reason, a reason to...'", a: ["Live", "Die", "Smile", "Cry"], c: 0 },
+        { id: 147, q: "Chapter Four: 'Give me your hand, blood is on the...'", a: ["Floor", "Wall", "Sand", "Stone"], c: 2 },
+        { id: 148, q: "Remenissions: 'Agood friend once told me, you are the...'", a: ["Only one", "Enemy", "Master", "Sinner"], c: 1 },
+        { id: 149, q: "Desecrate Through Reverence: 'Far away, you've gone too...'", a: ["Deep", "Far", "Fast", "Low"], c: 1 },
+        { id: 150, q: "Radiant Eclipse: 'Cold walls of my, eternal...'", a: ["Prison", "Grave", "Home", "Hell"], c: 1 },
+        { id: 151, q: "To End the Rapture: 'In early morning, the sun will...'", a: ["Rise", "Shine", "Burn", "Die"], c: 0 },
+        { id: 152, q: "Clairvoyant Disease: 'Failure inside, the dark is...'", a: ["Coming", "Calling", "Falling", "Rising"], c: 1 },
+        { id: 153, q: "And All Things Will End: 'And all things will end, in...'", a: ["Time", "Pain", "Fire", "Dust"], c: 0 },
+        { id: 154, q: "Blindcuts (B-Side): 'Don't look away, it's time to...'", a: ["Pray", "Face the day", "See the truth", "Run"], c: 1 },
+        { id: 155, q: "Lost It All: 'I've lost it all, I'm...'", a: ["Gonna fall", "Sinking low", "Standing small", "On my knees"], c: 0 },
+        { id: 156, q: "4:00 AM: 'It's four AM, I'm...'", a: ["Still awake", "Wide awake", "Losing time", "Going home"], c: 1 },
+        { id: 157, q: "Set Me Free: 'Set me free, and let me...    '", a: ["Fly", "Go", "Be", "Die"], c: 1 },
+        { id: 158, q: "Beautiful Morning: 'It's a beautiful morning, it's a beautiful...'", a: ["Day", "Life", "Lie", "Time"], c: 2 },
+        { id: 159, q: "Easier: 'It's easier to, fade away than to...'", a: ["Face the day", "Try again", "Stay the same", "Let it go"], c: 0 },
+        { id: 160, q: "Ordinary: 'Will you let me, enter your...'", a: ["Heart", "World", "Mind", "Soul"], c: 1 }
+    ];
+
     let user = { name: "", email: "" };
     let curIdx = 0;
     let score = 0;
     let timer;
     let timeLeft = 100;
     let activeQuestions = [];
+    let currentMode = "trivia"; // 'trivia' atau 'lyric'
+    let pointPerQuestion = 10;
 
     window.onload = fetchLeaderboard;
 
@@ -162,39 +308,54 @@
         document.getElementById(id).classList.add('active');
     }
 
-    function checkDailyLimit() {
+    function checkDailyLimit(mode) {
         const n = document.getElementById('username').value;
         const e = document.getElementById('useremail').value;
         if(!n || !e) return alert("Identify yourself!");
         
         const today = new Date().toLocaleDateString();
-        if(localStorage.getItem(`a7x_daily_${e}`) === today) {
-            return alert("Mission already completed today!");
+        // Limit harian dicek berdasarkan mode spesifik
+        if(localStorage.getItem(`a7x_daily_${mode}_${e}`) === today) {
+            return alert(`Mission [${mode.toUpperCase()}] already completed today!`);
         }
 
-        // --- SISTEM ANTI-REPEAT SOAL ---
-        let usedIds = JSON.parse(localStorage.getItem(`a7x_used_q_${e}`)) || [];
+        currentMode = mode;
+        let selectedDb = [];
+        let storageKey = "";
+
+        if(mode === "trivia") {
+            selectedDb = database50;
+            pointPerQuestion = 10;
+            storageKey = `a7x_used_q_${e}`;
+            document.getElementById('main-panel').classList.remove('lyric-mode');
+        } else {
+            selectedDb = databaseLyrics60;
+            pointPerQuestion = 20;
+            storageKey = `a7x_used_lyric_${e}`;
+            // Tambahkan class penanda lirik untuk kustomisasi visual bertema emas
+            document.getElementById('main-panel').classList.add('lyric-mode');
+        }
+
+        let usedIds = JSON.parse(localStorage.getItem(storageKey)) || [];
+        let available = selectedDb.filter(q => !usedIds.includes(q.id));
         
-        // Filter soal yang belum pernah dikerjakan
-        let available = database50.filter(q => !usedIds.includes(q.id));
-        
-        // Reset jika semua 50 soal sudah dikerjakan (siklus 5 hari selesai)
+        // Reset siklus jika soal habis
         if(available.length < 10) {
-            alert("All mission packs completed! Resetting question cycle.");
+            alert(`All ${mode} mission packs completed! Resetting question cycle.`);
             usedIds = [];
-            available = [...database50];
+            available = [...selectedDb];
         }
 
         user = { name: n, email: e };
-        // Ambil 10 soal acak dari yang tersedia
         const shuffled = available.sort(() => Math.random() - 0.5);
         activeQuestions = shuffled.slice(0, 10);
         
-        // Simpan ID soal yang akan dikerjakan ke list 'sudah dipakai'
         const currentIds = activeQuestions.map(q => q.id);
-        localStorage.setItem(`a7x_used_q_${e}`, JSON.stringify([...usedIds, ...currentIds]));
+        localStorage.setItem(storageKey, JSON.stringify([...usedIds, ...currentIds]));
 
         showView('view-quiz');
+        // Sesuaikan warna bar timer berdasarkan mode (Merah untuk Trivia, Emas untuk Lirik)
+        document.getElementById('timer-bar').style.background = mode === 'trivia' ? 'var(--neon-red)' : 'var(--gold)';
         loadQuestion();
     }
 
@@ -203,10 +364,14 @@
         clearInterval(timer);
         timeLeft = 100;
         const data = activeQuestions[curIdx];
-        document.getElementById('q-count').innerText = `QUEST ${curIdx + 1}/10`;
+        
+        const modeLabel = currentMode === "trivia" ? "TRIVIA" : "LYRICS";
+        document.getElementById('q-count').innerText = `${modeLabel} QUEST ${curIdx + 1}/10`;
         document.getElementById('q-text').innerText = data.q;
+        
         const box = document.getElementById('options-box');
         box.innerHTML = '';
+        
         data.a.forEach((opt, i) => {
             const d = document.createElement('div');
             d.className = 'option-card';
@@ -214,6 +379,7 @@
             d.onclick = () => handleAnswer(i);
             box.appendChild(d);
         });
+        
         timer = setInterval(() => {
             timeLeft -= 1.1;
             document.getElementById('timer-bar').style.width = timeLeft + "%";
@@ -223,7 +389,7 @@
 
     function handleAnswer(idx) {
         if(idx === activeQuestions[curIdx].c) {
-            score += 10;
+            score += pointPerQuestion;
             document.getElementById('q-score').innerText = `XP: ${score}`;
         }
         curIdx++;
@@ -233,8 +399,19 @@
     function endQuiz() {
         clearInterval(timer);
         showView('view-result');
-        document.getElementById('final-points').innerText = score;
-        localStorage.setItem(`a7x_daily_${user.email}`, new Date().toLocaleDateString());
+        
+        const finalPtsElement = document.getElementById('final-points');
+        finalPtsElement.innerText = score;
+        
+        if(currentMode === "lyric") {
+            finalPtsElement.style.color = "var(--gold)";
+            document.getElementById('result-header').innerText = "LYRIC MISSION ACCOMPLISHED";
+        } else {
+            finalPtsElement.style.color = "var(--neon-red)";
+            document.getElementById('result-header').innerText = "MISSION ACCOMPLISHED";
+        }
+
+        localStorage.setItem(`a7x_daily_${currentMode}_${user.email}`, new Date().toLocaleDateString());
         submitScore();
     }
 
@@ -245,7 +422,7 @@
                 mode: 'no-cors',
                 body: JSON.stringify({ user: user.name, email: user.email, score: score })
             });
-            document.getElementById('sync-status').innerText = "XP DATA SYNCHRONIZED";
+            document.getElementById('sync-status').innerText = "XP DATA SYNCHRONIZED TO YOUR ACCOUNT";
             fetchLeaderboard();
         } catch(e) { console.log(e); }
     }
@@ -258,7 +435,7 @@
             data.sort((a,b) => b[2] - a[2]);
             target.innerHTML = data.slice(0, 10).map((row, i) => `
                 <div class="leader-item">
-                    <span><strong style="color:gold">#${i+1}</strong> ${row[0]}</span>
+                    <span><strong style="color:var(--gold)">#${i+1}</strong> ${row[0]}</span>
                     <span style="color:var(--neon-red); font-family:'Orbitron'; font-weight:bold;">${row[2]} XP</span>
                 </div>
             `).join('');
