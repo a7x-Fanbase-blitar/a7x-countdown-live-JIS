@@ -92,11 +92,6 @@
         }
         .btn-ticket:hover { transform: scale(1.1) translateY(-5px); background: #fff; color: #ff0000; box-shadow: 0 0 50px #ff0000; }
 
-        #journal-modal {
-            position: fixed; inset: 0; z-index: 10001; background: rgba(0,0,0,0.9);
-            display: none; align-items: center; justify-content: center; padding: 20px;
-        }
-
         .hidden-content { opacity: 0; pointer-events: none; transition: 1.5s ease; }
         .show-content { opacity: 1; pointer-events: auto; }
 
@@ -163,16 +158,6 @@
 
     <div id="particles-js"></div>
 
-    <!-- MODAL JOURNAL -->
-    <div id="journal-modal" onclick="closeJournal()">
-        <div class="ultra-glass p-6 max-w-2xl w-full relative" onclick="event.stopPropagation()">
-            <button onclick="closeJournal()" class="absolute top-4 right-4 text-red-600 text-2xl font-bold">&times;</button>
-            <img id="modal-img" src="" class="w-full h-64 object-cover rounded-xl mb-4 border-2 border-red-600">
-            <h2 id="modal-title" class="a7x-title text-2xl mb-4 uppercase"></h2>
-            <div id="modal-text" class="text-[10px] md:text-xs text-gray-300 leading-relaxed uppercase tracking-widest overflow-y-auto max-h-40 pr-2"></div>
-        </div>
-    </div>
-
     <!-- GATEKEEPER -->
     <div id="gatekeeper">
         <img src="a8x.webp" alt="Logo A7X" class="w-48 h-auto mb-8 animate-pulse">
@@ -228,21 +213,6 @@
             <p class="text-[10px] text-gray-400 mt-3 animate-pulse uppercase tracking-[0.2em]">Beli Sebelum Kehabisan!</p>
         </div>
 
-        <!-- JOURNAL SECTION -->
-        <div class="mt-12 text-left px-4 relative z-10 mb-16">
-            <h2 class="text-red-500 font-bold mb-6 uppercase text-sm tracking-widest border-b-2 border-red-600 inline-block">Deathbat Blitar Journal</h2>
-            <div class="grid md:grid-cols-2 gap-4">
-                <article class="ultra-glass p-5 border-l-2 border-red-600 cursor-pointer hover:bg-red-600/10 transition" onclick="openJournal('news1')">
-                    <h3 class="text-white font-bold text-xs mb-2 uppercase">Update Konser JIS 2026</h3>
-                    <p class="text-[10px] text-gray-400 leading-relaxed uppercase">Persiapan panggung termegah A7X di Asia. Klik untuk detail...</p>
-                </article>
-                <article class="ultra-glass p-5 border-l-2 border-red-600 cursor-pointer hover:bg-red-600/10 transition" onclick="openJournal('news2')">
-                    <h3 class="text-white font-bold text-xs mb-2 uppercase">Info Bus Fanbase Blitar</h3>
-                    <p class="text-[10px] text-gray-400 leading-relaxed uppercase">-</p>
-                </article>
-            </div>
-        </div>
-
         <!-- PLAYER AUDIO -->
         <div class="mt-8 mb-4 flex flex-col items-center px-4 relative z-10">
             <div class="bg-black/80 backdrop-blur-md px-4 py-3 md:px-6 md:py-4 rounded-full border border-red-600/30 flex items-center gap-4 md:gap-6 w-full max-w-sm overflow-hidden">
@@ -259,6 +229,7 @@
             <audio id="audioPlayer" onended="nextSong()"></audio>
         </div>
 
+        <!-- SHOUTBOX -->
         <div class="mt-12 w-full max-w-lg mx-auto shoutbox-container p-6 rounded-r-3xl ultra-glass mb-16 text-left">
             <h3 class="text-red-500 font-bold mb-4 uppercase text-xs tracking-widest flex items-center gap-2">
                 <i class="fas fa-comment-dots"></i> Moshpit Shoutbox
@@ -405,26 +376,11 @@
             });
         });
 
-        // JOURNAL & UI
-        const journalData = {
-            news1: { title: "Update Konser JIS 2026", img: "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?auto=format&fit=crop&w=800&q=80", text: "Stadion JIS akan menggunakan panggung 360 derajat untuk memberikan pengalaman maksimal bagi The Fallen." },
-            news2: { title: "Info Bus Fanbase Blitar", img: "https://i.ibb.co.com/p6FmqgMF/Whats-App-Image-2026-05-09-at-06-02-32.jpg", text: "-" }
-        };
-
-        function openJournal(key) {
-            const d = journalData[key];
-            document.getElementById('modal-title').innerText = d.title;
-            document.getElementById('modal-img').src = d.img;
-            document.getElementById('modal-text').innerText = d.text;
-            document.getElementById('journal-modal').style.display = 'flex';
-        }
-
-        function closeJournal() { document.getElementById('journal-modal').style.display = 'none'; }
         function toggleLightMode() { document.body.classList.toggle('light-mode'); spawnBats(); }
 
         // COUNTDOWN
         setInterval(() => {
-            const gap = new Date('October 10, 2026 20:00:00') - new Date();
+            const gap = new Date('October 10, 2026 19:00:00') - new Date();
             const d=1000*60*60*24, h=d/24, m=h/60, s=m/60;
             document.getElementById('days').innerText = Math.floor(gap/d);
             document.getElementById('hours').innerText = Math.floor((gap%d)/h);
