@@ -16,7 +16,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background-color: #030303;
-            /* Efek overlay radial gelap dikombinasikan dengan gambar latar bertema metal */
             background-image: radial-gradient(circle, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.95) 100%), url('wood.jpg!d');
             background-size: cover;
             background-attachment: fixed;
@@ -30,7 +29,6 @@
             text-align: center; 
             position: relative;
         }
-        /* Ornamen Deathbat fiktif menggunakan CSS border untuk memperkuat vibe A7X */
         header::after {
             content: '';
             display: block;
@@ -99,31 +97,125 @@
             letter-spacing: 1px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
-        .btn-metal:hover { transform: translateY(-2px); box-shadow: 0 0 25px var(--neon-red); background: linear-gradient(135deg, #b30000, #ff0000); }
-        .btn-lyric {
-            background: linear-gradient(135deg, #111, #222);
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            margin-top: 15px;
+        .btn-metal:disabled { background: #111; border-color: #222; color: #444; cursor: not-allowed; box-shadow: none; }
+        
+        /* BUTTON REDEEM GOLD GLOW STYLE */
+        .btn-redeem { 
+            display: block;
+            width: 100%; 
+            padding: 15px; 
+            background: transparent; 
+            border: 2px solid var(--gold); 
+            color: var(--gold); 
+            border-radius: 8px; 
+            font-family: 'Orbitron', sans-serif; 
+            font-weight: bold; 
+            font-size: 0.9rem;
+            text-align: center;
+            text-decoration: none;
+            text-transform: uppercase; 
+            margin-top: 15px; 
+            transition: 0.3s all ease; 
+            cursor: pointer;
         }
-        .btn-lyric:hover { transform: translateY(-2px); box-shadow: 0 0 25px var(--gold); background: linear-gradient(135deg, #cc9900, var(--gold)); color: #000; }
-        .btn-redeem { background: transparent; border: 2px solid var(--gold); color: var(--gold); padding: 15px; width: 100%; border-radius: 8px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; margin-top: 15px; }
-        .btn-redeem:hover { background: var(--gold); color: black; box-shadow: 0 0 15px var(--gold); }
-        .leader-item { display: flex; justify-content: space-between; padding: 12px 18px; background: rgba(255,255,255,0.02); margin-bottom: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); transition: 0.2s; }
+        .btn-redeem:hover { 
+            background: var(--gold); 
+            color: black; 
+            box-shadow: 0 0 20px var(--gold); 
+            transform: scale(1.01);
+        }
+        
+        .leader-item { display: flex; justify-content: space-between; padding: 12px 18px; background: rgba(255,255,255,0.02); margin-bottom: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); transition: 0.2s; align-items: center; }
         .leader-item:hover { background: rgba(255,0,0,0.05); border-color: rgba(255,0,0,0.2); }
-        .option-card { background: rgba(255,255,255,0.03); border: 1px solid #222; padding: 20px; border-radius: 8px; margin-bottom: 12px; cursor: pointer; transition: 0.2s; font-size: 1.1rem; }
-        .option-card:hover { border-color: var(--neon-red); background: rgba(255,0,0,0.12); transform: translateX(5px); }
-        .lyric-mode .option-card:hover { border-color: var(--gold); background: rgba(255,204,0,0.1); }
-        #timer-wrap { width: 100%; height: 6px; background: #111; margin: 20px 0; border-radius: 10px; overflow: hidden; border: 1px solid #222; }
-        #timer-bar { width: 100%; height: 100%; background: var(--neon-red); transition: width 0.1s linear; }
-        input { width: 100%; padding: 18px; margin-bottom: 15px; background: #050505; border: 1px solid #333; color: white; border-radius: 8px; font-family: inherit; font-size: 1.1rem; }
-        input:focus { outline: none; border-color: var(--neon-red); box-shadow: 0 0 10px rgba(255,0,0,0.3); }
+        
+        /* STYLE JUARA MULTI-COLOR & GRADIENT */
+        @keyframes rgbWave {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .rank-1-name {
+            font-weight: 700;
+            background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0000ff, #8000ff, #ff00ff, #ff0000);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rgbWave 5s linear infinite;
+        }
+        .rank-2-name {
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 45%, #888888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+        }
+        .rank-3-name { font-weight: 700; color: #cd7f32; text-shadow: 0 0 5px rgba(205, 127, 50, 0.4); }
+
+        /* INTERFACE COUNTDOWN PANEL */
+        .countdown-box {
+            background: linear-gradient(180deg, #0a0a0a 0%, #030303 100%);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 25px 15px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: inset 0 0 15px rgba(255, 0, 0, 0.1);
+        }
+        .cd-msg {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            color: var(--neon-red);
+            font-size: 1rem;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 8px rgba(255,0,0,0.6);
+            animation: pulse-glow 2s infinite;
+        }
+        @keyframes pulse-glow {
+            0% { opacity: 0.7; text-shadow: 0 0 5px rgba(255,0,0,0.4); }
+            50% { opacity: 1; text-shadow: 0 0 15px rgba(255,0,0,0.9); }
+            100% { opacity: 0.7; text-shadow: 0 0 5px rgba(255,0,0,0.4); }
+        }
+        .timer-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .time-block {
+            background: #000;
+            border: 1px solid #222;
+            padding: 10px 15px;
+            border-radius: 8px;
+            min-width: 70px;
+        }
+        .time-num {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .time-label {
+            font-size: 0.65rem;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        input { width: 100%; padding: 18px; margin-bottom: 15px; background: #050505; border: 1px solid #222; color: #444; border-radius: 8px; font-family: inherit; font-size: 1.1rem; }
+        input:disabled { cursor: not-allowed; }
         section { display: none; }
         section.active { display: block; }
         @media (max-width: 1000px) { .main-container { grid-template-columns: 1fr; } .main-container aside { order: 2; } .main-container main { order: 1; } }
     </style>
 </head>
 <body>
+
+<div id="toast"></div>
+
+<a href="kuis.html" class="btn-back">
+    <span>&lsaquo;</span> BACK
+</a>
 
 <header>
     <h1 class="glitch-text">A7X BLITAR</h1>
@@ -136,37 +228,39 @@
         <div id="leaderboard-list"><p style="color:#444; text-align: center;">Fetching souls...</p></div>
         <div style="margin-top: 30px; border-top: 1px solid #222; padding-top: 20px;">
             <h3 class="panel-header" style="color: var(--gold); border-color: var(--gold); font-size: 0.9rem;">ELITE REWARDS</h3>
-            <button class="btn-redeem" onclick="window.location.href='redem.html'">REDEEM XP POINTS</button>
+            <a href="redem.html" class="btn-redeem">REDEEM XP POINTS</a>
         </div>
     </aside>
 
     <main class="panel" id="main-panel">
         <section id="view-gate" class="active">
             <h3 class="panel-header">GATEKEEPER ACCESS</h3>
-            <p style="font-size: 1rem; color:#888; margin-bottom: 20px;">Pilih misi harian Anda. Setiap misi berisi 10 soal acak tanpa pengulangan.</p>
-            <input type="text" id="username" placeholder="NAMA / NICKNAME">
-            <input type="email" id="useremail" placeholder="EMAIL TERDAFTAR">
-            <button class="btn-metal" onclick="checkDailyLimit('trivia')">START QUIZ MISSION (10 XP)</button>
-            <button class="btn-metal btn-lyric" onclick="checkDailyLimit('lyric')">START LYRICS MISSION (20 XP)</button>
-        </section>
-
-        <section id="view-quiz">
-            <div style="display: flex; justify-content: space-between; font-family: 'Orbitron'; font-size: 0.85rem; color: #777;">
-                <span id="q-count">QUEST 01/10</span>
-                <span id="q-score" style="color: var(--gold);">XP: 0</span>
+            
+            <div class="countdown-box">
+                <div class="cd-msg">⚠️ QUIZ SELESAI | COOLDOWN SYSTEM UPDATE</div>
+                <div class="timer-grid">
+                    <div class="time-block">
+                        <div class="time-num" id="days">00</div>
+                        <div class="time-label">Hari</div>
+                    </div>
+                    <div class="time-block">
+                        <div class="time-num" id="hours">00</div>
+                        <div class="time-label">Jam</div>
+                    </div>
+                    <div class="time-block">
+                        <div class="time-num" id="minutes">00</div>
+                        <div class="time-label">Menit</div>
+                    </div>
+                    <div class="time-block">
+                        <div class="time-num" id="seconds">00</div>
+                        <div class="time-label">Detik</div>
+                    </div>
+                </div>
             </div>
-            <div id="timer-wrap"><div id="timer-bar"></div></div>
-            <h2 id="q-text" style="font-size: 1.6rem; margin-bottom: 25px; line-height: 1.4; font-weight: 500;">...</h2>
-            <div id="options-box"></div>
-        </section>
 
-        <section id="view-result">
-            <h3 class="panel-header" id="result-header">MISSION ACCOMPLISHED</h3>
-            <div style="text-align: center; padding: 25px 0;">
-                <h1 id="final-points" style="font-size: 5.5rem; color: var(--neon-red);">0</h1>
-                <p id="sync-status" style="color: #00ff00; font-size: 0.9rem; margin-bottom: 35px;">DATA SYNCHRONIZED</p>
-                <button class="btn-metal" onclick="location.reload()">DASHBOARD</button>
-            </div>
+            <input type="text" placeholder="LOCKDOWN MODE - ENGINE OFFLINE" disabled style="text-align: center;">
+            <button class="btn-metal" disabled>START QUIZ MISSION (LOCKED)</button>
+            <button class="btn-metal btn-lyric" disabled>START LYRICS MISSION (LOCKED)</button>
         </section>
     </main>
 </div>
@@ -174,257 +268,33 @@
 <script>
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzvFAVo9rxkc9i_x86NR_TFSp_pG2ZIAUBCcUW5okBAa49Uq2dAb5pWbBwJW9mfnCRyfg/exec'; 
 
-    // --- DATABASE TRIVIA (KODE ASLI) ---
-    const database50 = [
-        { id: 1, q: "Siapa vokalis band 'Successful Failure', proyek sampingan personil A7X di masa lalu?", a: ["M. Shadows", "The Rev", "Zacky Vengeance", "Johnny Christ"], c: 2 },
-        { id: 2, q: "Lagu 'Save Me' memiliki durasi 10:57. Apa 'working title' lagu ini saat proses demo?", a: ["L-7", "The Bridge", "Fiction", "Victim"], c: 0 },
-        { id: 3, q: "Di kota mana Avenged Sevenfold memainkan konser pertama mereka di luar Amerika Serikat?", a: ["London", "Tokyo", "Vancouver", "Mexico City"], c: 2 },
-        { id: 4, q: "Lagu 'Exist' menampilkan monolog naratif di bagian akhir. Siapa tokoh yang mengisi suara tersebut?", a: ["Neil deGrasse Tyson", "Stephen Hawking", "Carl Sagan", "Elon Musk"], c: 0 },
-        { id: 5, q: "Siapa drummer yang melakukan sesi rekaman penuh untuk album 'Sounding the Seventh Trumpet'?", a: ["The Rev", "Matt Wendt", "Arin Ilejay", "Brooks Wackerman"], c: 0 },
-        { id: 6, q: "Apa nama teknik drum 'Double-Ride' ikonik yang diciptakan oleh The Rev?", a: ["The Double-Ride Thing", "The Octopus Stroke", "Spider Chops", "The Rev Beat"], c: 0 },
-        { id: 7, q: "Zacky Vengeance membentuk brand pakaian bernama Vengeance University. Tahun berapa brand ini berdiri?", a: ["2005", "2007", "2004", "2006"], c: 0 },
-        { id: 8, q: "Lagu 'Afterlife' menampilkan elemen string section. Siapa yang menulis aransemen orkestranya?", a: ["The Rev", "Synyster Gates", "Brian Haner Sr.", "Marc Klasfeld"], c: 0 },
-        { id: 9, q: "Apa instrumen pertama yang dipelajari Johnny Christ sebelum akhirnya berpindah ke Bass?", a: ["Gitar", "Piano", "Seksafon", "Drum"], c: 0 },
-        { id: 10, q: "Lagu 'Not Ready to Die' dibuat khusus untuk game Call of Duty: Black Ops. Map apa yang dimaksud?", a: ["Call of the Dead", "Origins", "Mob of the Dead", "Moon"], c: 0 },
-        { id: 11, q: "Apa judul lagu pertama yang pernah ditulis oleh The Rev untuk Avenged Sevenfold?", a: ["Fiction", "A Little Piece of Heaven", "Warmness on the Soul", "Shattered by Broken Dreams"], c: 3 },
-        { id: 12, q: "Album 'City of Evil' menduduki posisi berapa di Billboard 200 pada minggu pertamanya?", a: ["30", "15", "42", "21"], c: 0 },
-        { id: 13, q: "Siapa musisi yang memberikan teknik vokal 'Grit' kepada M. Shadows setelah operasi pita suara?", a: ["Ron Anderson", "Melissa Cross", "Axl Rose", "Chris Cornell"], c: 0 },
-        { id: 14, q: "Di video klip 'Seize the Day', siapa personil yang diceritakan masuk penjara?", a: ["M. Shadows", "Zacky Vengeance", "Johnny Christ", "The Rev"], c: 0 },
-        { id: 15, q: "Apa nama label rekaman pertama yang merilis debut album A7X?", a: ["Good Life Recordings", "Hopeless Records", "Warner Bros", "Capitol Records"], c: 0 },
-        { id: 16, q: "Lagu 'Sidewinder' memiliki outro gitar akustik yang kental dengan nuansa?", a: ["Flamenco", "Country", "Blues", "Gypsy Jazz"], c: 0 },
-        { id: 17, q: "Brooks Wackerman resmi bergabung tahun 2015. Dari band mana ia berasal sebelumnya?", a: ["Bad Religion", "Suicidal Tendencies", "Tenacious D", "The Offspring"], c: 0 },
-        { id: 18, q: "Lagu 'M.I.A.' menceritakan tentang perang di negara mana?", a: ["Irak", "Vietnam", "Afganistan", "Suriah"], c: 0 },
-        { id: 19, q: "Siapa personil yang mendesain logo 'Deathbat' asli saat masih SMA?", a: ["Micah Montague", "M. Shadows", "Zacky Vengeance", "The Rev"], c: 0 },
-        { id: 20, q: "Teknik gitar 'Sweep Picking' di lagu 'Bat Country' terinspirasi dari komposer klasik siapa?", a: ["Paganini", "Bach", "Beethoven", "Vivaldi"], c: 0 },
-        { id: 21, q: "Siapa produser yang menangani album 'Life Is But A Dream...'?", a: ["Joe Barresi", "Mike Elizondo", "Andy Wallace", "Rick Rubin"], c: 0 },
-        { id: 22, q: "Lagu 'Acid Rain' merupakan bagian kedua (sekuel) dari lagu apa?", a: ["Planets", "Victim", "Coming Home", "Higher"], c: 0 },
-        { id: 23, q: "Lirik lagu 'Fiction' diselesaikan oleh The Rev hanya berapa hari sebelum ia meninggal?", a: ["3 Hari", "1 Hari", "7 Hari", "14 Hari"], c: 0 },
-        { id: 24, q: "Apa model gitar Schecter pertama yang digunakan Synyster Gates secara resmi?", a: ["Avenger", "Hellraiser", "C-1 Elite", "Tempest"], c: 0 },
-        { id: 25, q: "DVD 'All Excess' merinci sejarah band. Apa kepanjangan dari nama asli M. Shadows?", a: ["Matthew Charles Sanders", "Matthew James Sanders", "Matthew Seth Sanders", "Matthew Robert Sanders"], c: 0 },
-        { id: 26, q: "Lagu 'Warmness on the Soul' dirilis dalam format EP. Berapa jumlah lagu dalam EP tersebut?", a: ["4", "2", "6", "5"], c: 0 },
-        { id: 27, q: "Siapa bassist A7X yang dipecat karena kabarnya menusuk ban mobil personil lain?", a: ["Justin Sane", "Dameon Ash", "Matt Wendt", "Johnny Christ"], c: 0 },
-        { id: 28, q: "Zacky Vengeance menggunakan gitar kidal. Apa alasan utama ia memilih bermain kidal?", a: ["Secara alami kidal", "Tantangan", "Kagum pada Hendrix", "Cedera tangan kanan"], c: 0 },
-        { id: 29, q: "Album 'The Stage' adalah 'concept album' yang membahas tentang?", a: ["Artificial Intelligence", "Simulated Reality", "Theology", "Semua Benar"], c: 3 },
-        { id: 30, q: "Di lagu 'Beast and the Harlot', suara teriakan tinggi di awal lagu dilakukan oleh?", a: ["M. Shadows", "The Rev", "Synyster Gates", "Brian Haner Sr."], c: 1 },
-        { id: 31, q: "Arin Ilejay adalah drummer termuda yang pernah bergabung. Band apa yang ia tinggalkan demi A7X?", a: ["Confide", "Attack Attack!", "Of Mice & Men", "The Word Alive"], c: 0 },
-        { id: 32, q: "Lagu 'God Hates Us' terinspirasi dari gaya musik band metal legendaris apa?", a: ["Pantera", "Slayer", "Metallica", "Megadeth"], c: 0 },
-        { id: 33, q: "Brian Haner Sr. (Papa Gates) mengisi solo gitar di lagu apa pada album City of Evil?", a: ["Sidewinder", "Bat Country", "Seize the Day", "M.I.A."], c: 0 },
-        { id: 34, q: "Album 'Waking the Fallen' adalah album terakhir yang menggunakan vokal?", a: ["Full Screaming", "Clean Vokal", "Double Tracking", "Growl"], c: 0 },
-        { id: 35, q: "Siapa model wanita yang menjadi 'kekasih' M. Shadows di video klip Seize the Day?", a: ["Valary DiBenedetto", "Michelle DiBenedetto", "Gwendolyn Sanders", "Lacey Christ"], c: 1 },
-        { id: 36, q: "Berapa banyak lagu di album 'Nightmare' yang liriknya ditulis sepenuhnya oleh The Rev?", a: ["1 (Fiction)", "3", "0", "5"], c: 0 },
-        { id: 37, q: "The Rev merekam bagian vokal untuk lagu 'A Little Piece of Heaven' di studio mana?", a: ["Bilik vokal sendiri", "Kamar mandi studio", "Garasi M. Shadows", "Hutan"], c: 1 },
-        { id: 38, q: "Lagu 'Nightmare' awalnya akan diberi judul apa oleh The Rev?", a: ["Death", "The One", "L-7", "Buried Alive"], c: 1 },
-        { id: 39, q: "Lagu 'The Fight' merupakan B-side dari album mana?", a: ["Self-Titled", "Nightmare", "City of Evil", "The Stage"], c: 0 },
-        { id: 40, q: "Nama Avenged Sevenfold diambil dari Kejadian 4:24. Siapa tokoh di Alkitab yang dimaksud?", a: ["Kain", "Habel", "Adam", "Lamekh"], c: 0 },
-        { id: 41, q: "Siapa pemain biola profesional yang mengisi di lagu 'Afterlife'?", a: ["Samuel Fischer", "Musisi Session (Tidak Dikreditkan)", "Brian Haner Sr", "The Rev"], c: 1 },
-        { id: 42, q: "Lagu 'Dear God' memiliki pengaruh kuat dari genre Country. Siapa musisi country inspirasinya?", a: ["Johnny Cash", "Eagles", "Garth Brooks", "Blake Shelton"], c: 1 },
-        { id: 43, q: "Apa nama band punk masa remaja Zacky Vengeance sebelum A7X?", a: ["MPA (Mad Porno Action)", "The Feds", "Society Trust", "Pinkly Smooth"], c: 0 },
-        { id: 44, q: "Siapa bassist asli yang bermain di album 'Sounding the Seventh Trumpet'?", a: ["Justin Sane", "Matt Wendt", "Dameon Ash", "Johnny Christ"], c: 1 },
-        { id: 45, q: "Lagu 'Nobody' menggunakan teknik 'Stop-Motion' untuk video klipnya. Berapa lama pembuatannya?", a: ["15 bulan", "5 bulan", "2 tahun", "8 bulan"], c: 0 },
-        { id: 46, q: "Apa arti tato '7x' yang ada di belakang telinga para personil?", a: ["Tujuh kali lipat", "Anggota ke-7", "Tahun ke-7", "Kematian"], c: 0 },
-        { id: 47, q: "Lagu 'Natural Born Killer' memiliki riff yang awalnya ditujukan untuk proyek?", a: ["Pinkly Smooth", "Solo Synyster Gates", "Film Horror", "Game Call of Duty"], c: 0 },
-        { id: 48, q: "Lagu 'Cosmic' di album LIBAD sangat menonjolkan penggunaan alat musik?", a: ["Vocoder & Synthesizer", "Double Bass", "Terompet", "Harpa"], c: 0 },
-        { id: 49, q: "Lagu 'Victim' dimulai dengan suara lonceng. Berapa kali lonceng tersebut berdentang?", a: ["12 kali", "7 kali", "10 kali", "13 kali"], c: 0 },
-        { id: 50, q: "Siapa seniman yang mengerjakan artwork album 'Nightmare'?", a: ["Travis Smith", "Cam Rackam", "Wes Benscoter", "Micah Montague"], c: 0 }
-    ];
-
-    // --- DATABASE SAMBUNG LIRIK BARU (60 SOAL) ---
-    const databaseLyrics60 = [
-        { id: 101, q: "Dear God: 'Dear God the only thing I ask of you is to...'", a: ["take care of the one I love", "hold her when I'm not around", "show her the way back home", "save me from this lonely road"], c: 0 },
-        { id: 102, q: "A Little Piece of Heaven: 'Before the story begins, is it such a sin...'", a: ["To take what's mine", "To cause a crying shame", "To love too much", "To look back in time"], c: 1 },
-        { id: 103, q: "Nightmare: 'Nightmare! Now your nightmare comes to...'", a: ["Life", "Die", "Light", "End"], c: 0 },
-        { id: 104, q: "Afterlife: 'I don't belong here, I gotta move on dear, escape from this...'", a: ["Hellhole", "Afterlife", "Prison cell", "Madness"], c: 1 },
-        { id: 105, q: "Bat Country: 'He who makes a beast of himself gets rid of the pain of being a...'", a: ["Monster", "Human", "Sinner", "Man"], c: 3 },
-        { id: 106, q: "So Far Away: 'How do I live without the ones I love? Time still turns the...'", a: ["Pages of the book", "Clock upon the wall", "Leaves of the tree", "World into the dark"], c: 0 },
-        { id: 107, q: "Hail to the King: 'Hail to the king, hail to the...'", a: ["One", "Crown", "Throne", "Lord"], c: 0 },
-        { id: 108, q: "Seize the Day: 'Seize the day or die regretting the time you...'", a: ["Lost", "Wasted", "Spent", "Had"], c: 0 },
-        { id: 109, q: "Buried Alive: 'Take the chain of your life, 'cause you're...'", a: ["Buried alive", "Gonna fall down", "Left behind", "Trapped inside"], c: 0 },
-        { id: 110, q: "Almost Easy: 'I feel insane, every time I still...'", a: ["Hear your voice", "See your face", "Call your name", "Remember us"], c: 2 },
-        { id: 111, q: "Unholy Confessions: 'I'll try, she said as he walked away. It's too late for...'", a: ["Regrets", "Goodbyes", "Apologies", "Remorse"], c: 1 },
-        { id: 112, q: "Critical Acclaim: 'Shhh, be quiet, you might...'", a: ["Wake the dead", "Piss them off", "Start a war", "Lose your mind"], c: 1 },
-        { id: 113, q: "Save Me: 'Tonight we all die young, tonight we...'", a: ["Burn in hell", "Sail away", "All die young", "Fade to black"], c: 2 },
-        { id: 114, q: "Gunslinger: 'Yeah, I'm reaching home, but I'm...'", a: ["Still alone", "Not the same", "On my knees", "Gonna leave again"], c: 0 },
-        { id: 115, q: "Beast and the Harlot: 'She's a dwelling place for demons, she's a cage for every...'", a: ["Sinner", "Evil spirit", "Unclean spirit", "Vile creature"], c: 2 },
-        { id: 116, q: "Welcome to the Family: 'Hey, nobody said that life was gonna be...'", a: ["Fair", "Perfect", "Easy", "Kind"], c: 1 },
-        { id: 117, q: "This Means War: 'This means war, this means war, this means...'", a: ["Death", "Blood", "War", "Pain"], c: 2 },
-        { id: 118, q: "Fiction: 'Now I think I understand, how this world can...'", a: ["Break a man", "Fall apart", "Turn so cold", "End tonight"], c: 0 },
-        { id: 119, q: "The Stage: 'Who is the crowd that peers through the...'", a: ["Window", "Cage", "Curtain", "Darkness"], c: 1 },
-        { id: 120, q: "Nobody: 'I am the sun, I am the...'", a: ["Moon", "One", "Dark", "Star"], c: 1 },
-        { id: 121, q: "M.I.A.: 'I watch the clouds change color with my weapon in my...'", a: ["Hand", "Pocket", "Grip", "Arm"], c: 0 },
-        { id: 122, q: "Victim: 'We're all victims of a crime that has no...'", a: ["Name", "Reason", "Face", "End"], c: 0 },
-        { id: 123, q: "Shepherd of Fire: 'Let me guide you through your darkest years, I am the...'", a: ["Devil's son", "Shepherd of fire", "King of hell", "Master of puppets"], c: 1 },
-        { id: 124, q: "God Damn: 'God damn, the world is going...'", a: ["To hell", "Underground", "Insane", "Silent"], c: 2 },
-        { id: 125, q: "Cosmic: 'Left the world alone, now I'm...'", a: ["Floating free", "Heading home", "In the stars", "Gone for good"], c: 1 },
-        { id: 126, q: "Scream: 'Scream, scream, scream, the way you...'", a: ["Love me", "Want it", "Do it", "Scream"], c: 1 },
-        { id: 127, q: "Danger Line: 'I never thought I'd die on the...'", a: ["Frontline", "Battlefield", "Danger line", "Border"], c: 2 },
-        { id: 128, q: "Brompton Cocktail: 'I dynamic my pulse, I'm...'", a: ["Fading away", "Ready to go", "Sinking deep", "Losing control"], c: 1 },
-        { id: 129, q: "Sidewinder: 'I can hear you breathe, I can...'", a: ["Feel your fear", "See you shake", "Watch you fall", "Sense your presence"], c: 0 },
-        { id: 130, q: "Strength of the World: 'Strength of the world, is on my...'", a: ["Shoulders", "Hands", "Side", "Mind"], c: 2 },
-        { id: 131, q: "I Won't See You Tonight Part 1: 'Sorrow, sank deep inside my...'", a: ["Heart", "Soul", "Veins", "Mind"], c: 1 },
-        { id: 132, q: "Warmness on the Soul: 'Your soul is guarded by the...'", a: ["Angels above", "Love in my heart", "Light of day", "Power of God"], c: 0 },
-        { id: 133, q: "Acid Rain: 'Our eco-system in the night, we are the...'", a: ["Last ones", "Chosen few", "Children of the sun", "Dust in the wind"], c: 2 },
-        { id: 134, q: "We Love You: 'More power, more pace, more money, more...'", a: ["Greed", "Fame", "Taste", "Space"], c: 2 },
-        { id: 135, q: "Mattel: 'Now I know this might sound strange, but I believe it's...'", a: ["Time to change", "All a game", "Just a phase", "Out of range"], c: 1 },
-        { id: 136, q: "Game Over: 'As the rope grows tight, I close my...'", a: ["Eyes", "Mouth", "Mind", "Heart"], c: 0 },
-        { id: 137, q: "Coming Home: 'I've fallen from grace, but I'm...'", a: ["Coming home", "Back in place", "Still alive", "Finding my way"], c: 0 },
-        { id: 138, q: "Planets: 'Planets collide, isolating the...'", a: ["Human race", "Stars", "Sun", "Darkness"], c: 0 },
-        { id: 139, q: "St. James: 'Shed your tears for the one who...'", a: ["Died today", "Left us all", "Stood so tall", "Saved our souls"], c: 2 },
-        { id: 140, q: "Not Ready to Die: 'I'll swallow your soul, alter your...'", a: ["Mind", "Destiny", "State", "Life"], c: 2 },
-        { id: 141, q: "Carry On: 'Carry on, my wayward son' - No wait, actual A7X Carry On: 'Carry on, the time will...'", a: ["Tell", "Heal", "Come", "Pass"], c: 0 },
-        { id: 142, q: "Lost: 'With peace of mind so hard to find, we're...'", a: ["Running blind", "Left behind", "Losing time", "Far behind"], c: 1 },
-        { id: 143, q: "Gunslinger: 'At home the warfare, the image...'", a: ["Fades away", "Stays clear", "In my head", "Of your face"], c: 3 },
-        { id: 144, q: "The Wicked End: 'Dust the apple off, clean each...'", a: ["Corner", "Bite", "Piece", "Side"], c: 1 },
-        { id: 145, q: "Eternal Rest: 'Eternal rest, in time you'll...'", a: ["Find", "See", "Die", "Be"], c: 0 },
-        { id: 146, q: "Second Heartbeat: 'We all need a reason, a reason to...'", a: ["Live", "Die", "Smile", "Cry"], c: 0 },
-        { id: 147, q: "Chapter Four: 'Give me your hand, blood is on the...'", a: ["Floor", "Wall", "Sand", "Stone"], c: 2 },
-        { id: 148, q: "Remenissions: 'Agood friend once told me, you are the...'", a: ["Only one", "Enemy", "Master", "Sinner"], c: 1 },
-        { id: 149, q: "Desecrate Through Reverence: 'Far away, you've gone too...'", a: ["Deep", "Far", "Fast", "Low"], c: 1 },
-        { id: 150, q: "Radiant Eclipse: 'Cold walls of my, eternal...'", a: ["Prison", "Grave", "Home", "Hell"], c: 1 },
-        { id: 151, q: "To End the Rapture: 'In early morning, the sun will...'", a: ["Rise", "Shine", "Burn", "Die"], c: 0 },
-        { id: 152, q: "Clairvoyant Disease: 'Failure inside, the dark is...'", a: ["Coming", "Calling", "Falling", "Rising"], c: 1 },
-        { id: 153, q: "And All Things Will End: 'And all things will end, in...'", a: ["Time", "Pain", "Fire", "Dust"], c: 0 },
-        { id: 154, q: "Blindcuts (B-Side): 'Don't look away, it's time to...'", a: ["Pray", "Face the day", "See the truth", "Run"], c: 1 },
-        { id: 155, q: "Lost It All: 'I've lost it all, I'm...'", a: ["Gonna fall", "Sinking low", "Standing small", "On my knees"], c: 0 },
-        { id: 156, q: "4:00 AM: 'It's four AM, I'm...'", a: ["Still awake", "Wide awake", "Losing time", "Going home"], c: 1 },
-        { id: 157, q: "Set Me Free: 'Set me free, and let me...    '", a: ["Fly", "Go", "Be", "Die"], c: 1 },
-        { id: 158, q: "Beautiful Morning: 'It's a beautiful morning, it's a beautiful...'", a: ["Day", "Life", "Lie", "Time"], c: 2 },
-        { id: 159, q: "Easier: 'It's easier to, fade away than to...'", a: ["Face the day", "Try again", "Stay the same", "Let it go"], c: 0 },
-        { id: 160, q: "Ordinary: 'Will you let me, enter your...'", a: ["Heart", "World", "Mind", "Soul"], c: 1 }
-    ];
-
-    let user = { name: "", email: "" };
-    let curIdx = 0;
-    let score = 0;
-    let timer;
-    let timeLeft = 100;
-    let activeQuestions = [];
-    let currentMode = "trivia"; // 'trivia' atau 'lyric'
-    let pointPerQuestion = 10;
-
-    window.onload = fetchLeaderboard;
-
-    function showView(id) {
-        document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
+    let targetTime = localStorage.getItem('a7x_update_target');
+    if (!targetTime) {
+        targetTime = new Date().getTime() + (2 * 24 * 60 * 60 * 1000); 
+        localStorage.setItem('a7x_update_target', targetTime);
     }
 
-    function checkDailyLimit(mode) {
-        const n = document.getElementById('username').value;
-        const e = document.getElementById('useremail').value;
-        if(!n || !e) return alert("Identify yourself!");
-        
-        const today = new Date().toLocaleDateString();
-        // Limit harian dicek berdasarkan mode spesifik
-        if(localStorage.getItem(`a7x_daily_${mode}_${e}`) === today) {
-            return alert(`Mission [${mode.toUpperCase()}] already completed today!`);
-        }
+    function startCountdown() {
+        const timerInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetTime - now;
 
-        currentMode = mode;
-        let selectedDb = [];
-        let storageKey = "";
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / (1000));
 
-        if(mode === "trivia") {
-            selectedDb = database50;
-            pointPerQuestion = 10;
-            storageKey = `a7x_used_q_${e}`;
-            document.getElementById('main-panel').classList.remove('lyric-mode');
-        } else {
-            selectedDb = databaseLyrics60;
-            pointPerQuestion = 20;
-            storageKey = `a7x_used_lyric_${e}`;
-            // Tambahkan class penanda lirik untuk kustomisasi visual bertema emas
-            document.getElementById('main-panel').classList.add('lyric-mode');
-        }
+            document.getElementById("days").innerText = String(days).padStart(2, '0');
+            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
 
-        let usedIds = JSON.parse(localStorage.getItem(storageKey)) || [];
-        let available = selectedDb.filter(q => !usedIds.includes(q.id));
-        
-        // Reset siklus jika soal habis
-        if(available.length < 10) {
-            alert(`All ${mode} mission packs completed! Resetting question cycle.`);
-            usedIds = [];
-            available = [...selectedDb];
-        }
-
-        user = { name: n, email: e };
-        const shuffled = available.sort(() => Math.random() - 0.5);
-        activeQuestions = shuffled.slice(0, 10);
-        
-        const currentIds = activeQuestions.map(q => q.id);
-        localStorage.setItem(storageKey, JSON.stringify([...usedIds, ...currentIds]));
-
-        showView('view-quiz');
-        // Sesuaikan warna bar timer berdasarkan mode (Merah untuk Trivia, Emas untuk Lirik)
-        document.getElementById('timer-bar').style.background = mode === 'trivia' ? 'var(--neon-red)' : 'var(--gold)';
-        loadQuestion();
-    }
-
-    function loadQuestion() {
-        if(curIdx >= 10) return endQuiz();
-        clearInterval(timer);
-        timeLeft = 100;
-        const data = activeQuestions[curIdx];
-        
-        const modeLabel = currentMode === "trivia" ? "TRIVIA" : "LYRICS";
-        document.getElementById('q-count').innerText = `${modeLabel} QUEST ${curIdx + 1}/10`;
-        document.getElementById('q-text').innerText = data.q;
-        
-        const box = document.getElementById('options-box');
-        box.innerHTML = '';
-        
-        data.a.forEach((opt, i) => {
-            const d = document.createElement('div');
-            d.className = 'option-card';
-            d.innerText = opt;
-            d.onclick = () => handleAnswer(i);
-            box.appendChild(d);
-        });
-        
-        timer = setInterval(() => {
-            timeLeft -= 1.1;
-            document.getElementById('timer-bar').style.width = timeLeft + "%";
-            if(timeLeft <= 0) handleAnswer(-1);
-        }, 100);
-    }
-
-    function handleAnswer(idx) {
-        if(idx === activeQuestions[curIdx].c) {
-            score += pointPerQuestion;
-            document.getElementById('q-score').innerText = `XP: ${score}`;
-        }
-        curIdx++;
-        loadQuestion();
-    }
-
-    function endQuiz() {
-        clearInterval(timer);
-        showView('view-result');
-        
-        const finalPtsElement = document.getElementById('final-points');
-        finalPtsElement.innerText = score;
-        
-        if(currentMode === "lyric") {
-            finalPtsElement.style.color = "var(--gold)";
-            document.getElementById('result-header').innerText = "LYRIC MISSION ACCOMPLISHED";
-        } else {
-            finalPtsElement.style.color = "var(--neon-red)";
-            document.getElementById('result-header').innerText = "MISSION ACCOMPLISHED";
-        }
-
-        localStorage.setItem(`a7x_daily_${currentMode}_${user.email}`, new Date().toLocaleDateString());
-        submitScore();
-    }
-
-    async function submitScore() {
-        try {
-            await fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify({ user: user.name, email: user.email, score: score })
-            });
-            document.getElementById('sync-status').innerText = "XP DATA SYNCHRONIZED TO YOUR ACCOUNT";
-            fetchLeaderboard();
-        } catch(e) { console.log(e); }
+            if (distance < 0) {
+                clearInterval(timerInterval);
+                document.querySelector(".countdown-box").innerHTML = "<div class='cd-msg' style='color:#00ff00; text-shadow:0 0 10px #00ff00;'>🔥 SYSTEM UPDATE READY! REFRESH PAGE...</div>";
+                localStorage.removeItem('a7x_update_target'); 
+            }
+        }, 1000);
     }
 
     async function fetchLeaderboard() {
@@ -433,14 +303,39 @@
             const res = await fetch(SCRIPT_URL);
             const data = await res.json();
             data.sort((a,b) => b[2] - a[2]);
-            target.innerHTML = data.slice(0, 10).map((row, i) => `
-                <div class="leader-item">
-                    <span><strong style="color:var(--gold)">#${i+1}</strong> ${row[0]}</span>
-                    <span style="color:var(--neon-red); font-family:'Orbitron'; font-weight:bold;">${row[2]} XP</span>
-                </div>
-            `).join('');
+            
+            target.innerHTML = data.slice(0, 10).map((row, i) => {
+                let nameStyleClass = "";
+                let medalOverlay = "";
+
+                if (i === 0) {
+                    nameStyleClass = "class='rank-1-name'";
+                    medalOverlay = "<span style='color:var(--gold); font-size:1.1rem; margin-right:5px;'>👑</span>";
+                } else if (i === 1) {
+                    nameStyleClass = "class='rank-2-name'";
+                    medalOverlay = "<span style='color:#aaa; font-size:0.9rem; margin-right:5px;'>🥈</span>";
+                } else if (i === 2) {
+                    nameStyleClass = "class='rank-3-name'";
+                    medalOverlay = "<span style='color:#cd7f32; font-size:0.9rem; margin-right:5px;'>🥉</span>";
+                }
+
+                return `
+                    <div class="leader-item">
+                        <span>
+                            <strong style="color:#555; font-family:'Orbitron'; margin-right:5px;">#${i+1}</strong> 
+                            ${medalOverlay}<span ${nameStyleClass}>${row[0]}</span>
+                        </span>
+                        <span style="color:var(--neon-red); font-family:'Orbitron'; font-weight:bold;">${row[2]} XP</span>
+                    </div>
+                `;
+            }).join('');
         } catch(e) { target.innerHTML = "<p style='color:#333; text-align:center;'>Database Offline.</p>"; }
     }
+
+    window.onload = function() {
+        fetchLeaderboard();
+        startCountdown();
+    };
 </script>
 
 </body>
