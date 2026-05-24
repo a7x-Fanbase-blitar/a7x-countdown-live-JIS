@@ -26,7 +26,6 @@
             overflow-x: hidden;
         }
 
-        /* Tombol Back Metal Style */
         .btn-back {
             position: absolute;
             top: 20px;
@@ -53,7 +52,6 @@
             border-color: #fff;
         }
 
-        /* Header Responsive */
         header {
             padding: clamp(60px, 12vh, 100px) 20px;
             text-align: center;
@@ -77,7 +75,6 @@
             letter-spacing: 3px;
         }
 
-        /* Catalog Grid */
         .catalog {
             max-width: 1200px;
             margin: 40px auto;
@@ -157,7 +154,32 @@
 
         .btn-redeem:disabled { background: #222; color: #555; cursor: not-allowed; transform: none; }
 
-        /* Modal Styles */
+        /* BUTTON MERAH MENYALA NEON */
+        .btn-link-solid {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 14px;
+            text-transform: uppercase;
+            text-align: center;
+            text-decoration: none;
+            color: #ffffff;
+            letter-spacing: 2px;
+            margin-top: 20px;
+            background: #ff0000;
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-link-solid:hover {
+            transform: scale(1.02);
+            background: #ff2222;
+            box-shadow: 0 0 25px #ff0000, 0 0 50px #ff0000;
+        }
+
         .modal-overlay {
             display: none;
             position: fixed;
@@ -198,19 +220,6 @@
 
         input:focus { border-color: var(--neon-red); outline: none; }
 
-        #voucher-display {
-            font-family: 'Orbitron';
-            font-size: clamp(1.2rem, 6vw, 2.2rem);
-            color: gold;
-            background: #000;
-            padding: 25px;
-            margin: 25px 0;
-            border: 2px dashed var(--neon-red);
-            letter-spacing: 4px;
-            word-break: break-all;
-        }
-
-        /* Notifikasi Toast */
         #toast {
             visibility: hidden;
             min-width: 280px;
@@ -230,10 +239,7 @@
             box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
         }
 
-        #toast.show {
-            visibility: visible;
-            animation: fadein 0.5s, fadeout 0.5s 2.5s;
-        }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
 
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
@@ -245,10 +251,8 @@
 </head>
 <body>
 
-<!-- Notifikasi Toast -->
 <div id="toast"></div>
 
-<!-- Tombol Back -->
 <a href="kuis.html" class="btn-back">
     <span>&lsaquo;</span> BACK
 </a>
@@ -258,11 +262,8 @@
     <p class="elite-subtitle">Tukarkan XP Loyalitasmu dengan Hadiah Eksklusif</p>
 </header>
 
-<div class="catalog" id="item-grid">
-    <!-- Item dimuat otomatis dari Google Sheets -->
-</div>
+<div class="catalog" id="item-grid"></div>
 
-<!-- Modal Identitas -->
 <div id="redeem-modal" class="modal-overlay">
     <div class="modal-box">
         <h2 style="font-family:'Orbitron'; color:var(--neon-red); letter-spacing: 2px;">IDENTITY CHECK</h2>
@@ -273,23 +274,27 @@
     </div>
 </div>
 
-<!-- Modal Voucher -->
 <div id="voucher-modal" class="modal-overlay">
     <div class="modal-box">
         <h2 style="font-family:'Orbitron'; color:gold; letter-spacing: 2px;">REDEEM SUCCESSFUL!</h2>
-        <p style="margin-top:15px; font-size: 0.95rem; color: #888;">Gunakan kode unik ini untuk klaim hadiah:</p>
-        <div id="voucher-display">XXXXX</div>
-        <p style="margin-bottom: 25px; font-size: 0.8rem; color: #555;">(Screenshot layar ini sebagai bukti)</p>
-        <button class="btn-redeem" onclick="location.reload()">KEMBALI KE KATALOG</button>
+        <p style="margin-top:15px; font-size: 0.95rem; color: #888;">Selamat! Klik tombol merah di bawah ini untuk membuka halaman voucher Anda:</p>
+        
+        <a href="#" id="voucher-target-link" class="btn-link-solid" target="_blank">BUKA VOUCHER ANDA</a>
+        
+        <p style="margin-top: 25px; font-size: 0.8rem; color: #555;">(Voucher ini menggunakan sistem siapa cepat dia dapat)</p>
+        <button class="btn-redeem" onclick="location.reload()" style="background: #222; margin-top: 10px;">TUTUP</button>
     </div>
 </div>
 
 <script>
-    // --- KONFIGURASI FIX (JANGAN DIRUBAH) ---
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzvFAVo9rxkc9i_x86NR_TFSp_pG2ZIAUBCcUW5okBAa49Uq2dAb5pWbBwJW9mfnCRyfg/exec';
-    let selectedItemId = null;
+    
+    // ⚠️ GANTI IKI NGGO LINK WEB PRE-ORDER BAJU UTAMAMU COK!
+    const PREORDER_URL = 'https://a7xblitar.web.id/merch.html'; 
 
-    // Fungsi Notifikasi
+    let selectedItemId = null;
+    let currentAvailableStock = 0;
+
     function showToast(message) {
         const toast = document.getElementById("toast");
         toast.innerText = message;
@@ -312,7 +317,7 @@
                     <h3 style="font-family:'Orbitron'; font-size: 1.1rem; letter-spacing: 1px;">${item[1]}</h3>
                     <p style="color:gold; font-weight:bold; margin: 10px 0; font-family:'Orbitron'; font-size: 1.2rem;">${item[2]} XP</p>
                     <p class="stock-info">AVAILABLE: ${item[3] <= 0 ? '0' : item[3]}</p>
-                    <button class="btn-redeem" ${item[3] <= 0 ? 'disabled' : ''} onclick="openRedeem('${item[0]}')">
+                    <button class="btn-redeem" ${item[3] <= 0 ? 'disabled' : ''} onclick="openRedeem('${item[0]}', ${item[3]})">
                         ${item[3] <= 0 ? 'HABIS' : 'REDEEM NOW'}
                     </button>
                 </div>
@@ -322,8 +327,9 @@
         }
     }
 
-    function openRedeem(id) {
+    function openRedeem(id, stock) {
         selectedItemId = id;
+        currentAvailableStock = stock; 
         document.getElementById('redeem-modal').classList.add('active');
     }
 
@@ -333,7 +339,6 @@
         const email = document.getElementById('email-verify').value;
         if (!email) return alert("Email wajib diisi untuk verifikasi poin!");
 
-        // Notifikasi sedang memproses login/verifikasi
         showToast("VERIFIKASI DATA... SILAHKAN TUNGGU");
 
         try {
@@ -344,12 +349,30 @@
             const result = await res.json();
 
             if (result.status === "success") {
-                // Notifikasi Sukses
                 showToast("VERIFIKASI BERHASIL! MEMPROSES REDEEM...");
                 
+                const linkContainer = document.getElementById('voucher-target-link');
+                
+                // Menerima teks kode murni yang dipisah koma (Contoh dari Sheet: HAXTFX-VCH61 , HAXTFX-VCH62)
+                const rawCodes = result.code; 
+                const codeArray = rawCodes.split(",");
+                
+                let kodeTerpilih = "";
+
+                // Pilih kodenya berdasarkan sisa stok aktif kuis saat diklik
+                if (currentAvailableStock === 2) {
+                    kodeTerpilih = codeArray[0].trim(); // Pemenang 1
+                } else if (currentAvailableStock === 1) {
+                    kodeTerpilih = codeArray[1].trim(); // Pemenang 2
+                } else {
+                    kodeTerpilih = codeArray[0].trim();
+                }
+
+                // JAVASCRIPT MERAKIT OTOMATIS LINK GABUNGAN NYA DI SINI
+                linkContainer.href = "https://a7xblitar.web.id/voucher.html?code=" + encodeURIComponent(kodeTerpilih) + "&target=" + encodeURIComponent(PREORDER_URL);
+
                 setTimeout(() => {
                     closeModal('redeem-modal');
-                    document.getElementById('voucher-display').innerText = result.code;
                     document.getElementById('voucher-modal').classList.add('active');
                 }, 1000);
             } else {
