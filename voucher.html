@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Order Voucher - Deathbat Blitar Raya</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;700&display=swap');
+
+        :root {
+            --bg-color: #000000; 
+            --card-bg: #0f0f0f;
+            --solid-red: #ff0000;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* ANIMASI RGB CHROMATIC WAVE UNTUK BORDER DAN JUDUL */
+        @keyframes rgbWave {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .rgb-title {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 26px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0000ff, #8000ff, #ff00ff, #ff0000);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rgbWave 6s linear infinite;
+            text-align: center;
+        }
+
+        .voucher-container {
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            border-radius: 24px;
+            padding: 2px;
+            background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0000ff, #8000ff, #ff00ff, #ff0000);
+            background-size: 400% 400%;
+            animation: rgbWave 6s linear infinite;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.25);
+        }
+
+        .voucher-card {
+            background: var(--card-bg);
+            border-radius: 22px;
+            padding: 40px;
+            position: relative;
+        }
+
+        .code-box {
+            background: rgba(0,0,0,0.6);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .unique-code {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 6px;
+            color: #fff;
+            padding: 15px;
+            display: inline-block;
+            border: 1px dashed rgba(255, 0, 0, 0.5);
+            border-radius: 8px;
+        }
+
+        /* TOMBOL MERAH MENYALA SOLID */
+        .btn-link-solid {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 14px;
+            text-transform: uppercase;
+            text-align: center;
+            text-decoration: none;
+            color: #ffffff;
+            letter-spacing: 2px;
+            margin-top: 25px;
+            background: var(--solid-red); /* Warna Dasar Merah Murni */
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        /* EFEK SAAT HOVER (KURSOR DIATAS BUTTON) */
+        .btn-link-solid:hover {
+            transform: scale(1.01);
+            background: #ff2222; /* Merah sedikit lebih terang */
+            box-shadow: 0 0 25px #ff0000, 0 0 50px #ff0000; /* Efek Neon Glow Menyala Kuat */
+        }
+
+        .info-section {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 25px;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #bbb;
+        }
+
+        .info-title {
+            font-size: 12px;
+            color: #ff3333;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="voucher-container">
+        <div class="voucher-card">
+            
+            <div class="header" style="text-align: center; margin-bottom: 35px;">
+                <h1 class="rgb-title">VOUCHER POTONGAN 20%</h1>
+                <p style="font-size: 10px; letter-spacing: 6px; color: #888;">DEATHBAT BLITAR RAYA</p>
+            </div>
+
+            <div class="code-box">
+                <span style="display:block; font-size: 10px; color: #555; margin-bottom: 15px; letter-spacing: 2px;">PROMO CODE PRE-ORDER</span>
+                <div class="unique-code" id="voucherCode">LOADING...</div>
+            </div>
+
+            <div class="info-section">
+                <div class="info-title">Instruksi Penggunaan</div>
+                <ol style="padding-left: 18px; margin-bottom: 20px;">
+                    <li>Klik tombol di bawah untuk menuju halaman Pre-Order khusus Anda.</li>
+                    <li>Salin kode unik di atas dan masukkan pada kolom voucher saat checkout.</li>
+                </ol>
+
+                <!-- Tombol Merah Menyala -->
+                <a href="#" id="orderLink" class="btn-link-solid">MENUJU WEB PRE-ORDER</a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const kodeVoucher = urlParams.get('code');
+        const linkTujuan = urlParams.get('target');
+
+        const codeElement = document.getElementById('voucherCode');
+        const linkElement = document.getElementById('orderLink');
+
+        if (kodeVoucher && linkTujuan) {
+            codeElement.innerText = decodeURIComponent(kodeVoucher);
+            linkElement.href = decodeURIComponent(linkTujuan);
+        } else {
+            // Data bawaan awal jika dibuka polosan
+            codeElement.innerText = "DBR-PREORDER20"; 
+            linkElement.href = "https://link-preorder-default.com"; 
+        }
+    </script>
+
+</body>
+</html>
