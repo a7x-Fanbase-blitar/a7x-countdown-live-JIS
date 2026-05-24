@@ -23,7 +23,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: clamp(15px, 4vw, 30px); /* Padding adaptif luar */
         }
 
         /* ANIMASI RGB CHROMATIC WAVE UNTUK BORDER DAN JUDUL */
@@ -36,7 +36,7 @@
         .rgb-title {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: 26px;
+            font-size: clamp(20px, 5vw, 26px); /* Mengecil otomatis di HP */
             text-transform: uppercase;
             letter-spacing: 3px;
             margin-bottom: 10px;
@@ -50,7 +50,7 @@
 
         .voucher-container {
             width: 100%;
-            max-width: 600px;
+            max-width: 500px; /* Diperkecil dari 600px agar lebih pas dan padat di PC */
             position: relative;
             border-radius: 24px;
             padding: 2px;
@@ -63,29 +63,30 @@
         .voucher-card {
             background: var(--card-bg);
             border-radius: 22px;
-            padding: 40px;
+            padding: clamp(20px, 6vw, 40px); /* Padding dalam fleksibel sesuai device */
             position: relative;
         }
 
         .code-box {
             background: rgba(0,0,0,0.6);
             border-radius: 16px;
-            padding: 30px;
+            padding: clamp(20px, 5vw, 30px);
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: clamp(20px, 5vw, 30px);
             box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
         }
 
         .unique-code {
             font-family: 'Orbitron', sans-serif;
-            font-size: 32px;
+            font-size: clamp(20px, 5vw, 32px); /* Teks mengecil halus agar tidak menabrak border HP */
             font-weight: 700;
-            letter-spacing: 6px;
+            letter-spacing: clamp(3px, 1vw, 6px);
             color: #fff;
-            padding: 15px;
+            padding: 12px clamp(10px, 3vw, 20px);
             display: inline-block;
             border: 1px dashed rgba(255, 0, 0, 0.5);
             border-radius: 8px;
+            word-break: break-all; /* Pengaman jika kode terlalu panjang di layar mini */
         }
 
         /* TOMBOL MERAH MENYALA SOLID */
@@ -96,35 +97,35 @@
             border-radius: 12px;
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: 14px;
+            font-size: clamp(12px, 3.5vw, 14px);
             text-transform: uppercase;
             text-align: center;
             text-decoration: none;
             color: #ffffff;
             letter-spacing: 2px;
             margin-top: 25px;
-            background: var(--solid-red); /* Warna Dasar Merah Murni */
+            background: var(--solid-red); 
             box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
             transition: all 0.3s ease;
         }
 
-        /* EFEK SAAT HOVER (KURSOR DIATAS BUTTON) */
+        /* EFEK SAAT HOVER */
         .btn-link-solid:hover {
             transform: scale(1.01);
-            background: #ff2222; /* Merah sedikit lebih terang */
-            box-shadow: 0 0 25px #ff0000, 0 0 50px #ff0000; /* Efek Neon Glow Menyala Kuat */
+            background: #ff2222; 
+            box-shadow: 0 0 25px #ff0000, 0 0 50px #ff0000; 
         }
 
         .info-section {
             border-top: 1px solid rgba(255,255,255,0.05);
             padding-top: 25px;
-            font-size: 12px;
+            font-size: clamp(11px, 3vw, 12px);
             line-height: 1.6;
             color: #bbb;
         }
 
         .info-title {
-            font-size: 12px;
+            font-size: clamp(11px, 3vw, 12px);
             color: #ff3333;
             font-weight: 700;
             text-transform: uppercase;
@@ -155,7 +156,6 @@
                     <li>Salin kode unik di atas dan masukkan pada kolom voucher saat checkout.</li>
                 </ol>
 
-                <!-- Tombol Merah Menyala -->
                 <a href="#" id="orderLink" class="btn-link-solid">MENUJU WEB PRE-ORDER</a>
             </div>
 
@@ -174,9 +174,8 @@
             codeElement.innerText = decodeURIComponent(kodeVoucher);
             linkElement.href = decodeURIComponent(linkTujuan);
         } else {
-            // Data bawaan awal jika dibuka polosan
-            codeElement.innerText = "DBR-PREORDER20"; 
-            linkElement.href = "https://link-preorder-default.com"; 
+            codeElement.innerText = "ADMINGANTENG"; 
+            linkElement.href = "a7xblitar.web.id/merch"; 
         }
     </script>
 
