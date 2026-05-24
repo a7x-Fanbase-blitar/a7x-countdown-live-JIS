@@ -468,7 +468,7 @@
 
         // COUNTDOWN
         setInterval(() => {
-            const gap = new Date('October 10, 2026 20:00:00') - new Date();
+            const gap = new Date('2026-10-10T19:00:00+07:00') - new Date();
             const d=1000*60*60*24, h=d/24, m=h/60, s=m/60;
             document.getElementById('days').innerText = Math.floor(gap/d);
             document.getElementById('hours').innerText = Math.floor((gap%d)/h);
