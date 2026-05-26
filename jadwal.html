@@ -1,347 +1,256 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta name="title" content="Jadwal Kopdar - DEATHBAT Blitar Raya">
-    <meta name="description" content="Gather the fallen! Cek jadwal kopdar resmi Deathbat Blitar Raya untuk persiapan keberangkatan konser Avenged Sevenfold Live at JIS 2026.">
-
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://a7x-fanbase-blitar.github.io/a7x-countdown-live-JIS/jadwal.html">
-    <meta property="og:title" content="Jadwal Kopdar - DEATHBAT Blitar Raya">
-    <meta property="og:description" content="Persiapkan dirimu untuk 2026 World Tour. Cek lokasi dan waktu kopdar di sini!">
-
-    <meta property="og:image" content="https://a7x-fanbase-blitar.github.io/a7x-countdown-live-JIS/logo.png"> 
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Jadwal Kopdar - DEATHBAT Blitar Raya">
-    <meta property="twitter:image" content="https://a7x-fanbase-blitar.github.io/a7x-countdown-live-JIS/logo.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kopdar Schedule - DEATHBAT Blitar Raya</title>
+    <title>A7X BLITAR | EXCLUSIVE VIP PASS - DINAMIS</title>
     
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.95)), url('a7x.jpg'); 
-            background-attachment: fixed; background-size: cover; background-position: center;
-            color: #fff; font-family: 'Orbitron', sans-serif;
-            overflow-x: hidden;
+            background-color: #030303;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1200px; 
+            overflow: hidden;
         }
 
-        /* --- ANIMASI GLITCH METAL --- */
-        .glitch-metal {
-            font-family: 'Metal Mania', cursive;
+        .vip-card-container {
             position: relative;
-            animation: metalGlow 3s infinite ease-in-out;
+            width: 550px;   
+            height: 320px;  
+            transform-style: preserve-3d;
+            animation: flagWaveLarge 7s ease-in-out infinite alternate;
         }
 
-        .glitch-metal::before, .glitch-metal::after {
-            content: attr(data-text);
+        @keyframes flagWaveLarge {
+            0% {
+                transform: rotateX(12deg) rotateY(-18deg) skewX(3deg) translateY(0px);
+                box-shadow: -25px 30px 45px rgba(0, 0, 0, 0.95), 15px -15px 35px rgba(255, 0, 0, 0.07);
+            }
+            50% {
+                transform: rotateX(6deg) rotateY(0deg) skewX(-3deg) translateY(-8px);
+                box-shadow: -10px 20px 50px rgba(0, 0, 0, 0.9), 0px 0px 40px rgba(255, 0, 0, 0.15);
+            }
+            100% {
+                transform: rotateX(14deg) rotateY(18deg) skewX(2deg) translateY(8px);
+                box-shadow: 25px 35px 45px rgba(0, 0, 0, 0.95), -15px 15px 35px rgba(255, 0, 0, 0.07);
+            }
+        }
+
+        .vip-card {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #070707 0%, #151515 50%, #040404 100%);
+            border-radius: 20px; 
+            padding: 30px;      
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 2px solid #1c1c1c;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.95);
+        }
+
+        .vip-card::before {
+            content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0.8;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent 42%, rgba(255, 255, 255, 0.12) 50%, transparent 58%);
+            mix-blend-mode: overlay;
+            animation: chromeShimmer 6s linear infinite;
         }
 
-        .glitch-metal::before { color: #ff0000; z-index: -1; animation: glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite; }
-        .glitch-metal::after { color: #00fff2; z-index: -2; animation: glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite; }
-
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-3px, 3px); }
-            40% { transform: translate(-3px, -3px); }
-            60% { transform: translate(3px, 3px); }
-            80% { transform: translate(3px, -3px); }
-            100% { transform: translate(0); }
+        @keyframes chromeShimmer {
+            0% { transform: translate(-30%, -30%); }
+            100% { transform: translate(30%, 30%); }
         }
 
-        @keyframes metalGlow {
-            0%, 100% { text-shadow: 0 0 10px #ff0000; color: #fff; }
-            50% { text-shadow: 0 0 30px #ff0000; color: #ef4444; }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2;
         }
 
-        .bat-particle {
-            position: fixed; pointer-events: none; z-index: 1;
-            filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(255,0,0,0.5));
-            animation: flyAround 8s linear infinite; opacity: 0;
+        .logo-a7x-blitar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-img {
+            width: 55px; 
+            height: auto;
+            filter: drop-shadow(0 0 8px #ff0000);
+        }
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1.1rem; 
+            color: #ffffff;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 5px #000;
         }
 
-        @keyframes flyAround {
-            0% { transform: translate(-10vw, 110vh) rotate(0deg) scale(0.5); opacity: 0; }
-            10% { opacity: 0.4; }
-            90% { opacity: 0.4; }
-            100% { transform: translate(110vw, -10vh) rotate(360deg) scale(1.2); opacity: 0; }
+        .vip-badge {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 0.95rem;
+            color: #ffcc00;
+            border: 1px solid rgba(255, 204, 0, 0.5);
+            background: rgba(255, 204, 0, 0.07);
+            padding: 6px 18px;
+            border-radius: 20px;
+            letter-spacing: 2px;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.15);
         }
 
-        .metal-title { font-family: 'Metal Mania', cursive; }
-        .animate-focus { animation: textFocus 1s ease-out forwards; }
-        @keyframes textFocus {
-            0% { filter: blur(12px); opacity: 0; transform: translateY(20px); }
-            100% { filter: blur(0); opacity: 1; transform: translateY(0); }
+        .card-body {
+            margin-top: auto;
+            margin-bottom: auto;
+            padding-left: 5px;
+            z-index: 2;
         }
         
-        .delay-1 { animation-delay: 0.3s; opacity: 0; }
-        .delay-2 { animation-delay: 0.6s; opacity: 0; }
-        .delay-3 { animation-delay: 0.9s; opacity: 0; }
-
-        .kopdar-card {
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(10px);
-            border-left: 5px solid #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-left-width: 5px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative; overflow: hidden; z-index: 10;
+        @keyframes movingRainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .kopdar-card:hover:not(.past-event) {
-            transform: scale(1.02) translateX(10px);
-            background: rgba(40, 0, 0, 0.4);
-            box-shadow: -10px 0 20px rgba(239, 68, 68, 0.4);
-            border-left-width: 15px;
+        .member-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.6rem; 
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0000ff, #8000ff, #ff00ff, #ff0000);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: movingRainbow 4s linear infinite;
+            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.9));
         }
 
-        .past-event { opacity: 0.7; border-left-color: #4b5563; cursor: pointer; }
-        .past-event:hover { background: rgba(30, 30, 30, 0.8); transform: translateY(-2px); }
-
-        .status-badge {
-            background: #ef4444; color: black; font-weight: 900;
-            padding: 2px 12px; font-size: 10px;
-            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            padding-top: 15px;
+            z-index: 2;
         }
 
-        .status-badge.done { background: #4b5563; color: #d1d5db; }
-
-        .ultra-glass {
-            background: rgba(10, 10, 10, 0.98);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 50px rgba(0,0,0,1);
+        .meta-box .label {
+            font-size: 0.75rem;
+            color: #555;
+            text-transform: uppercase;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .meta-box .value {
+            font-size: 1.15rem;
+            color: #e0e0e0;
+            font-weight: 700;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.5px;
+        }
+        
+        .id-value {
+            color: #ff0000 !important;
+            font-family: 'Orbitron', sans-serif !important;
+            font-size: 1.1rem !important;
+            font-weight: 900 !important;
+            text-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
         }
 
-        /* Custom Scrollbar */
-        .custom-scroll::-webkit-scrollbar { width: 4px; }
-        .custom-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #ef4444; }
-
-        .scanner {
-            position: absolute; inset: 0;
-            background: linear-gradient(to bottom, transparent, rgba(239, 68, 68, 0.1), transparent);
-            animation: scanline 3s linear infinite; pointer-events: none;
+        .card-watermark {
+            position: absolute;
+            right: 0px;
+            bottom: -30px;
+            font-size: 16rem; 
+            color: rgba(255, 0, 0, 0.015);
+            font-family: 'Metal Mania', cursive;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
         }
-
-        @keyframes scanline {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-
-        .back-btn { background: transparent; border: 1px solid #ef4444; color: #ef4444; transition: 0.3s; }
-        .back-btn:hover { background: #ef4444; color: white; box-shadow: 0 0 20px #ef4444; }
     </style>
 </head>
-<body class="min-h-screen p-4 md:p-8">
+<body>
 
-    <!-- Modal Detail -->
-    <div id="modalOverlay" class="fixed inset-0 bg-black/90 backdrop-blur-xl z-[100] hidden flex items-center justify-center p-4" style="opacity: 0; transition: opacity 0.4s ease;">
-        <div class="ultra-glass w-full max-w-lg p-6 md:p-8 border-t-4 border-red-600 relative overflow-hidden">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-white transition">
-                <i class="fas fa-times text-2xl"></i>
-            </button>
-
-            <h2 id="modalTitle" class="metal-title text-2xl md:text-3xl text-red-600 mb-2 uppercase tracking-tighter">DETAIL KOPDAR</h2>
-            <div class="h-1 w-20 bg-red-600 mb-6"></div>
-
-            <div class="space-y-5 relative z-10">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="text-[9px] text-gray-500 font-black tracking-widest uppercase">Location</label>
-                        <p id="modalLocation" class="text-lg font-bold italic text-white leading-tight"></p>
-                    </div>
-                    <div>
-                        <label class="text-[9px] text-gray-500 font-black tracking-widest uppercase">Time & Agenda</label>
-                        <p id="modalTime" class="text-sm font-bold text-gray-300"></p>
-                    </div>
-                </div>
-
-                <!-- DAFTAR PESERTA (MEMBER LIST) -->
-                <div id="memberSection" class="hidden">
-                    <label class="text-[9px] text-red-500 font-black tracking-widest uppercase mb-2 block">Daftar Member Hadir</label>
-                    <div class="bg-black/50 border border-white/5 rounded p-3">
-                        <div id="memberList" class="custom-scroll max-h-[150px] overflow-y-auto grid grid-cols-2 gap-2 text-[11px] font-bold tracking-wide text-gray-400">
-                            <!-- Nama member akan diisi via JS -->
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pt-4 border-t border-white/10">
-                    <a id="modalMaps" href="#" target="_blank" class="block w-full bg-red-600 text-black text-center py-3 font-black tracking-widest uppercase hover:bg-white transition-all text-sm">
-                        LIHAT LOKASI MAPS <i class="fas fa-chevron-right ml-2"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Header Navigation -->
-    <div class="max-w-4xl mx-auto flex justify-between items-center mb-12">
-        <a href="index.html" class="back-btn px-6 py-2 rounded-full font-bold text-[10px] tracking-widest flex items-center gap-2 animate-focus">
-            <i class="fas fa-arrow-left"></i> BACK TO BASE
-        </a>
-        <div class="text-right animate-focus delay-1">
-            <h2 class="metal-title text-2xl text-red-600">DEATHBAT</h2>
-            <p class="text-[9px] tracking-[0.3em] font-bold text-gray-400 uppercase">Blitar Raya Chapter</p>
-        </div>
-    </div>
-
-    <div class="max-w-4xl mx-auto relative">
-        <header class="text-center mb-16 relative z-20">
-            <h1 class="glitch-metal text-5xl md:text-7xl mb-4 animate-focus" data-text="JADWAL KOPDAR">JADWAL KOPDAR</h1>
-            <div class="h-1 w-32 bg-red-600 mx-auto mb-4 shadow-[0_0_15px_#ef4444] animate-focus delay-1"></div>
-            <p class="text-gray-400 text-sm md:text-base italic animate-focus delay-2">"Gather the fallen, strengthen the family."</p>
-        </header>
-
-        <div class="space-y-8 relative z-20">
+    <div class="vip-card-container">
+        <div class="vip-card">
+            <div class="card-watermark">☠</div>
             
-            <!-- EVENT 1: TERLAKSANA -->
-            <div class="kopdar-card past-event p-6 rounded-r-xl flex flex-col xl:flex-row justify-between items-center gap-6 animate-focus delay-3"
-                 onclick="showKopdar1Detail()">
-                
-                <div class="flex flex-col sm:flex-row items-center gap-6 w-full xl:w-auto">
-                    <div class="text-center sm:border-r border-gray-600/30 sm:pr-6">
-                        <span class="block text-4xl font-black text-gray-500">01</span>
-                        <span class="text-xs font-bold text-gray-500 uppercase">MEI 2026</span>
-                    </div>
-                    <div class="text-center sm:text-left">
-                        <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-1">
-                            <span class="status-badge done">TERLAKSANA</span>
-                            <h3 class="text-xl font-bold tracking-tighter uppercase text-gray-400">Meetup & Sharing</h3>
-                        </div>
-                        <p class="text-gray-500 text-xs flex items-center justify-center sm:justify-start gap-2">
-                            <i class="fas fa-users text-red-600"></i> Klik untuk lihat daftar kehadiran member.
-                        </p>
-                    </div>
+            <div class="card-header">
+                <div class="logo-a7x-blitar">
+                    <img src="logo.png" alt="A7X" class="logo-img" onerror="this.style.display='none'">
+                    <span class="logo-text">A7X BLITAR</span>
                 </div>
-
-                <div class="text-center xl:text-right">
-                    <button class="bg-gray-800 text-gray-400 px-6 py-2 text-[10px] font-black uppercase border border-white/10">VIEW RECAP</button>
+                <div class="vip-badge">VIP PASS</div>
+            </div>
+            
+            <!-- Default teks jika parameter link kosong -->
+            <div class="card-body">
+                <div class="member-name" id="card-name">GUEST_MEMBER</div>
+            </div>
+            
+            <div class="card-footer">
+                <div class="meta-box">
+                    <div class="label">Status Kategori</div>
+                    <div class="value" id="card-status" style="color: #ffcc00;">VIP MEMBER</div>
+                </div>
+                <div class="meta-box" style="text-align: right;">
+                    <div class="label">MEMBER ID</div>
+                    <div class="value id-value" id="card-id">DBR-000000</div>
                 </div>
             </div>
-
-            <!-- EVENT 2: NEXT (COMING SOON) -->
-            <div class="kopdar-card p-6 rounded-r-xl flex flex-col xl:flex-row justify-between items-center gap-6 animate-focus" style="animation-delay: 1.2s">
-                
-                <div class="flex flex-col sm:flex-row items-center gap-6 w-full xl:w-auto">
-                    <div class="text-center sm:border-r border-red-600/30 sm:pr-6">
-                        <span class="block text-4xl font-black text-red-600">?</span>
-                        <span class="text-xs font-bold text-gray-400 uppercase">TBA 2026</span>
-                    </div>
-                    <div class="text-center sm:text-left">
-                        <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-1">
-                            <span class="status-badge animate-pulse">NEXT EVENT</span>
-                            <h3 class="text-xl font-bold tracking-tighter uppercase">COMING SOON</h3>
-                        </div>
-                        <p class="text-gray-400 text-xs flex items-center justify-center sm:justify-start gap-2 italic">
-                            <i class="fas fa-hourglass-half text-red-600"></i> Jadwal sedang dalam koordinasi tim.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="text-center xl:text-right flex flex-col items-center xl:items-end gap-2">
-                    <div class="flex items-center gap-2 mb-1">
-                        <span class="relative flex h-3 w-3">
-                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                          <span class="relative inline-flex rounded-full h-3 w-3 bg-red-600"></span>
-                        </span>
-                        <span class="text-[10px] font-black text-red-500 uppercase tracking-widest uppercase">Wait for info</span>
-                    </div>
-                    <button class="border border-red-600 text-red-600 px-6 py-2 text-[10px] font-black uppercase hover:bg-red-600 hover:text-black transition-all">STAY TUNED</button>
-                </div>
-                
-                <div class="scanner"></div>
-            </div>
-
         </div>
-
-        <footer class="mt-20 text-center border-t border-white/10 pt-8 pb-12 animate-focus relative z-20">
-            <p class="text-[10px] text-gray-500 tracking-[0.5em] mb-4 uppercase">Official Fanbase Blitar Raya</p>
-            <p class="text-[9px] text-gray-600 font-bold uppercase tracking-widest">Developed by The fallen_Blitar • 2026</p>
-        </footer>
     </div>
 
     <script>
-        const modal = document.getElementById('modalOverlay');
-        const memberSection = document.getElementById('memberSection');
-        const memberList = document.getElementById('memberList');
+        // --- LOGIKA UTAMA MEMBACA URL PARAMETER ---
+        function getCardParameters() {
+            var urlParams = new URLSearchParams(window.location.search);
+            
+            // Mengambil nilai dari ?nama=... &id=... &status=...
+            var nameParam = urlParams.get('nama');
+            var idParam = urlParams.get('id');
+            var statusParam = urlParams.get('status');
 
-        // Data Member yang hadir di Kopdar 1 (Silakan edit/tambah di sini)
-        const attendeeNames = [
-            "Ilham", "Surya", "Aca", "Reno", 
-            "Alfi", "Lambang", "Nata", "Dwi",
-            "Rohman", "Delon", "Sheila", "Achmad"
-        ];
+            // 1. Ganti Nama
+            if (nameParam) {
+                // Mengubah tanda underscore (_) atau %20 menjadi spasi agar rapi di kartu
+                document.getElementById('card-name').innerText = nameParam.replace(/_/g, ' ');
+            }
 
-        function spawnBats() {
-            const batCount = 6;
-            for(let i=0; i<batCount; i++) {
-                setTimeout(() => {
-                    const bat = document.createElement('img');
-                    bat.src = 'https://www.pngarts.com/files/1/Bat-PNG-Transparent-Image.png';
-                    bat.className = 'bat-particle';
-                    bat.style.width = Math.random() * 50 + 20 + 'px';
-                    bat.style.top = Math.random() * 100 + 'vh';
-                    bat.style.animationDuration = Math.random() * 5 + 5 + 's';
-                    bat.style.animationDelay = Math.random() * 10 + 's';
-                    document.body.appendChild(bat);
-                }, i * 2000);
+            // 2. Ganti ID Member
+            if (idParam) {
+                document.getElementById('card-id').innerText = idParam.toUpperCase();
+            }
+
+            // 3. Ganti Status Kategori (Opsional)
+            if (statusParam) {
+                document.getElementById('card-status').innerText = statusParam.replace(/_/g, ' ').toUpperCase();
             }
         }
-        spawnBats();
 
-        function showKopdar1Detail() {
-            // Set konten dasar
-            document.getElementById('modalTitle').innerText = "RECAP KOPDAR #1";
-            document.getElementById('modalLocation').innerText = "WARKOP MR. JOKO";
-            document.getElementById('modalTime').innerText = "01 Mei 2026 | 16:00 WIB";
-            document.getElementById('modalMaps').href = "https://maps.app.goo.gl/H4UwZ5N8PiKVqMSm7";
-            
-            // Tampilkan Section Member
-            memberSection.classList.remove('hidden');
-            memberList.innerHTML = ""; // Bersihkan list
-            
-            // Masukkan nama-nama ke list
-            attendeeNames.forEach((name, index) => {
-                const item = document.createElement('div');
-                item.className = "flex items-center gap-2 border-b border-white/5 pb-1";
-                item.innerHTML = `<span class="text-red-600">#</span> ${name}`;
-                memberList.appendChild(item);
-            });
-
-            openModal();
-        }
-
-        function openModal() {
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            setTimeout(() => { modal.style.opacity = '1'; }, 10);
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            modal.style.opacity = '0';
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-                memberSection.classList.add('hidden'); // Sembunyikan lagi member list saat tutup
-            }, 400);
-            document.body.style.overflow = 'auto';
-        }
-
-        window.onclick = function(event) {
-            if (event.target == modal) { closeModal(); }
-        }
+        // Jalankan fungsi pembaca link saat halaman selesai dimuat
+        window.onload = getCardParameters;
     </script>
+
 </body>
 </html>
