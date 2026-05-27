@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A7X Blitar - Member Database</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('a7x.jpg');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- GLITCH CYBER TITLE ANIMATION --- */
+        .cyber-glitch {
+            font-family: 'Metal Mania', cursive;
+            position: relative;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255,255,255,0.5);
+            animation: glitch-skew 1s infinite linear alternate-reverse;
+        }
+        .cyber-glitch::before, .cyber-glitch::after {
+            content: "BLITAR RAYA SOLDIERS";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+        }
+        .cyber-glitch::before {
+            left: 2px; text-shadow: -2px 0 #ff00c8;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+        .cyber-glitch::after {
+            left: -2px; text-shadow: -2px 0 #00fff0, 0 2px #ff00c8;
+            clip: rect(85px, 450px, 140px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim {
+            0% { clip: rect(31px, 9999px, 94px, 0); }
+            10% { clip: rect(112px, 9999px, 76px, 0); }
+            100% { clip: rect(85px, 9999px, 5px, 0); }
+        }
+        @keyframes glitch-anim2 {
+            0% { clip: rect(76px, 9999px, 116px, 0); }
+            11% { clip: rect(5px, 9999px, 102px, 0); }
+            100% { clip: rect(23px, 9999px, 95px, 0); }
+        }
+        @keyframes glitch-skew {
+            0% { transform: skew(1deg); }
+            10% { transform: skew(-1deg); }
+            100% { transform: skew(0deg); }
+        }
+
+        /* --- BASE CARD & GLASS MORPHISM --- */
+        .ultra-glass {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .member-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* --- STATUS 1: VIP (GALAXY WAVE BORDER ONLY) --- */
+        .border-vip {
+            position: relative;
+            background: rgba(255, 255, 255, 0.02) !important; /* Dibuat Transparan */
+            border: 1px solid transparent !important;
+            background-clip: padding-box;
+        }
+        .border-vip::after {
+            content: '';
+            position: absolute;
+            top: -1px; bottom: -1px; left: -1px; right: -1px;
+            background: linear-gradient(90deg, #4f46e5, #9333ea, #ec4899, #4f46e5);
+            background-size: 400% 400%;
+            z-index: -1;
+            border-radius: 1.5rem;
+            animation: moveWave 6s linear infinite;
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            padding: 2px; /* Ketebalan garis luar */
+        }
+        .text-vip {
+            background: linear-gradient(90deg, #a855f7, #f472b6, #6366f1, #a855f7);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: moveWave 4s linear infinite;
+            font-weight: 900;
+        }
+
+        /* --- STATUS 2: VVIP (RAINBOW CHROMATIC WAVE BORDER ONLY) --- */
+        .border-vvip {
+            position: relative;
+            background: rgba(255, 255, 255, 0.03) !important; /* Dibuat Transparan */
+            border: 1px solid transparent !important;
+            background-clip: padding-box;
+        }
+        .border-vvip::after {
+            content: '';
+            position: absolute;
+            top: -2px; bottom: -2px; left: -2px; right: -2px;
+            background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3, #ff0000);
+            background-size: 800% 800%;
+            z-index: -1;
+            border-radius: 1.5rem;
+            animation: moveWave 4s linear infinite;
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            padding: 3px; /* Ketebalan garis luar */
+        }
+        .text-vvip {
+            background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
+            background-size: 400% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: moveWave 3s linear infinite;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes moveWave {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- LOADING SHIMMER ANIMATION --- */
+        .shimmer {
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0) 100%);
+            background-size: 200% 100%;
+            animation: loadingGrid 1.5s infinite;
+        }
+        @keyframes loadingGrid {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <header class="max-w-6xl mx-auto flex justify-between items-center mb-16">
+        <a href="index.html" class="bg-white/10 hover:bg-red-600 w-12 h-12 flex items-center justify-center rounded-full transition-all duration-300 shadow-lg hover:scale-110 active:scale-95">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        
+        <div class="text-center">
+            <h1 class="cyber-glitch text-4xl md:text-6xl uppercase tracking-tighter">BLITAR RAYA SOLDIERS</h1>
+            <p class="text-[10px] md:text-xs tracking-[0.4em] text-red-500 uppercase font-black mt-3">
+                <i class="fas fa-database mr-2"></i> Member Database Connection
+            </p>
+        </div>
+
+        <div class="w-12 h-12 invisible"></div> </header>
+
+    <div id="loading-container" class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="ultra-glass rounded-[1.5rem] p-6 h-36 shimmer"></div>
+        <div class="ultra-glass rounded-[1.5rem] p-6 h-36 shimmer"></div>
+        <div class="ultra-glass rounded-[1.5rem] p-6 h-36 shimmer"></div>
+    </div>
+
+    <main id="member-grid" class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+        </main>
+
+    <script>
+        // MASUKKAN URL APLIKASI WEB GOOGLE APPS SCRIPT ANDA DI SINI (Akhiran /exec)
+        const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbyd9Oh_UWJPVhdAyBUC-HDtGwRWmfxnYOQG4oIom2bhfEBAvOzTqBvGSTPkTilSpMb_/exec';
+
+        async function loadMembers() {
+            try {
+                const response = await fetch(appsScriptUrl);
+                const rows = await response.json();
+                
+                const grid = document.getElementById('member-grid');
+                grid.innerHTML = ''; 
+
+                rows.forEach(member => {
+                    const name = member.nama || "Unknown Soldier";
+                    const role = member.jabatan || "Member";
+                    const status = member.status ? member.status.toUpperCase().trim() : "MEMBER";
+
+                    let cardStyle = "ultra-glass";
+                    let nameStyle = "text-white text-lg font-bold tracking-wide";
+                    let badge = `<span class="px-3 py-1 bg-white/10 text-gray-400 text-[9px] font-black tracking-widest rounded-md uppercase">Soldier</span>`;
+
+                    if (status === "VVIP") {
+                        cardStyle = "border-vvip";
+                        nameStyle = "text-vvip text-xl";
+                        badge = `<span class="px-3 py-1 bg-gradient-to-r from-red-600 via-yellow-500 to-purple-600 text-black text-[9px] font-black tracking-widest rounded-md uppercase shadow-[0_0_10px_rgba(255,0,0,0.5)]">👑 VVIP GOD</span>`;
+                    } else if (status === "VIP") {
+                        cardStyle = "border-vip";
+                        nameStyle = "text-vip text-xl";
+                        badge = `<span class="px-3 py-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-[9px] font-black tracking-widest rounded-md uppercase shadow-[0_0_10px_rgba(147,51,234,0.5)]">🔥 VIP ELITE</span>`;
+                    }
+
+                    const memberCard = `
+                        <div class="${cardStyle} member-card rounded-[1.5rem] p-6 flex flex-col justify-between relative overflow-hidden">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="${nameStyle}">${name}</h3>
+                                    <p class="text-[11px] text-gray-400 uppercase tracking-widest font-semibold mt-1">${role}</p>
+                                </div>
+                                <div class="shrink-0">
+                                    ${badge}
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 mt-2 text-white/40 text-[9px] uppercase tracking-wider font-bold">
+                                <i class="fas fa-shield-alt text-red-600/60"></i> Blitar Raya Chapter
+                            </div>
+                        </div>
+                    `;
+                    grid.innerHTML += memberCard;
+                });
+
+                document.getElementById('loading-container').classList.add('hidden');
+                grid.classList.remove('hidden');
+
+            } catch (error) {
+                console.error("Gagal menarik data:", error);
+                document.getElementById('loading-container').innerHTML = `
+                    <div class="col-span-full text-center ultra-glass p-8 border border-red-600/30 rounded-2xl">
+                        <i class="fas fa-exclamation-triangle text-3xl text-red-600 mb-2"></i>
+                        <p class="text-xs uppercase font-bold text-gray-400">Gagal Membangun Koneksi Database</p>
+                    </div>
+                `;
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', loadMembers);
+    </script>
+</body>
+</html>
