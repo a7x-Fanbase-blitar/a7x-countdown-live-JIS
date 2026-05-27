@@ -564,7 +564,7 @@
             </div>
             <div class="quiz-box game-wrapper-box">
                 <div class="clue-badge">CHANCE: 1 KALI SEHARI</div>
-                <div class="lyrics-quote" style="font-size:1.1rem; padding: 15px;">Sistem mengacak angka dari 1 sampai 5. Tebak dengan tepat untuk memenangkan bonus 20 XP!</div>
+                <div class="lyrics-quote" style="font-size:1.1rem; padding: 15px;">Sistem mengacak angka dari 1 sampai 5. Tebak dengan tepat untuk memenangkan bonus 200 XP!</div>
                 
                 <div class="game-grid">
                     <button class="btn-number" onclick="playLuckyGame(1)">1</button>
@@ -775,7 +775,7 @@
         var luckyNumber = Math.floor(Math.random() * 5) + 1;
 
         if (chosenNumber === luckyNumber) {
-            totalPointsGained += 20;
+            totalPointsGained += 200;
             triggerPopup(true, `GG JITU! Angka Keberuntungan Adalah ${luckyNumber}. Anda Menang +20 XP!`);
         } else {
             triggerPopup(false, `Zonk! Angka Keluar Adalah ${luckyNumber}. Anda Kurang Beruntung Hari Ini.`);
