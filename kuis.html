@@ -560,7 +560,7 @@
             <h3 class="panel-header">BONUS MISSION: LUCKY NUMBER</h3>
             <div class="status-bar">
                 <div>MISSION: TEBAK ANGKA JITU</div>
-                <div>REWARD: <span style="color:var(--gold); font-weight:700;">+20 XP</span></div>
+                <div>REWARD: <span style="color:var(--gold); font-weight:700;">+200 XP</span></div>
             </div>
             <div class="quiz-box game-wrapper-box">
                 <div class="clue-badge">CHANCE: 1 KALI SEHARI</div>
@@ -776,7 +776,7 @@
 
         if (chosenNumber === luckyNumber) {
             totalPointsGained += 200;
-            triggerPopup(true, `GG JITU! Angka Keberuntungan Adalah ${luckyNumber}. Anda Menang +20 XP!`);
+            triggerPopup(true, `GG JITU! Angka Keberuntungan Adalah ${luckyNumber}. Anda Menang +200 XP!`);
         } else {
             triggerPopup(false, `Zonk! Angka Keluar Adalah ${luckyNumber}. Anda Kurang Beruntung Hari Ini.`);
         }
