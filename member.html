@@ -21,13 +21,27 @@
             overflow-x: hidden;
         }
 
+        /* --- FLYING BATS ANIMATION --- */
+        .bat {
+            position: fixed;
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.3);
+            pointer-events: none;
+            z-index: 0;
+            animation: fly linear infinite;
+        }
+        @keyframes fly {
+            0% { transform: translate(-100px, 100vh) rotate(20deg); }
+            100% { transform: translate(100vw, -100px) rotate(-20deg); }
+        }
+
         /* --- GLITCH CYBER TITLE ANIMATION --- */
         .cyber-glitch {
             font-family: 'Metal Mania', cursive;
             position: relative;
             color: #fff;
             text-shadow: 0 0 15px rgba(255,255,255,0.5);
-            animation: glitch-skew 1s infinite linear alternate-reverse;
+            animation: glitch-skew 0.5s infinite linear alternate-reverse;
         }
         .cyber-glitch::before, .cyber-glitch::after {
             content: "BLITAR RAYA SOLDIERS";
@@ -35,29 +49,27 @@
             top: 0; left: 0; width: 100%; height: 100%;
         }
         .cyber-glitch::before {
-            left: 2px; text-shadow: -2px 0 #ff00c8;
-            clip: rect(44px, 450px, 56px, 0);
-            animation: glitch-anim 5s infinite linear alternate-reverse;
+            left: 3px; text-shadow: -2px 0 #ff00c8;
+            clip: rect(20px, 9999px, 80px, 0);
+            animation: glitch-anim 2s infinite linear alternate-reverse;
         }
         .cyber-glitch::after {
-            left: -2px; text-shadow: -2px 0 #00fff0, 0 2px #ff00c8;
-            clip: rect(85px, 450px, 140px, 0);
-            animation: glitch-anim2 5s infinite linear alternate-reverse;
+            left: -3px; text-shadow: -2px 0 #00fff0, 0 2px #ff00c8;
+            clip: rect(50px, 9999px, 120px, 0);
+            animation: glitch-anim2 2s infinite linear alternate-reverse;
         }
-        @keyframes glitch-anim {
-            0% { clip: rect(31px, 9999px, 94px, 0); }
-            10% { clip: rect(112px, 9999px, 76px, 0); }
-            100% { clip: rect(85px, 9999px, 5px, 0); }
+        @keyframes glitch-anim { 0% { clip: rect(10px, 9999px, 50px, 0); } 100% { clip: rect(70px, 9999px, 30px, 0); } }
+        @keyframes glitch-anim2 { 0% { clip: rect(40px, 9999px, 90px, 0); } 100% { clip: rect(10px, 9999px, 60px, 0); } }
+        @keyframes glitch-skew { 0% { transform: skew(5deg); } 100% { transform: skew(-5deg); } }
+
+        /* --- HOVER GLOW EFFECT --- */
+        .member-card {
+            transition: all 0.4s ease;
         }
-        @keyframes glitch-anim2 {
-            0% { clip: rect(76px, 9999px, 116px, 0); }
-            11% { clip: rect(5px, 9999px, 102px, 0); }
-            100% { clip: rect(23px, 9999px, 95px, 0); }
-        }
-        @keyframes glitch-skew {
-            0% { transform: skew(1deg); }
-            10% { transform: skew(-1deg); }
-            100% { transform: skew(0deg); }
+        .member-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         /* --- BASE CARD & GLASS MORPHISM --- */
@@ -67,108 +79,46 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .member-card:hover {
-            transform: translateY(-5px);
-        }
 
-        /* --- STATUS 1: VIP (GALAXY WAVE BORDER ONLY) --- */
-        .border-vip {
-            position: relative;
-            background: rgba(255, 255, 255, 0.02) !important; /* Dibuat Transparan */
-            border: 1px solid transparent !important;
-            background-clip: padding-box;
-        }
-        .border-vip::after {
-            content: '';
-            position: absolute;
-            top: -1px; bottom: -1px; left: -1px; right: -1px;
-            background: linear-gradient(90deg, #4f46e5, #9333ea, #ec4899, #4f46e5);
-            background-size: 400% 400%;
-            z-index: -1;
-            border-radius: 1.5rem;
-            animation: moveWave 6s linear infinite;
-            -webkit-mask: 
-                linear-gradient(#fff 0 0) content-box, 
-                linear-gradient(#fff 0 0);
-            -webkit-mask-composite: destination-out;
-            mask-composite: exclude;
-            padding: 2px; /* Ketebalan garis luar */
-        }
-        .text-vip {
-            background: linear-gradient(90deg, #a855f7, #f472b6, #6366f1, #a855f7);
-            background-size: 300% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: moveWave 4s linear infinite;
-            font-weight: 900;
-        }
-
-        /* --- STATUS 2: VVIP (RAINBOW CHROMATIC WAVE BORDER ONLY) --- */
-        .border-vvip {
-            position: relative;
-            background: rgba(255, 255, 255, 0.03) !important; /* Dibuat Transparan */
-            border: 1px solid transparent !important;
-            background-clip: padding-box;
-        }
-        .border-vvip::after {
-            content: '';
-            position: absolute;
-            top: -2px; bottom: -2px; left: -2px; right: -2px;
-            background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3, #ff0000);
-            background-size: 800% 800%;
-            z-index: -1;
-            border-radius: 1.5rem;
-            animation: moveWave 4s linear infinite;
-            -webkit-mask: 
-                linear-gradient(#fff 0 0) content-box, 
-                linear-gradient(#fff 0 0);
-            -webkit-mask-composite: destination-out;
-            mask-composite: exclude;
-            padding: 3px; /* Ketebalan garis luar */
-        }
-        .text-vvip {
-            background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
-            background-size: 400% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: moveWave 3s linear infinite;
-            font-weight: 900;
-            letter-spacing: 0.5px;
-        }
-
-        @keyframes moveWave {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* --- LOADING SHIMMER ANIMATION --- */
-        .shimmer {
-            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0) 100%);
-            background-size: 200% 100%;
-            animation: loadingGrid 1.5s infinite;
-        }
-        @keyframes loadingGrid {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
+        /* --- STATUS CLASSES --- */
+        .border-vip { position: relative; background: rgba(255, 255, 255, 0.02) !important; border: 1px solid transparent !important; background-clip: padding-box; }
+        .border-vip::after { content: ''; position: absolute; top: -1px; bottom: -1px; left: -1px; right: -1px; background: linear-gradient(90deg, #4f46e5, #9333ea, #ec4899, #4f46e5); background-size: 400% 400%; z-index: -1; border-radius: 1.5rem; animation: moveWave 6s linear infinite; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: destination-out; mask-composite: exclude; padding: 2px; }
+        .text-vip { background: linear-gradient(90deg, #a855f7, #f472b6, #6366f1, #a855f7); background-size: 300% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: moveWave 4s linear infinite; font-weight: 900; }
+        .border-vvip { position: relative; background: rgba(255, 255, 255, 0.03) !important; border: 1px solid transparent !important; background-clip: padding-box; }
+        .border-vvip::after { content: ''; position: absolute; top: -2px; bottom: -2px; left: -2px; right: -2px; background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3, #ff0000); background-size: 800% 800%; z-index: -1; border-radius: 1.5rem; animation: moveWave 4s linear infinite; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: destination-out; mask-composite: exclude; padding: 3px; }
+        .text-vvip { background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000); background-size: 400% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: moveWave 3s linear infinite; font-weight: 900; letter-spacing: 0.5px; }
+        @keyframes moveWave { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .shimmer { background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0) 100%); background-size: 200% 100%; animation: loadingGrid 1.5s infinite; }
+        @keyframes loadingGrid { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     </style>
 </head>
 <body class="p-4 md:p-8">
+
+    <script>
+        // Bat Animation script
+        for(let i=0; i<5; i++) {
+            let bat = document.createElement('div');
+            bat.innerHTML = '🦇';
+            bat.className = 'bat';
+            bat.style.left = Math.random() * 100+ 'vw';
+            bat.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            bat.style.animationDelay = (Math.random() * 10) + 's';
+            document.body.appendChild(bat);
+        }
+    </script>
 
     <header class="max-w-6xl mx-auto flex justify-between items-center mb-16">
         <a href="index.html" class="bg-white/10 hover:bg-red-600 w-12 h-12 flex items-center justify-center rounded-full transition-all duration-300 shadow-lg hover:scale-110 active:scale-95">
             <i class="fas fa-arrow-left"></i>
         </a>
-        
         <div class="text-center">
             <h1 class="cyber-glitch text-4xl md:text-6xl uppercase tracking-tighter">BLITAR RAYA SOLDIERS</h1>
             <p class="text-[10px] md:text-xs tracking-[0.4em] text-red-500 uppercase font-black mt-3">
                 <i class="fas fa-database mr-2"></i> List Member Deathbat Blitar
             </p>
         </div>
-
-        <div class="w-12 h-12 invisible"></div> </header>
+        <div class="w-12 h-12 invisible"></div> 
+    </header>
 
     <div id="loading-container" class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <div class="ultra-glass rounded-[1.5rem] p-6 h-36 shimmer"></div>
@@ -177,17 +127,15 @@
     </div>
 
     <main id="member-grid" class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
-        </main>
+    </main>
 
     <script>
-        // MASUKKAN URL APLIKASI WEB GOOGLE APPS SCRIPT ANDA DI SINI (Akhiran /exec)
         const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbyd9Oh_UWJPVhdAyBUC-HDtGwRWmfxnYOQG4oIom2bhfEBAvOzTqBvGSTPkTilSpMb_/exec';
 
         async function loadMembers() {
             try {
                 const response = await fetch(appsScriptUrl);
                 const rows = await response.json();
-                
                 const grid = document.getElementById('member-grid');
                 grid.innerHTML = ''; 
 
@@ -228,10 +176,8 @@
                     `;
                     grid.innerHTML += memberCard;
                 });
-
                 document.getElementById('loading-container').classList.add('hidden');
                 grid.classList.remove('hidden');
-
             } catch (error) {
                 console.error("Gagal menarik data:", error);
                 document.getElementById('loading-container').innerHTML = `
@@ -242,7 +188,6 @@
                 `;
             }
         }
-
         window.addEventListener('DOMContentLoaded', loadMembers);
     </script>
 </body>
