@@ -94,8 +94,8 @@
     <main id="mainWebsite" class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
         
         <div class="space-y-6 lg:sticky lg:top-12">
-            <div class="ultra-glass p-3 sm:p-5 rounded-[2rem] sm:rounded-[3rem] relative group preview-animate">
-                <img src="vvvq2.jpeg" alt="Kaos Blitar Merch" class="w-full aspect-[3/4] object-cover rounded-[1.5rem] sm:rounded-[2.5rem] shadow-2xl transition-all duration-700">
+            <div class="ultra-glass p-3 sm:p-5 rounded-[2rem] sm:rounded-[3rem] relative group preview-animate overflow-hidden">
+                <img src="vvvq2.jpeg" alt="Kaos Blitar Merch" class="w-full h-auto object-contain rounded-[1.5rem] sm:rounded-[2.5rem] shadow-2xl transition-all duration-700">
                 <div class="absolute top-6 left-6 sm:top-10 sm:left-10 bg-red-600 text-black font-black text-xs sm:text-sm px-4 sm:px-6 py-2 rounded-lg -rotate-6 shadow-2xl">PRE-ORDER OPEN</div>
             </div>
             
@@ -123,20 +123,33 @@
                 </div>
                 
                 <div class="grid grid-cols-2 gap-4">
-                    <select id="ukuran" required class="p-4 rounded-2xl text-[10px] sm:text-xs font-bold uppercase tracking-widest cursor-pointer outline-none">
+                    <select id="ukuran" required onchange="hitungHargaTotal()" class="p-4 rounded-2xl text-[10px] sm:text-xs font-bold uppercase tracking-widest cursor-pointer outline-none">
                         <option value="" disabled selected>SIZE</option>
-                        <option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XL">XL</option><option value="XXL">XXL</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                        <option value="XXL">XXL (+15K)</option>
                     </select>
-                    <select id="metode" required class="p-4 rounded-2xl text-[10px] sm:text-xs font-bold uppercase tracking-widest cursor-pointer outline-none">
-                        <option value="DP 50%">DP 50%</option><option value="LUNAS">LUNAS</option>
+
+                    <select id="varian" required onchange="hitungHargaTotal()" class="p-4 rounded-2xl text-[10px] sm:text-xs font-bold uppercase tracking-widest cursor-pointer outline-none">
+                        <option value="Pendek" selected>LENGAN PENDEK</option>
+                        <option value="Panjang">LENGAN PANJANG (+15K)</option>
                     </select>
                 </div>
 
-                <select id="pembayaran" required class="w-full p-4 rounded-2xl text-[10px] sm:text-xs font-bold uppercase tracking-widest cursor-pointer outline-none">
-                    <option value="" disabled selected>TUJUAN TRANSFER</option>
-                    <option value="BCA">BCA - 123456789</option>
-                    <option value="DANA">DANA - 087753855074</option>
-                </select>
+                <div class="grid grid-cols-2 gap-4">
+                    <select id="metode" required class="p-4 rounded-2xl text-[10px] sm:text-xs font-bold uppercase tracking-widest cursor-pointer outline-none">
+                        <option value="DP 50%">DP 50%</option>
+                        <option value="LUNAS">LUNAS</option>
+                    </select>
+
+                    <select id="pembayaran" required class="p-4 rounded-2xl text-[10px] sm:text-xs font-bold uppercase tracking-widest cursor-pointer outline-none">
+                        <option value="" disabled selected>TRANSFER VIA</option>
+                        <option value="BCA">BCA - 123456789</option>
+                        <option value="DANA">DANA - 087753855074</option>
+                    </select>
+                </div>
 
                 <div class="relative group">
                     <input type="text" id="kupon" placeholder="KODE KUPON RAHASIA" class="w-full p-4 rounded-2xl text-[10px] sm:text-xs font-bold uppercase tracking-widest pr-24 outline-none">
@@ -146,7 +159,7 @@
                 <div class="bg-black/50 p-6 rounded-3xl text-center border-b-4 border-red-600 ring-1 ring-red-600/20 flex flex-col justify-center items-center min-h-[100px]">
                     <p class="text-[8px] text-gray-500 uppercase mb-1 tracking-[0.2em]">Estimation Total</p>
                     <div id="displayHarga" class="flex flex-col items-center justify-center gap-1 transition-all duration-500">
-                        <h3 class="text-3xl sm:text-4xl font-black text-white">Rp 185.000</h3>
+                        <h3 class="text-3xl sm:text-4xl font-black text-white">Rp 130.000</h3>
                     </div>
                 </div>
 
@@ -159,21 +172,17 @@
 
     <footer class="mt-20 lg:mt-32 opacity-40 text-center pb-12 border-t border-red-600/10 pt-10">
         <p class="text-[8px] sm:text-[10px] tracking-[0.4em] font-black uppercase">MADE WITH HELL BY THE FALLEN_BLITAR &copy; 2026</p>
-    </footer>
+    </footer >
 
     <script>
-        const HARGA_DASAR = 185000;
+        const HARGA_DASAR = 130000;
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxS8x_wpuyhoP3CHzMGWs8gqDmomBWSNytgTWHlyYuBHri5X_R9VVaiVNmfiVe-htKz/exec";
         
         let diskonAktif = 0;
 
         // ==========================================================
-        // LOGIKA BARU: HITUNG MUNDUR 20 HARI & PENUTUPAN FORM
+        // COUNTDOWN SISA WAKTU PRE-ORDER (20 HARI)
         // ==========================================================
-        
-        // Mengatur waktu penutupan tepat 20 hari dari waktu sekarang saat di-load pertama kali
-        // Jika ingin tanggal akhir yang mengikat secara permanen, ganti baris ini dengan string tanggal target, misal:
-        // const targetDate = new Date("June 21, 2026 19:40:00").getTime();
         const targetDate = new Date().getTime() + (20 * 24 * 60 * 60 * 1000);
 
         const countdownFunction = setInterval(() => {
@@ -190,25 +199,54 @@
             document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
             document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
 
-            // Jika hitungan mundur habis (Pre-Order Resmi Ditutup)
             if (distance <= 0) {
                 clearInterval(countdownFunction);
-                
-                // Sembunyikan panel countdown dan form utama website
                 document.getElementById("countdownPanel").style.display = "none";
                 document.getElementById("mainWebsite").style.display = "none";
-                
-                // Munculkan panel penutupan pre-order
                 document.getElementById("closedPanel").classList.remove("hidden");
             }
         }, 1000);
+
+
+        // ==========================================================
+        // LOGIKA BARU: REAL-TIME CALCULATION VARIANT & SIZE
+        // ==========================================================
+        function hitungHargaTotal() {
+            let hargaSekarang = HARGA_DASAR;
+            const ukuran = document.getElementById('ukuran').value;
+            const varian = document.getElementById('varian').value;
+            const displayHarga = document.getElementById('displayHarga');
+
+            // Tambahan Rp 15.000 jika varian lengan panjang
+            if (varian === "Panjang") {
+                hargaSekarang += 15000;
+            }
+
+            // Tambahan Rp 15.000 jika ukuran di atas XL (XXL)
+            if (ukuran === "XXL") {
+                hargaSekarang += 15000;
+            }
+
+            // Integrasi potongan diskon kupon aktif
+            const hargaSetelahDiskon = hargaSekarang - (hargaSekarang * diskonAktif);
+
+            if (diskonAktif > 0) {
+                displayHarga.innerHTML = `
+                    <span class="text-sm sm:text-base font-bold text-gray-500 line-through tracking-wider">Rp ${hargaSekarang.toLocaleString('id-ID')}</span>
+                    <h3 class="text-3xl sm:text-4xl font-black text-emerald-400 animate-pulse tracking-wide">Rp ${hargaSetelahDiskon.toLocaleString('id-ID')}</h3>
+                `;
+            } else {
+                displayHarga.innerHTML = `<h3 class="text-3xl sm:text-4xl font-black text-white tracking-wide">Rp ${hargaSekarang.toLocaleString('id-ID')}</h3>`;
+            }
+
+            return hargaSetelahDiskon;
+        }
 
 
         // Fungsi Cek Kupon dengan Metode Jalur Parameter Aman (Bypass CORS)
         async function cekKupon() {
             const code = document.getElementById('kupon').value.trim().toUpperCase();
             const btnCheck = document.getElementById('btnCheckKupon');
-            const displayHarga = document.getElementById('displayHarga');
 
             if (code === "") {
                 Swal.fire({ title: 'DAMN! 💀', text: 'Masukkan kode kupon.', icon: 'warning' });
@@ -225,12 +263,7 @@
 
                 if (result.valid) {
                     diskonAktif = result.discount; 
-                    const hargaBaru = HARGA_DASAR - (HARGA_DASAR * diskonAktif);
-                    
-                    displayHarga.innerHTML = `
-                        <span class="text-sm sm:text-base font-bold text-gray-500 line-through tracking-wider">Rp ${HARGA_DASAR.toLocaleString('id-ID')}</span>
-                        <h3 class="text-3xl sm:text-4xl font-black text-emerald-400 animate-pulse tracking-wide">Rp ${hargaBaru.toLocaleString('id-ID')}</h3>
-                    `;
+                    hitungHargaTotal();
 
                     Swal.fire({
                         title: 'KUPON ACCEPTED! 🤘',
@@ -240,7 +273,7 @@
                     });
                 } else {
                     diskonAktif = 0;
-                    displayHarga.innerHTML = `<h3 class="text-3xl sm:text-4xl font-black text-white tracking-wide">Rp ${HARGA_DASAR.toLocaleString('id-ID')}</h3>`;
+                    hitungHargaTotal();
                     
                     Swal.fire({
                         title: 'INVALID KUPON! 💀',
@@ -257,7 +290,8 @@
             }
         }
 
-        // Fungsi Kirim Form - VERSI REVISI TOTAL (ANTI-BLOKIR BROWSER LOKAL)
+
+        // Fungsi Kirim Form Ke WhatsApp & Google Sheet
         document.getElementById('orderForm').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btnSubmit');
@@ -272,12 +306,13 @@
                 wa: document.getElementById('wa').value,
                 alamat: document.getElementById('alamat').value,
                 ukuran: document.getElementById('ukuran').value,
+                varian: document.getElementById('varian').value,
                 metode: document.getElementById('metode').value,
                 pembayaran: document.getElementById('pembayaran').value,
                 kupon: document.getElementById('kupon').value.toUpperCase().trim()
             };
 
-            const hargaFinal = HARGA_DASAR - (HARGA_DASAR * diskonAktif);
+            const hargaFinal = hitungHargaTotal();
             const tglSaja = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
             
             const msgWA = `*DEATHBAT MERCH - PRE-ORDER CONFIRMATION* 💀🔥
@@ -293,7 +328,8 @@ Saya ingin mengonfirmasi pesanan Pre-Order baju dengan rincian data sebagai beri
 👕 *DETAIL PRODUK*
 • *Artikel :* Kaos A7X Blitar Raya (Timber & Hellfire Edition)
 • *Ukuran :* ${formData.ukuran.toUpperCase()}
-• *Metode   :* ${formData.metode.toUpperCase()}
+• *Varian :* Lengan ${formData.varian}
+• *Metode    :* ${formData.metode.toUpperCase()}
 
 💳 *INFORMASI PEMBAYARAN*
 • *Via Transfer :* ${formData.pembayaran.toUpperCase()}
