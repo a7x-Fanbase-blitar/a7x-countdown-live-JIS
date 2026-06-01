@@ -98,13 +98,56 @@
                 <img src="vvvq2.jpeg" alt="Kaos Blitar Merch" class="w-full h-auto object-contain rounded-[1.5rem] sm:rounded-[2.5rem] shadow-2xl transition-all duration-700">
                 <div class="absolute top-6 left-6 sm:top-10 sm:left-10 bg-red-600 text-black font-black text-xs sm:text-sm px-4 sm:px-6 py-2 rounded-lg -rotate-6 shadow-2xl">PRE-ORDER OPEN</div>
             </div>
+            <div class="ultra-glass p-6 rounded-3xl border-b-4 border-red-600">
+    <div class="text-red-500 font-black text-xs uppercase mb-4 flex items-center">
+        <i class="fas fa-ruler-combined mr-2"></i> Panduan Ukuran (Size Chart)
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full text-center text-xs font-bold uppercase tracking-wider">
+            <thead>
+                <tr class="border-b border-white/10 text-gray-400">
+                    <th class="pb-3 text-left pl-2">Ukuran</th>
+                    <th class="pb-3">Lebar (CM)</th>
+                    <th class="pb-3 text-right pr-2">Panjang (CM)</th>
+                </tr>
+            </thead>
+            <tbody class="text-white/90">
+                <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                    <td class="py-3 text-left pl-2 font-black text-red-500">S</td>
+                    <td class="py-3">48</td>
+                    <td class="py-3 text-right pr-2">69</td>
+                </tr>
+                <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                    <td class="py-3 text-left pl-2 font-black text-red-500">M</td>
+                    <td class="py-3">50</td>
+                    <td class="py-3 text-right pr-2">71</td>
+                </tr>
+                <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                    <td class="py-3 text-left pl-2 font-black text-red-500">L</td>
+                    <td class="py-3">52</td>
+                    <td class="py-3 text-right pr-2">73</td>
+                </tr>
+                <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                    <td class="py-3 text-left pl-2 font-black text-red-500">XL</td>
+                    <td class="py-3">54</td>
+                    <td class="py-3 text-right pr-2">75</td>
+                </tr>
+                <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                    <td class="py-3 text-left pl-2 font-black text-red-400">XXL</td>
+                    <td class="py-3">56</td>
+                    <td class="py-3 text-right pr-2">77</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
             
             <div class="ultra-glass p-6 rounded-3xl border-l-4 border-red-600">
                 <div class="text-red-500 font-black text-xs uppercase mb-3 flex items-center"><i class="fas fa-skull-crossbones mr-2"></i> Payment Info</div>
                 <div class="text-[10px] sm:text-xs text-gray-400 font-bold uppercase space-y-1">
-                    <div class="flex justify-between border-b border-white/5 pb-1"><span>BCA</span><span>6173067696</span></div>
-                    <div class="flex justify-between border-b border-white/5 pb-1 mt-2"><span>DANA</span><span>081219987041</span></div>
-                    <p class="text-[8px] text-red-600/60 mt-2">*A/N Fierly Endyarta Ilham</p>
+                    <div class="flex justify-between border-b border-white/5 pb-1"><span>BCA</span><span>123456789</span></div>
+                    <div class="flex justify-between border-b border-white/5 pb-1 mt-2"><span>OVO/DANA</span><span>087753855074</span></div>
+                    <p class="text-[8px] text-red-600/60 mt-2">*A/N THE FALLEN</p>
                 </div>
             </div>
         </div>
@@ -146,8 +189,8 @@
 
                     <select id="pembayaran" required class="p-4 rounded-2xl text-[10px] sm:text-xs font-bold uppercase tracking-widest cursor-pointer outline-none">
                         <option value="" disabled selected>TRANSFER VIA</option>
-                        <option value="BCA">BCA - 6173067696 (Fierly Endyarta Ilham)</option>
-                        <option value="DANA">DANA - 081219987041 (Fierly Endyarta Ilham)</option>
+                        <option value="BCA">BCA - 123456789</option>
+                        <option value="DANA">DANA - 087753855074</option>
                     </select>
                 </div>
 
@@ -159,7 +202,7 @@
                 <div class="bg-black/50 p-6 rounded-3xl text-center border-b-4 border-red-600 ring-1 ring-red-600/20 flex flex-col justify-center items-center min-h-[100px]">
                     <p class="text-[8px] text-gray-500 uppercase mb-1 tracking-[0.2em]">Estimation Total</p>
                     <div id="displayHarga" class="flex flex-col items-center justify-center gap-1 transition-all duration-500">
-                        <h3 class="text-3xl sm:text-4xl font-black text-white">Rp 130.000</h3>
+                        <h3 class="text-3xl sm:text-4xl font-black text-white">Rp 185.000</h3>
                     </div>
                 </div>
 
@@ -175,7 +218,7 @@
     </footer >
 
     <script>
-        const HARGA_DASAR = 130000;
+        const HARGA_DASAR = 185000;
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxS8x_wpuyhoP3CHzMGWs8gqDmomBWSNytgTWHlyYuBHri5X_R9VVaiVNmfiVe-htKz/exec";
         
         let diskonAktif = 0;
