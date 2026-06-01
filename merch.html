@@ -10,40 +10,20 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.95)), 
-                        url('https://www.transparenttextures.com/patterns/dark-wood.png'), #0a0a0a;
-            background-attachment: fixed;
-            background-size: cover;
+            background: #0a0a0a; /* Solid black background */
             color: #fff;
             font-family: 'Orbitron', sans-serif;
             min-height: 100vh;
         }
 
-        .fire-bg {
-            position: fixed;
-            bottom: 0; left: 0; width: 100%; height: 20vh;
-            background: linear-gradient(to top, rgba(239, 68, 68, 0.4), transparent);
-            z-index: -1;
-            filter: blur(50px);
-            animation: flame-move 3s infinite alternate;
-        }
-
-        @keyframes flame-move {
-            from { transform: scaleY(1); opacity: 0.4; }
-            to { transform: scaleY(1.4); opacity: 0.7; }
-        }
-
         .a7x-title {
             font-family: 'Metal Mania', cursive;
             color: #ef4444;
-            text-shadow: 0 0 15px #ff0000;
         }
 
         .ultra-glass {
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(20px);
+            background: rgba(15, 15, 15, 0.95);
             border: 1px solid rgba(239, 68, 68, 0.2);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
         }
 
         .preview-animate {
@@ -51,7 +31,7 @@
         }
         @keyframes float {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(1deg); }
+            50% { transform: translateY(-10px) rotate(0.5deg); }
         }
 
         input, textarea, select {
@@ -60,7 +40,7 @@
             color: white !important;
             transition: all 0.3s ease;
         }
-        input:focus { border-color: #ef4444 !important; box-shadow: 0 0 15px rgba(239,68,68,0.4); background: rgba(239,68,68,0.05) !important; }
+        input:focus { border-color: #ef4444 !important; background: rgba(239,68,68,0.05) !important; outline: none; }
         
         .swal2-popup {
             background: #0a0a0a !important;
@@ -71,7 +51,6 @@
         .swal2-title {
             font-family: 'Metal Mania', cursive !important;
             color: #ef4444 !important;
-            text-shadow: 0 0 10px #ff0000;
         }
         .swal2-confirm {
             background-color: #ef4444 !important;
@@ -82,28 +61,37 @@
 </head>
 <body class="p-4 sm:p-8 lg:p-12">
 
-    <div class="fire-bg"></div>
-
     <header class="text-center mb-10 lg:mb-20">
         <h1 class="a7x-title text-5xl sm:text-7xl lg:text-9xl uppercase tracking-tighter leading-none">PRE-ORDER A7X BLITAR</h1>
         <p class="text-[8px] sm:text-[10px] tracking-[0.3em] sm:tracking-[0.5em] text-red-500 font-black mt-4 uppercase"> • Blitar Nation Merch • </p>
     </header>
 
     <div id="countdownPanel" class="max-w-3xl mx-auto text-center my-12 p-8 ultra-glass rounded-[2rem] border-b-4 border-red-600">
-        <div class="text-red-600 drop-shadow-[0_0_15px_rgba(239,68,68,0.7)] mb-4 text-4xl animate-bounce">
+        <div class="text-red-600 mb-4 text-4xl animate-bounce">
             <i class="fas fa-skull-crossbones"></i>
         </div>
-        <h2 class="text-xl sm:text-2xl font-black text-red-500 tracking-widest uppercase mb-6">THE REVELATION IS COMING</h2>
+        <h2 class="text-xl sm:text-2xl font-black text-red-500 tracking-widest uppercase mb-6">SISA WAKTU PRE-ORDER</h2>
         <div class="grid grid-cols-4 gap-3 max-w-xl mx-auto">
-            <div class="bg-black/60 p-4 rounded-xl"><h3 id="days" class="text-xl sm:text-3xl font-black text-white">00</h3><p class="text-[8px] text-gray-500 uppercase font-bold mt-1">Hari</p></div>
-            <div class="bg-black/60 p-4 rounded-xl"><h3 id="hours" class="text-xl sm:text-3xl font-black text-white">00</h3><p class="text-[8px] text-gray-500 uppercase font-bold mt-1">Jam</p></div>
-            <div class="bg-black/60 p-4 rounded-xl"><h3 id="minutes" class="text-xl sm:text-3xl font-black text-white">00</h3><p class="text-[8px] text-gray-500 uppercase font-bold mt-1">Menit</p></div>
-            <div class="bg-black/60 p-4 rounded-xl"><h3 id="seconds" class="text-xl sm:text-3xl font-black text-emerald-400">00</h3><p class="text-[8px] text-gray-500 uppercase font-bold mt-1">Detik</p></div>
+            <div class="bg-black/80 p-4 rounded-xl"><h3 id="days" class="text-xl sm:text-3xl font-black text-white">00</h3><p class="text-[8px] text-gray-500 uppercase font-bold mt-1">Hari</p></div>
+            <div class="bg-black/80 p-4 rounded-xl"><h3 id="hours" class="text-xl sm:text-3xl font-black text-white">00</h3><p class="text-[8px] text-gray-500 uppercase font-bold mt-1">Jam</p></div>
+            <div class="bg-black/80 p-4 rounded-xl"><h3 id="minutes" class="text-xl sm:text-3xl font-black text-white">00</h3><p class="text-[8px] text-gray-500 uppercase font-bold mt-1">Menit</p></div>
+            <div class="bg-black/80 p-4 rounded-xl"><h3 id="seconds" class="text-xl sm:text-3xl font-black text-emerald-400">00</h3><p class="text-[8px] text-gray-500 uppercase font-bold mt-1">Detik</p></div>
         </div>
-        <p class="text-[9px] text-gray-400 uppercase font-bold tracking-widest mt-6 animate-pulse"><i class="fas fa-lock mr-2"></i> Form Pre-Order Terkunci Sampai Hitungan Mundur Selesai</p>
+        <p class="text-[9px] text-gray-400 uppercase font-bold tracking-widest mt-6 animate-pulse"><i class="fas fa-hourglass-half mr-2"></i> Segera amankan slot sebelum gerbang Pre-Order ditutup otomatis</p>
     </div>
 
-    <main id="mainWebsite" class="hidden max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+    <div id="closedPanel" class="hidden max-w-3xl mx-auto text-center my-12 p-8 ultra-glass rounded-[2rem] border-b-4 border-gray-600">
+        <div class="text-gray-500 mb-4 text-5xl">
+            <i class="fas fa-lock"></i>
+        </div>
+        <h2 class="text-2xl sm:text-4xl font-black text-red-500 tracking-widest uppercase mb-4">PRE-ORDER CLOSED</h2>
+        <p class="text-sm sm:text-base text-gray-300 font-bold uppercase tracking-wider max-w-lg mx-auto leading-relaxed">
+            Terimakasih sudah mensupport A7X Fanbase Blitar. <br>Sampai jumpa di rilisan artikel merchandise selanjutnya!
+        </p>
+        <div class="mt-6 text-xs text-gray-500 font-semibold uppercase tracking-widest">Salam Persaudaraan 🤘</div>
+    </div>
+
+    <main id="mainWebsite" class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
         
         <div class="space-y-6 lg:sticky lg:top-12">
             <div class="ultra-glass p-3 sm:p-5 rounded-[2rem] sm:rounded-[3rem] relative group preview-animate">
@@ -162,7 +150,7 @@
                     </div>
                 </div>
 
-                <button type="submit" id="btnSubmit" class="w-full bg-red-600 hover:bg-white text-black font-black py-5 rounded-[2rem] uppercase tracking-widest text-[10px] sm:text-xs transition-all duration-500 shadow-xl hover:shadow-red-600/20 group">
+                <button type="submit" id="btnSubmit" class="w-full bg-red-600 hover:bg-white text-black font-black py-5 rounded-[2rem] uppercase tracking-widest text-[10px] sm:text-xs transition-all duration-500 shadow-xl group">
                     KIRIM PESANAN SEKARANG <i class="fas fa-bolt ml-2 group-hover:animate-bounce"></i>
                 </button>
             </form>
@@ -179,11 +167,14 @@
         
         let diskonAktif = 0;
 
-        // ==========================================
-        // LOGIKA KONTROL COUNTDOWN & PEMBUKA GEMBOK
-        // ==========================================
-        // Untuk mencoba langsung ganti ke tanggal kemarin: "May 16, 2026 00:00:00"
-        const targetDate = new Date("June 5, 2025 00:00:00").getTime();
+        // ==========================================================
+        // LOGIKA BARU: HITUNG MUNDUR 20 HARI & PENUTUPAN FORM
+        // ==========================================================
+        
+        // Mengatur waktu penutupan tepat 20 hari dari waktu sekarang saat di-load pertama kali
+        // Jika ingin tanggal akhir yang mengikat secara permanen, ganti baris ini dengan string tanggal target, misal:
+        // const targetDate = new Date("June 21, 2026 19:40:00").getTime();
+        const targetDate = new Date().getTime() + (20 * 24 * 60 * 60 * 1000);
 
         const countdownFunction = setInterval(() => {
             const now = new Date().getTime();
@@ -199,11 +190,16 @@
             document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
             document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
 
-            // Jika hitungan mundur habis / sudah lewat target rilis
+            // Jika hitungan mundur habis (Pre-Order Resmi Ditutup)
             if (distance <= 0) {
                 clearInterval(countdownFunction);
+                
+                // Sembunyikan panel countdown dan form utama website
                 document.getElementById("countdownPanel").style.display = "none";
-                document.getElementById("mainWebsite").classList.remove("hidden");
+                document.getElementById("mainWebsite").style.display = "none";
+                
+                // Munculkan panel penutupan pre-order
+                document.getElementById("closedPanel").classList.remove("hidden");
             }
         }, 1000);
 
@@ -233,7 +229,7 @@
                     
                     displayHarga.innerHTML = `
                         <span class="text-sm sm:text-base font-bold text-gray-500 line-through tracking-wider">Rp ${HARGA_DASAR.toLocaleString('id-ID')}</span>
-                        <h3 class="text-3xl sm:text-4xl font-black text-emerald-400 drop-shadow-[0_0_10px_rgba(16,185,129,0.6)] animate-pulse tracking-wide">Rp ${hargaBaru.toLocaleString('id-ID')}</h3>
+                        <h3 class="text-3xl sm:text-4xl font-black text-emerald-400 animate-pulse tracking-wide">Rp ${hargaBaru.toLocaleString('id-ID')}</h3>
                     `;
 
                     Swal.fire({
@@ -284,7 +280,6 @@
             const hargaFinal = HARGA_DASAR - (HARGA_DASAR * diskonAktif);
             const tglSaja = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
             
-            // Formasi Teks WhatsApp Keren & Profesional (Anti-Bug Tanda Tanya)
             const msgWA = `*DEATHBAT MERCH - PRE-ORDER CONFIRMATION* 💀🔥
 --------------------------------------------------
 Halo Admin Deathbat Blitar Raya,
@@ -310,11 +305,9 @@ Berikut saya lampirkan bukti transfer terlampir untuk segera diverifikasi.
 
 Terima kasih, Salam Persaudaraan! 🤘`;
 
-            // 🔥 STRATEGI MUTLAK: Eksekusi window.open seketika di sini agar lolos proteksi browser 100%
-            window.open(`https://wa.me/6287753855074?text=${encodeURIComponent(msgWA)}`, '_blank');
+            window.open(`https://wa.me/6281219987041?text=${encodeURIComponent(msgWA)}`, '_blank');
 
             try {
-                // Proses pengiriman ke Google Sheets berjalan mandiri di latar belakang
                 await fetch(APPS_SCRIPT_URL, { 
                     method: 'POST', 
                     mode: 'no-cors',
