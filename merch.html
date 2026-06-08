@@ -229,9 +229,10 @@
         let diskonAktif = 0;
 
         // ==========================================================
-        // COUNTDOWN SISA WAKTU PRE-ORDER (20 HARI)
+        // COUNTDOWN SISA WAKTU PRE-ORDER (DIMULAI 5 JUNI 2026)
         // ==========================================================
-        const targetDate = new Date().getTime() + (20 * 24 * 60 * 60 * 1000);
+        // Menggunakan tanggal target tetap agar sisa waktu tidak merestart saat di-refresh
+        const targetDate = new Date("June 25, 2026 23:59:59").getTime();
 
         const countdownFunction = setInterval(() => {
             const now = new Date().getTime();
@@ -289,8 +290,6 @@
 
             return hargaSetelahDiskon;
         }
-
-
         // Fungsi Cek Kupon dengan Metode Jalur Parameter Aman (Bypass CORS)
         async function cekKupon() {
             const code = document.getElementById('kupon').value.trim().toUpperCase();
