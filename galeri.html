@@ -59,32 +59,48 @@
             border-radius: 20px;
         }
 
-        /* --- SWIPER LANDSCAPE & RESPONSIVE --- */
-        .swiper { width: 100%; padding-top: 30px; padding-bottom: 50px; }
+        /* --- SWIPER ADAPTIF (BORDER MENYESUAIKAN FOTO FULL) --- */
+        .swiper { width: 100%; padding-top: 20px; padding-bottom: 60px; }
 
         .swiper-slide {
-            width: 85vw; /* Landscape di HP */
-            aspect-ratio: 16 / 9; /* Paksa Rasio Landscape */
+            width: 85vw; /* Lebar responsif di HP */
+            max-width: 550px; /* Batas lebar maksimal di desktop */
+            height: auto; /* Mengikuti tinggi foto asli secara proporsional */
             border-radius: 15px;
             border: 1px solid rgba(239, 68, 68, 0.3);
             box-shadow: 0 10px 30px rgba(0,0,0,0.8);
             overflow: hidden;
-            transition: 0.4s;
+            transition: transform 0.4s, border-color 0.4s, box-shadow 0.4s;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            position: relative;
         }
 
-        @media (min-width: 768px) {
-            .swiper-slide { width: 600px; } /* Landscape di Desktop */
-        }
-
+        /* Border & Glow Menyala Mengikuti Lekuk Frame Foto yang Aktif */
         .swiper-slide-active {
             border: 2px solid #ef4444;
-            box-shadow: 0 0 40px rgba(239, 68, 68, 0.5);
+            box-shadow: 0 0 35px rgba(239, 68, 68, 0.6);
         }
 
-        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
+        /* Mengatur Foto Tampil Penuh Utuh */
+        .swiper-slide img { 
+            width: 100%; 
+            height: auto; 
+            object-fit: contain; /* Foto utuh tidak terpotong */
+            display: block;
+        }
 
         .swiper-button-next, .swiper-button-prev { color: #ef4444 !important; }
         .swiper-pagination-bullet-active { background: #ef4444 !important; }
+
+        /* Style tombol kategori aktif */
+        .tab-btn.active {
+            background-color: #dc2626;
+            color: #fff;
+            border-color: #ef4444;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+        }
     </style>
 </head>
 <body class="flex flex-col items-center">
@@ -98,14 +114,31 @@
     </nav>
 
     <main class="w-full max-w-6xl px-4 py-8 text-center relative z-10">
-        <header class="mb-6 md:mb-10">
+        <header class="mb-6">
             <h2 class="text-xl md:text-4xl font-bold uppercase mb-2">Dokumentasi Fanbase</h2>
             <p class="text-gray-500 text-[8px] md:text-xs tracking-[0.4em] uppercase">Momen Kebersamaan Deathbat Blitar Raya</p>
         </header>
 
+        <!-- --- FILTER KATEGORI (TABS) --- -->
+        <div class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8 max-w-xl mx-auto px-2">
+            <button onclick="filterCategory('all')" id="tab-all" class="tab-btn active bg-white/5 border border-white/10 px-4 py-1.5 md:px-6 md:py-2 rounded-full text-[9px] md:text-xs font-bold tracking-widest uppercase transition-all duration-300 hover:bg-red-600/30">
+                <i class="fas fa-th-large mr-1.5"></i> Semua
+            </button>
+            <button onclick="filterCategory('konser')" id="tab-konser" class="tab-btn bg-white/5 border border-white/10 px-4 py-1.5 md:px-6 md:py-2 rounded-full text-[9px] md:text-xs font-bold tracking-widest uppercase transition-all duration-300 hover:bg-red-600/30">
+                <i class="fas fa-guitar mr-1.5"></i> Konser
+            </button>
+            <button onclick="filterCategory('kopdar')" id="tab-kopdar" class="tab-btn bg-white/5 border border-white/10 px-4 py-1.5 md:px-6 md:py-2 rounded-full text-[9px] md:text-xs font-bold tracking-widest uppercase transition-all duration-300 hover:bg-red-600/30">
+                <i class="fas fa-users mr-1.5"></i> Kopdar
+            </button>
+            <button onclick="filterCategory('random')" id="tab-random" class="tab-btn bg-white/5 border border-white/10 px-4 py-1.5 md:px-6 md:py-2 rounded-full text-[9px] md:text-xs font-bold tracking-widest uppercase transition-all duration-300 hover:bg-red-600/30">
+                <i class="fas fa-bolt mr-1.5"></i> Random
+            </button>
+        </div>
+
+        <!-- --- CONTAINER SWIPER --- -->
         <div class="swiper mySwiper">
             <div class="swiper-wrapper" id="gallery-wrapper">
-                <div class="swiper-slide flex items-center justify-center bg-black/40">
+                <div class="swiper-slide flex items-center justify-center bg-black/40 p-10">
                     <p class="text-red-500 animate-pulse text-[10px]">MENGAMBIL DATA DARI CLOUD...</p>
                 </div>
             </div>
@@ -127,6 +160,8 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         const REPO = "a7x-Fanbase-blitar/image";
+        let allImagesData = []; 
+        let swiperInstance = null; 
         
         // --- SPAWN BATS (ANIMASI KELELAWAR) ---
         function spawnBats() {
@@ -145,11 +180,13 @@
             }
         }
 
+        // --- FETCH UTAMA DARI GITHUB ---
         async function loadImages() {
             const wrapper = document.getElementById('gallery-wrapper');
             try {
                 const res = await fetch(`https://api.github.com/repos/${REPO}/contents/?ref=main`);
                 const files = await res.json();
+                
                 const images = files.filter(f => f.name.match(/\.(jpg|jpeg|png|webp)$/i));
 
                 if (images.length === 0) {
@@ -157,37 +194,83 @@
                     return;
                 }
 
-                wrapper.innerHTML = '';
-                images.forEach(img => {
-                    const cdn = `https://cdn.jsdelivr.net/gh/${REPO}@main/${img.path}`;
-                    const name = img.name.split('.')[0].replace(/_/g, ' ');
+                allImagesData = images.map(img => {
+                    const rawName = img.name.split('.')[0]; 
                     
-                    const slide = document.createElement('div');
-                    slide.className = 'swiper-slide';
-                    slide.innerHTML = `
-                        <img src="${cdn}" alt="A7X Blitar">
-                        <div class="absolute bottom-0 left-0 w-full p-3 md:p-5 bg-gradient-to-t from-black via-black/80 to-transparent text-left">
-                            <p class="text-white text-[9px] md:text-[11px] font-bold uppercase tracking-widest">${name}</p>
-                            <p class="text-red-500 text-[7px] md:text-[8px] font-black uppercase">Deathbat Blitar Raya</p>
-                        </div>
-                    `;
-                    wrapper.appendChild(slide);
+                    let category = 'random'; 
+                    const match = rawName.match(/\(([^)]+)\)$/); 
+                    
+                    if (match) {
+                        const tag = match[1].toLowerCase();
+                        if (tag === 'konser' || tag === 'kopdar' || tag === 'random') {
+                            category = tag;
+                        }
+                    }
+
+                    const cleanName = rawName.replace(/\(([^)]+)\)$/, '').replace(/_/g, ' ').trim();
+                    const cdn = `https://cdn.jsdelivr.net/gh/${REPO}@main/${img.path}`;
+
+                    return { cdn, name: cleanName, category };
                 });
 
-                initSwiper();
+                renderGallery('all');
                 spawnBats();
             } catch (e) {
                 wrapper.innerHTML = '<p class="text-red-500">KONEKSI BERMASALAH.</p>';
             }
         }
 
+        // --- RENDER ELEMEN GAMBAR KE SWIPER WRAPPER ---
+        function renderGallery(categoryFilter) {
+            const wrapper = document.getElementById('gallery-wrapper');
+            
+            if (swiperInstance) {
+                swiperInstance.destroy(true, true);
+                swiperInstance = null;
+            }
+
+            wrapper.innerHTML = '';
+
+            const filtered = categoryFilter === 'all' 
+                ? allImagesData 
+                : allImagesData.filter(img => img.category === categoryFilter);
+
+            if (filtered.length === 0) {
+                wrapper.innerHTML = `<p class="w-full text-center text-gray-500 py-10 uppercase tracking-widest text-[10px]">Tidak ada foto di kategori ini.</p>`;
+                return;
+            }
+
+            filtered.forEach(img => {
+                const slide = document.createElement('div');
+                slide.className = 'swiper-slide';
+                slide.innerHTML = `
+                    <img src="${img.cdn}" alt="${img.name}">
+                    <div class="absolute bottom-0 left-0 w-full p-3 md:p-4 bg-gradient-to-t from-black via-black/80 to-transparent text-left">
+                        <p class="text-white text-[9px] md:text-[11px] font-bold uppercase tracking-widest">${img.name}</p>
+                        <p class="text-red-500 text-[7px] md:text-[8px] font-black uppercase">Deathbat Blitar Raya • ${img.category}</p>
+                    </div>
+                `;
+                wrapper.appendChild(slide);
+            });
+
+            initSwiper();
+        }
+
+        // --- FILTER KATEGORI VIA TOMBOL ---
+        function filterCategory(category) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`tab-${category}`).classList.add('active');
+            renderGallery(category);
+        }
+
+        // --- INISIALISASI SWIPER ---
         function initSwiper() {
-            new Swiper(".mySwiper", {
+            swiperInstance = new Swiper(".mySwiper", {
                 effect: "coverflow",
                 grabCursor: true,
                 centeredSlides: true,
                 slidesPerView: "auto",
-                loop: true,
+                loop: document.querySelectorAll('#gallery-wrapper .swiper-slide').length > 1,
                 coverflowEffect: {
                     rotate: 15,
                     stretch: 0,
