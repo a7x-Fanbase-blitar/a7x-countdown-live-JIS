@@ -18,8 +18,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
     <style>
@@ -36,7 +34,6 @@
             min-height: 100vh;
         }
 
-        /* Mengunci background utama menggunakan pseudo-element agar stabil */
         body::before {
             content: "";
             position: fixed;
@@ -53,66 +50,43 @@
         /* ============================== */
         /* PERBAIKAN TOTAL MODE TERANG */
         /* ============================== */
-        body.light-mode {
-            background-color: #f5f5f5;
-            color: #111;
-        }
-
-        /* Menghilangkan total gambar latar berulang di mode terang */
-        body.light-mode::before {
-            background-image: none !important;
-            opacity: 0;
-        }
-
-        /* Menyembunyikan partikel api agar tidak mengganggu kontras terang */
-        body.light-mode #particles-js {
-            display: none !important;
-        }
-
-        /* Menyesuaikan Ultra Glass di mode terang */
+        body.light-mode { background-color: #f5f5f5; color: #111; }
+        body.light-mode::before { background-image: none !important; opacity: 0; }
+        body.light-mode #particles-js { display: none !important; }
+        
         body.light-mode .ultra-glass {
             background: rgba(0, 0, 0, 0.03) !important;
             border: 1px solid rgba(0, 0, 0, 0.08) !important;
             color: #111;
         }
-
         body.light-mode .ultra-glass .grid > div {
             background-color: rgba(0, 0, 0, 0.04) !important;
             border: 1px solid rgba(239, 68, 68, 0.15) !important;
         }
+        body.light-mode .text-\[9px\].uppercase { color: #444 !important; }
 
-        body.light-mode .text-\[9px\].uppercase {
-            color: #444 !important;
-        }
-
-        /* Menyesuaikan Shoutbox di mode terang */
+        /* Penyesuaian Komponen Interaktif di Mode Terang */
         body.light-mode .shoutbox-container {
-            border-left: 3px solid #ef4444;
-            background: rgba(239, 68, 68, 0.04) !important;
+            border: 1px solid rgba(236, 72, 153, 0.2) !important;
+            background: rgba(255, 255, 255, 0.9) !important;
         }
-        body.light-mode #shoutName,
-        body.light-mode #shoutInput {
+        body.light-mode input[type="text"],
+        body.light-mode input[type="file"] {
             background-color: #fff !important;
-            border: 1px solid rgba(0, 0, 0, 0.15) !important;
+            border: 1px solid rgba(0, 0, 0, 0.2) !important;
             color: #111 !important;
         }
-        body.light-mode #shoutbox p {
-            color: #222 !important;
-        }
+        body.light-mode #shoutbox { background: rgba(0,0,0,0.02) !important; }
+        body.light-mode #shoutbox p { color: #222 !important; }
+        body.light-mode #shoutbox .msg-text { color: #444 !important; }
         
-        /* Menyesuaikan Music Player di mode terang */
         body.light-mode main div .bg-black\/80 {
             background-color: #e5e5e5 !important;
             border: 1px solid rgba(239, 68, 68, 0.25) !important;
         }
-        body.light-mode #songTitle + .text-gray-500 {
-            color: #555 !important;
-        }
-        body.light-mode button.text-gray-400 {
-            color: #333 !important;
-        }
+        body.light-mode #songTitle + .text-gray-500 { color: #555 !important; }
+        body.light-mode button.text-gray-400 { color: #333 !important; }
         
-        /* Menyesuaikan Dropdown Menu di mode terang */
         body.light-mode .dropdown-menu {
             background: #ffffff !important;
             border: 1px solid #dddddd !important;
@@ -122,11 +96,7 @@
             color: #222222 !important;
             border-bottom: 1px solid rgba(0,0,0,0.05) !important;
         }
-        
-        /* Menyesuaikan Footer di mode terang */
-        body.light-mode main p.text-gray-600 {
-            color: #555555 !important;
-        }
+        body.light-mode main p.text-gray-600 { color: #555555 !important; }
 
         /* ============================== */
         /* ANIMASI DAN LAYOUT UTAMA */
@@ -229,11 +199,10 @@
             border-bottom: 1px solid rgba(255,255,255,0.05); color: #ccc;
         }
 
-        .shoutbox-container { border-left: 3px solid #ef4444; background: rgba(255,0,0,0.05); position: relative; z-index: 10; }
+        .shoutbox-container { background: rgba(0,0,0,0.4); position: relative; z-index: 10; border: 1px solid rgba(244, 114, 182, 0.2); }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #ef4444; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #ec4899; border-radius: 10px; }
 
-        /* MODIFIKASI KHUSUS HP (TIDAK MENGUBAH KODE ASLI, HANYA OVERRIDE CSS) */
         @media (max-width: 640px) {
             .a7x-title { font-size: 2.5rem !important; line-height: 1.1; }
             #gatekeeper h1 { font-size: 2rem !important; }
@@ -259,7 +228,7 @@
 
     <nav class="fixed top-0 w-full z-50 p-4 flex justify-between items-center bg-black/60 backdrop-blur-lg border-b border-white/10 hidden-content" id="nav-content">
         <div class="flex items-center gap-2 md:gap-3">
-            <div class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-red-600 overflow-hidden shadow-[0_0_15px_red] cursor-pointer" onclick="toggleLightMode()">
+            <div class="w-10 h-10 md:w-12 h-12 rounded-full border-2 border-red-600 overflow-hidden shadow-[0_0_15px_red] cursor-pointer" onclick="toggleLightMode()">
                 <img src="a7xblitar.png" alt="Logo Fanbase" class="w-full h-full object-cover">
             </div>
             <div class="leading-tight">
@@ -319,18 +288,57 @@
             <audio id="audioPlayer" onended="nextSong()"></audio>
         </div>
 
-        <div class="mt-12 w-full max-w-lg mx-auto shoutbox-container p-6 rounded-r-3xl ultra-glass mb-16 text-left">
-            <h3 class="text-red-500 font-bold mb-4 uppercase text-xs tracking-widest flex items-center gap-2">
-                <i class="fas fa-comment-dots"></i> Moshpit Shoutbox
+        <!-- KOLOM CHAT (GOOGLE SHEETS) -->
+        <div class="mt-12 w-full max-w-lg mx-auto shoutbox-container p-6 rounded-3xl ultra-glass mb-8 text-left shadow-[0_0_20px_rgba(236,72,153,0.15)] relative overflow-hidden">
+            <h3 class="text-pink-500 font-bold mb-1 uppercase text-sm tracking-widest flex items-center gap-2 justify-center text-center">
+                <i class="fas fa-fire-alt animate-pulse"></i>"Tiket aman? Fisik aman? Mental aman? 🤘 Tunjukkan seberapa keras semangat kalian menuju JIS! Hancurkan kolom komentar ini sekarang juga! Hail Deathbat! 🔥💀"
             </h3>
-            <div id="shoutbox" class="h-40 overflow-y-auto mb-4 custom-scrollbar space-y-3 pr-2 text-[11px]"></div>
-            <div class="flex flex-col gap-2">
-                <input type="text" id="shoutName" maxlength="20" placeholder="Nama..." class="bg-white/5 border border-white/10 rounded-full px-4 py-2 text-[11px] text-white">
-                <div class="flex gap-2">
-                    <input type="text" id="shoutInput" placeholder="Pesan..." class="flex-1 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-[11px] text-white">
-                    <button onclick="sendShout()" class="bg-red-600 px-6 py-2 rounded-full text-[11px] font-bold uppercase text-black">Kirim</button>
-                </div>
+            <p class="text-[9px] text-gray-400 text-center mb-5 uppercase tracking-[0.2em]">Live Moshpit Shoutbox</p>
+
+            <div id="shoutbox" class="h-48 overflow-y-auto mb-5 custom-scrollbar space-y-3 pr-2 text-[11px] bg-black/40 p-4 rounded-2xl border border-white/5">
+                <p class="text-center text-gray-500 animate-pulse mt-4">Menghubungkan ke server...</p>
             </div>
+
+            <form id="chatForm" class="flex flex-col gap-3">
+                <input type="text" id="shoutName" name="nama" maxlength="20" placeholder="Nama / Panggilan..." required 
+                       class="bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-[11px] text-white focus:outline-none focus:border-pink-500 transition-colors">
+                <div class="flex gap-2">
+                    <input type="text" id="shoutInput" name="pesan" placeholder="Tinggalkan jejakmu di sini..." required 
+                           class="flex-1 bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-[11px] text-white focus:outline-none focus:border-pink-500 transition-colors">
+                    <button type="submit" id="btnKirim" class="bg-gradient-to-r from-red-700 via-pink-600 to-red-500 px-6 py-3 rounded-xl text-[11px] font-bold uppercase text-white shadow-[0_0_15px_rgba(236,72,153,0.4)] hover:shadow-[0_0_25px_rgba(236,72,153,0.7)] transition-all transform hover:-translate-y-0.5">
+                        Kirim
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- KOLOM UPLOAD FOTO (GOOGLE DRIVE) -->
+        <div class="w-full max-w-lg mx-auto shoutbox-container p-6 rounded-3xl ultra-glass mb-16 text-left shadow-[0_0_20px_rgba(236,72,153,0.15)] relative overflow-hidden">
+            <h3 class="text-pink-500 font-bold mb-1 uppercase text-sm tracking-widest flex items-center gap-2 justify-center text-center">
+                <i class="fas fa-camera-retro animate-pulse"></i> Drop Your Concert Pics!
+            </h3>
+            <p class="text-[9px] text-gray-400 text-center mb-5 uppercase tracking-[0.2em]">Upload foto erbaik mu saat konser 10 Oktober disini</p>
+
+            <form id="uploadForm" class="flex flex-col gap-4">
+                <input type="text" id="uploaderName" name="nama" placeholder="Nama Kamu..." required 
+                       class="bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-[11px] text-white focus:outline-none focus:border-pink-500 transition-colors">
+                
+                <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-pink-500/30 border-dashed rounded-xl cursor-pointer bg-black/40 hover:bg-black/60 transition-colors">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <i class="fas fa-cloud-upload-alt text-2xl text-pink-500 mb-2"></i>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-widest"><span class="font-bold text-white">Klik untuk upload</span> atau drag foto</p>
+                        <p class="text-[8px] text-gray-500 mt-1">PNG, JPG or JPEG</p>
+                    </div>
+                    <input type="file" id="fileFoto" accept="image/png, image/jpeg" class="hidden" required />
+                </label>
+                
+                <p id="fileNameDisplay" class="text-[9px] text-pink-400 text-center hidden uppercase tracking-widest"></p>
+
+                <button type="submit" id="btnUpload" class="bg-gradient-to-r from-red-700 via-pink-600 to-red-500 px-6 py-3 rounded-xl text-[11px] font-bold uppercase text-white shadow-[0_0_15px_rgba(236,72,153,0.4)] hover:shadow-[0_0_25px_rgba(236,72,153,0.7)] transition-all">
+                    Upload Foto
+                </button>
+                <p id="uploadStatus" class="text-center text-[10px] mt-2 hidden"></p>
+            </form>
         </div>
 
         <p class="text-[8px] text-gray-600 mt-4 mb-12 tracking-widest uppercase relative z-10">© 2026 Deathbat Blitar Raya - Developed by THE FALLEN_BLITAR</p>
@@ -343,6 +351,9 @@
         let playlist = []; let index = 0;
         const player = document.getElementById('audioPlayer');
         const songTitle = document.getElementById('songTitle');
+
+        // ==== GANTI DENGAN URL GOOGLE APPS SCRIPT WEB APP ANDA ====
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyqThNRkYsIMseIJlGw7vMhn5WLj17K7c95bjcmabC0Ry2teO1iG6LSxUH9Jhu0Wk6DXw/exec";
 
         // PARTICLES
         particlesJS("particles-js", {
@@ -359,7 +370,7 @@
             "retina_detect": true
         });
 
-        // MUSIC ENGINE (API GITHUB + CDN JSDELIVR)
+        // MUSIC ENGINE
         async function fetchMusic() {
             try {
                 const response = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/`);
@@ -406,7 +417,122 @@
         function nextSong() { index = (index + 1) % playlist.length; load(index); player.play(); }
         function prevSong() { index = (index - 1 + playlist.length) % playlist.length; load(index); player.play(); }
 
-        // GATEKEEPER & MOSHPIT
+        // GOOGLE SHEETS CHAT ENGINE
+        async function loadChats() {
+            const shoutbox = document.getElementById('shoutbox');
+            if (APPS_SCRIPT_URL === "ISI_DENGAN_URL_WEB_APP_GOOGLE_SCRIPT_ANDA_DI_SINI") {
+                shoutbox.innerHTML = `<p class="text-center text-pink-500 text-[10px] mt-4">URL Google Script belum diisi di dalam kode.</p>`;
+                return;
+            }
+            try {
+                const response = await fetch(APPS_SCRIPT_URL + "?action=read");
+                const data = await response.json();
+                shoutbox.innerHTML = "";
+                data.forEach(chat => {
+                    shoutbox.innerHTML += `
+                    <div class="border-b border-white/5 pb-2 mb-2 animate-pulse" style="animation-iteration-count: 1;">
+                        <p class="flex items-center gap-2">
+                            <span class="text-pink-500 font-bold uppercase text-[10px]"><i class="fas fa-user-circle"></i> ${chat.nama}</span> 
+                            <span class="text-[8px] text-gray-500">${chat.waktu}</span>
+                        </p>
+                        <p class="text-gray-300 mt-1 pl-4 border-l-2 border-pink-600/30 msg-text">${chat.pesan}</p>
+                    </div>`;
+                });
+                shoutbox.scrollTop = shoutbox.scrollHeight;
+            } catch (error) {
+                shoutbox.innerHTML = `<p class="text-center text-pink-500 mt-4">Gagal memuat pesan.</p>`;
+            }
+        }
+
+        document.getElementById('chatForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btnKirim = document.getElementById('btnKirim');
+            btnKirim.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            btnKirim.disabled = true;
+
+            const formData = new FormData(this);
+            formData.append('type', 'chat');
+
+            fetch(APPS_SCRIPT_URL, { method: 'POST', body: formData })
+                .then(response => {
+                    this.reset();
+                    btnKirim.innerHTML = "Kirim";
+                    btnKirim.disabled = false;
+                    loadChats();
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    btnKirim.innerHTML = "Kirim";
+                    btnKirim.disabled = false;
+                });
+        });
+
+        // FOTO UPLOAD ENGINE
+        document.getElementById('fileFoto').addEventListener('change', function(e) {
+            const fileNameDisplay = document.getElementById('fileNameDisplay');
+            if(this.files[0]) {
+                fileNameDisplay.textContent = "File terpilih: " + this.files[0].name;
+                fileNameDisplay.classList.remove('hidden');
+            }
+        });
+
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const btnUpload = document.getElementById('btnUpload');
+            const statusText = document.getElementById('uploadStatus');
+            const fileInput = document.getElementById('fileFoto');
+            const nama = document.getElementById('uploaderName').value;
+            const file = fileInput.files[0];
+
+            if (!file) return alert("Pilih foto terlebih dahulu!");
+
+            btnUpload.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENGUPLOAD...';
+            btnUpload.disabled = true;
+            statusText.textContent = "Sedang memproses gambar, mohon tunggu...";
+            statusText.className = "text-center text-[10px] mt-2 text-yellow-400 block animate-pulse";
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const base64Data = event.target.result.split(",")[1]; 
+
+                const formData = new URLSearchParams();
+                formData.append('type', 'upload');
+                formData.append('nama', nama);
+                formData.append('fileName', file.name);
+                formData.append('mimeType', file.type);
+                formData.append('fileData', base64Data);
+
+                fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "sukses") {
+                        statusText.textContent = "Berhasil! Foto tersimpan.";
+                        statusText.className = "text-center text-[10px] mt-2 text-green-400 block";
+                        document.getElementById('uploadForm').reset();
+                        document.getElementById('fileNameDisplay').classList.add('hidden');
+                    } else {
+                        throw new Error(data.pesan);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    statusText.textContent = "Gagal mengupload. Coba lagi.";
+                    statusText.className = "text-center text-[10px] mt-2 text-red-500 block";
+                })
+                .finally(() => {
+                    btnUpload.innerHTML = "Upload Foto";
+                    btnUpload.disabled = false;
+                });
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // GATEKEEPER & MOSHPIT UNLOCK
         function unlockMoshpit() {
             spawnBats();
             document.getElementById('gatekeeper').style.opacity = '0';
@@ -416,16 +542,16 @@
                 document.getElementById('main-content').classList.add('show-content');
                 document.body.style.overflowY = 'auto';
                 
-                // 1. Ambil data musik
                 await fetchMusic(); 
-                
-                // 2. Putar otomatis setelah data diambil
                 if (playlist.length > 0) {
                     player.play().then(() => {
                         document.getElementById('playIcon').className = 'fas fa-pause text-lg';
                         songTitle.classList.remove('pause-animation');
-                    }).catch(err => console.log("Auto-play blocked by browser, user must click play manually."));
+                    }).catch(err => console.log("Auto-play blocked by browser."));
                 }
+
+                loadChats();
+
             }, 1000);
         }
 
@@ -442,28 +568,6 @@
                 setTimeout(() => bat.remove(), 2500);
             }
         }
-
-        // FIREBASE
-        firebase.initializeApp({ 
-            apiKey: "AIzaSyD6VZW2uZ4XJtH2BiASl7EbbgFsXQlJSvc", 
-            databaseURL: "https://a7x-fanbase-blitar-default-rtdb.asia-southeast1.firebasedatabase.app" 
-        });
-        const shoutRef = firebase.database().ref('moshpit');
-
-        function sendShout() {
-            const n = document.getElementById('shoutName').value || "Fallen";
-            const m = document.getElementById('shoutInput').value;
-            if(m) shoutRef.push({ name: n, message: m, timestamp: Date.now() });
-            document.getElementById('shoutInput').value = "";
-        }
-
-        shoutRef.limitToLast(10).on('value', snap => {
-            const box = document.getElementById('shoutbox'); 
-            box.innerHTML = "";
-            snap.forEach(c => { 
-                box.innerHTML += `<p><span class="text-red-600 font-bold">${c.val().name}</span>: ${c.val().message}</p>`; 
-            });
-        });
 
         function toggleLightMode() { document.body.classList.toggle('light-mode'); spawnBats(); }
 
