@@ -67,7 +67,7 @@
 
         /* Penyesuaian Komponen Interaktif di Mode Terang */
         body.light-mode .shoutbox-container {
-            border: 1px solid rgba(236, 72, 153, 0.2) !important;
+            border: 1px solid rgba(239, 68, 68, 0.2) !important;
             background: rgba(255, 255, 255, 0.9) !important;
         }
         body.light-mode input[type="text"],
@@ -199,9 +199,9 @@
             border-bottom: 1px solid rgba(255,255,255,0.05); color: #ccc;
         }
 
-        .shoutbox-container { background: rgba(0,0,0,0.4); position: relative; z-index: 10; border: 1px solid rgba(244, 114, 182, 0.2); }
+        .shoutbox-container { background: rgba(0,0,0,0.4); position: relative; z-index: 10; border: 1px solid rgba(239, 68, 68, 0.2); }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #ec4899; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #ef4444; border-radius: 10px; }
 
         @media (max-width: 640px) {
             .a7x-title { font-size: 2.5rem !important; line-height: 1.1; }
@@ -289,8 +289,8 @@
         </div>
 
         <!-- KOLOM CHAT (GOOGLE SHEETS) -->
-        <div class="mt-12 w-full max-w-lg mx-auto shoutbox-container p-6 rounded-3xl ultra-glass mb-8 text-left shadow-[0_0_20px_rgba(236,72,153,0.15)] relative overflow-hidden">
-            <h3 class="text-pink-500 font-bold mb-1 uppercase text-sm tracking-widest flex items-center gap-2 justify-center text-center">
+        <div class="mt-12 w-full max-w-lg mx-auto shoutbox-container p-6 rounded-3xl ultra-glass mb-8 text-left shadow-[0_0_20px_rgba(239,68,68,0.15)] relative overflow-hidden">
+            <h3 class="text-red-600 font-bold mb-1 uppercase text-sm tracking-widest flex items-center gap-2 justify-center text-center">
                 <i class="fas fa-fire-alt animate-pulse"></i>"Tiket aman? Fisik aman? Mental aman? 🤘 Tunjukkan seberapa keras semangat kalian menuju JIS! Hancurkan kolom komentar ini sekarang juga! Hail Deathbat! 🔥💀"
             </h3>
             <p class="text-[9px] text-gray-400 text-center mb-5 uppercase tracking-[0.2em]">Live Moshpit Shoutbox</p>
@@ -301,11 +301,11 @@
 
             <form id="chatForm" class="flex flex-col gap-3">
                 <input type="text" id="shoutName" name="nama" maxlength="20" placeholder="Nama / Panggilan..." required 
-                       class="bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-[11px] text-white focus:outline-none focus:border-pink-500 transition-colors">
+                       class="bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-[11px] text-white focus:outline-none focus:border-red-600 transition-colors">
                 <div class="flex gap-2">
                     <input type="text" id="shoutInput" name="pesan" placeholder="Tinggalkan jejakmu di sini..." required 
-                           class="flex-1 bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-[11px] text-white focus:outline-none focus:border-pink-500 transition-colors">
-                    <button type="submit" id="btnKirim" class="bg-gradient-to-r from-red-700 via-pink-600 to-red-500 px-6 py-3 rounded-xl text-[11px] font-bold uppercase text-white shadow-[0_0_15px_rgba(236,72,153,0.4)] hover:shadow-[0_0_25px_rgba(236,72,153,0.7)] transition-all transform hover:-translate-y-0.5">
+                           class="flex-1 bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-[11px] text-white focus:outline-none focus:border-red-600 transition-colors">
+                    <button type="submit" id="btnKirim" class="bg-gradient-to-r from-red-800 to-red-600 px-6 py-3 rounded-xl text-[11px] font-bold uppercase text-white shadow-[0_0_15px_rgba(239,68,68,0.4)] hover:shadow-[0_0_25px_rgba(239,68,68,0.7)] transition-all transform hover:-translate-y-0.5">
                         Kirim
                     </button>
                 </div>
@@ -313,28 +313,28 @@
         </div>
         
         <!-- KOLOM UPLOAD FOTO (GOOGLE DRIVE) -->
-        <div class="w-full max-w-lg mx-auto shoutbox-container p-6 rounded-3xl ultra-glass mb-16 text-left shadow-[0_0_20px_rgba(236,72,153,0.15)] relative overflow-hidden">
-            <h3 class="text-pink-500 font-bold mb-1 uppercase text-sm tracking-widest flex items-center gap-2 justify-center text-center">
+        <div class="w-full max-w-lg mx-auto shoutbox-container p-6 rounded-3xl ultra-glass mb-16 text-left shadow-[0_0_20px_rgba(239,68,68,0.15)] relative overflow-hidden">
+            <h3 class="text-red-600 font-bold mb-1 uppercase text-sm tracking-widest flex items-center gap-2 justify-center text-center">
                 <i class="fas fa-camera-retro animate-pulse"></i> Drop Your Concert Pics!
             </h3>
-            <p class="text-[9px] text-gray-400 text-center mb-5 uppercase tracking-[0.2em]">Upload foto erbaik mu saat konser 10 Oktober disini</p>
+            <p class="text-[9px] text-gray-400 text-center mb-5 uppercase tracking-[0.2em]">Upload foto terbaik mu saat konser 10 Oktober disini</p>
 
             <form id="uploadForm" class="flex flex-col gap-4">
                 <input type="text" id="uploaderName" name="nama" placeholder="Nama Kamu..." required 
-                       class="bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-[11px] text-white focus:outline-none focus:border-pink-500 transition-colors">
+                       class="bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-[11px] text-white focus:outline-none focus:border-red-600 transition-colors">
                 
-                <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-pink-500/30 border-dashed rounded-xl cursor-pointer bg-black/40 hover:bg-black/60 transition-colors">
+                <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-red-600/30 border-dashed rounded-xl cursor-pointer bg-black/40 hover:bg-black/60 transition-colors">
                     <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                        <i class="fas fa-cloud-upload-alt text-2xl text-pink-500 mb-2"></i>
+                        <i class="fas fa-cloud-upload-alt text-2xl text-red-600 mb-2"></i>
                         <p class="text-[10px] text-gray-400 uppercase tracking-widest"><span class="font-bold text-white">Klik untuk upload</span> atau drag foto</p>
                         <p class="text-[8px] text-gray-500 mt-1">PNG, JPG or JPEG</p>
                     </div>
                     <input type="file" id="fileFoto" accept="image/png, image/jpeg" class="hidden" required />
                 </label>
                 
-                <p id="fileNameDisplay" class="text-[9px] text-pink-400 text-center hidden uppercase tracking-widest"></p>
+                <p id="fileNameDisplay" class="text-[9px] text-red-500 text-center hidden uppercase tracking-widest"></p>
 
-                <button type="submit" id="btnUpload" class="bg-gradient-to-r from-red-700 via-pink-600 to-red-500 px-6 py-3 rounded-xl text-[11px] font-bold uppercase text-white shadow-[0_0_15px_rgba(236,72,153,0.4)] hover:shadow-[0_0_25px_rgba(236,72,153,0.7)] transition-all">
+                <button type="submit" id="btnUpload" class="bg-gradient-to-r from-red-800 to-red-600 px-6 py-3 rounded-xl text-[11px] font-bold uppercase text-white shadow-[0_0_15px_rgba(239,68,68,0.4)] hover:shadow-[0_0_25px_rgba(239,68,68,0.7)] transition-all">
                     Upload Foto
                 </button>
                 <p id="uploadStatus" class="text-center text-[10px] mt-2 hidden"></p>
@@ -421,7 +421,7 @@
         async function loadChats() {
             const shoutbox = document.getElementById('shoutbox');
             if (APPS_SCRIPT_URL === "ISI_DENGAN_URL_WEB_APP_GOOGLE_SCRIPT_ANDA_DI_SINI") {
-                shoutbox.innerHTML = `<p class="text-center text-pink-500 text-[10px] mt-4">URL Google Script belum diisi di dalam kode.</p>`;
+                shoutbox.innerHTML = `<p class="text-center text-red-500 text-[10px] mt-4">URL Google Script belum diisi di dalam kode.</p>`;
                 return;
             }
             try {
@@ -432,15 +432,15 @@
                     shoutbox.innerHTML += `
                     <div class="border-b border-white/5 pb-2 mb-2 animate-pulse" style="animation-iteration-count: 1;">
                         <p class="flex items-center gap-2">
-                            <span class="text-pink-500 font-bold uppercase text-[10px]"><i class="fas fa-user-circle"></i> ${chat.nama}</span> 
+                            <span class="text-red-600 font-bold uppercase text-[10px]"><i class="fas fa-user-circle"></i> ${chat.nama}</span> 
                             <span class="text-[8px] text-gray-500">${chat.waktu}</span>
                         </p>
-                        <p class="text-gray-300 mt-1 pl-4 border-l-2 border-pink-600/30 msg-text">${chat.pesan}</p>
+                        <p class="text-gray-300 mt-1 pl-4 border-l-2 border-red-600/30 msg-text">${chat.pesan}</p>
                     </div>`;
                 });
                 shoutbox.scrollTop = shoutbox.scrollHeight;
             } catch (error) {
-                shoutbox.innerHTML = `<p class="text-center text-pink-500 mt-4">Gagal memuat pesan.</p>`;
+                shoutbox.innerHTML = `<p class="text-center text-red-500 mt-4">Gagal memuat pesan.</p>`;
             }
         }
 
