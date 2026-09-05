@@ -135,7 +135,7 @@
             font-family: 'Orbitron', sans-serif;
             position: relative; z-index: 10000;
         }
-        .ready-btn:hover { transform: scale(1.15) rotate(-2deg); box-shadow: 0 0 50px #ef4444; }
+        .ready-btn:hover { transform: scale(1.15) rotate(-2deg); box-shadow: 0 0 50px #ef4444, 0 0 20px #ff69b4; } /* Sentuhan Pink pada Hover Glow */
 
         .gallery-hover:hover { color: #fff !important; text-shadow: 0 0 15px #fff; background: rgba(255, 255, 255, 0.1); padding-left: 22px; }
         .join-hover:hover { color: #22c55e !important; text-shadow: 0 0 15px #22c55e; background: rgba(34, 197, 94, 0.1); padding-left: 22px; }
@@ -153,7 +153,7 @@
             transition: all 0.3s ease-in-out;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
-        .btn-ticket:hover { transform: scale(1.1) translateY(-5px); background: #fff; color: #ff0000; box-shadow: 0 0 50px #ff0000; }
+        .btn-ticket:hover { transform: scale(1.1) translateY(-5px); background: #fff; color: #ff0000; box-shadow: 0 0 50px #ff0000, 0 0 20px #ff69b4; } /* Sentuhan Pink tambahan */
 
         .hidden-content { opacity: 0; pointer-events: none; transition: 1.5s ease; }
         .show-content { opacity: 1; pointer-events: auto; }
@@ -176,7 +176,7 @@
 
         .btn-dashboard {
             background: linear-gradient(135deg, #ef4444 0%, #7f1d1d 100%);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 192, 203, 0.4); /* Garis outline aksen Pink lembut */
             box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative; z-index: 60;
@@ -288,59 +288,6 @@
             <audio id="audioPlayer" onended="nextSong()"></audio>
         </div>
 
-        <!-- KOLOM CHAT (GOOGLE SHEETS) -->
-        <div class="mt-12 w-full max-w-lg mx-auto shoutbox-container p-6 rounded-3xl ultra-glass mb-8 text-left shadow-[0_0_20px_rgba(239,68,68,0.15)] relative overflow-hidden">
-            <h3 class="text-red-600 font-bold mb-1 uppercase text-sm tracking-widest flex items-center gap-2 justify-center text-center">
-                <i class="fas fa-fire-alt animate-pulse"></i>"Konser sebentar lagi apakah kalian siap 🔥💀"
-            </h3>
-            <p class="text-[9px] text-gray-400 text-center mb-5 uppercase tracking-[0.2em]">Live Moshpit Shoutbox</p>
-
-            <div id="shoutbox" class="h-48 overflow-y-auto mb-5 custom-scrollbar space-y-3 pr-2 text-[11px] bg-black/40 p-4 rounded-2xl border border-white/5">
-                <p class="text-center text-gray-500 animate-pulse mt-4">Menghubungkan ke server...</p>
-            </div>
-
-            <form id="chatForm" class="flex flex-col gap-3">
-                <input type="text" id="shoutName" name="nama" maxlength="20" placeholder="Nama / Panggilan..." required 
-                       class="bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-[11px] text-white focus:outline-none focus:border-red-600 transition-colors">
-                <div class="flex gap-2">
-                    <input type="text" id="shoutInput" name="pesan" placeholder="Tinggalkan jejakmu di sini..." required 
-                           class="flex-1 bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-[11px] text-white focus:outline-none focus:border-red-600 transition-colors">
-                    <button type="submit" id="btnKirim" class="bg-gradient-to-r from-red-800 to-red-600 px-6 py-3 rounded-xl text-[11px] font-bold uppercase text-white shadow-[0_0_15px_rgba(239,68,68,0.4)] hover:shadow-[0_0_25px_rgba(239,68,68,0.7)] transition-all transform hover:-translate-y-0.5">
-                        Kirim
-                    </button>
-                </div>
-            </form>
-        </div>
-        
-        <!-- KOLOM UPLOAD FOTO (GOOGLE DRIVE) -->
-        <div class="w-full max-w-lg mx-auto shoutbox-container p-6 rounded-3xl ultra-glass mb-16 text-left shadow-[0_0_20px_rgba(239,68,68,0.15)] relative overflow-hidden">
-            <h3 class="text-red-600 font-bold mb-1 uppercase text-sm tracking-widest flex items-center gap-2 justify-center text-center">
-                <i class="fas fa-camera-retro animate-pulse"></i> Drop Your Concert Pics!
-            </h3>
-            <p class="text-[9px] text-gray-400 text-center mb-5 uppercase tracking-[0.2em]">Upload foto terbaik mu saat konser 10 Oktober disini</p>
-
-            <form id="uploadForm" class="flex flex-col gap-4">
-                <input type="text" id="uploaderName" name="nama" placeholder="Nama Kamu..." required 
-                       class="bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-[11px] text-white focus:outline-none focus:border-red-600 transition-colors">
-                
-                <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-red-600/30 border-dashed rounded-xl cursor-pointer bg-black/40 hover:bg-black/60 transition-colors">
-                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                        <i class="fas fa-cloud-upload-alt text-2xl text-red-600 mb-2"></i>
-                        <p class="text-[10px] text-gray-400 uppercase tracking-widest"><span class="font-bold text-white">Klik untuk upload</span> atau drag foto</p>
-                        <p class="text-[8px] text-gray-500 mt-1">PNG, JPG or JPEG</p>
-                    </div>
-                    <input type="file" id="fileFoto" accept="image/png, image/jpeg" class="hidden" required />
-                </label>
-                
-                <p id="fileNameDisplay" class="text-[9px] text-red-500 text-center hidden uppercase tracking-widest"></p>
-
-                <button type="submit" id="btnUpload" class="bg-gradient-to-r from-red-800 to-red-600 px-6 py-3 rounded-xl text-[11px] font-bold uppercase text-white shadow-[0_0_15px_rgba(239,68,68,0.4)] hover:shadow-[0_0_25px_rgba(239,68,68,0.7)] transition-all">
-                    Upload Foto
-                </button>
-                <p id="uploadStatus" class="text-center text-[10px] mt-2 hidden"></p>
-            </form>
-        </div>
-
         <p class="text-[8px] text-gray-600 mt-4 mb-12 tracking-widest uppercase relative z-10">© 2026 Deathbat Blitar Raya - Developed by THE FALLEN_BLITAR</p>
     </main>
 
@@ -351,9 +298,6 @@
         let playlist = []; let index = 0;
         const player = document.getElementById('audioPlayer');
         const songTitle = document.getElementById('songTitle');
-
-        // ==== GANTI DENGAN URL GOOGLE APPS SCRIPT WEB APP ANDA ====
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyqThNRkYsIMseIJlGw7vMhn5WLj17K7c95bjcmabC0Ry2teO1iG6LSxUH9Jhu0Wk6DXw/exec";
 
         // PARTICLES
         particlesJS("particles-js", {
@@ -417,121 +361,6 @@
         function nextSong() { index = (index + 1) % playlist.length; load(index); player.play(); }
         function prevSong() { index = (index - 1 + playlist.length) % playlist.length; load(index); player.play(); }
 
-        // GOOGLE SHEETS CHAT ENGINE
-        async function loadChats() {
-            const shoutbox = document.getElementById('shoutbox');
-            if (APPS_SCRIPT_URL === "ISI_DENGAN_URL_WEB_APP_GOOGLE_SCRIPT_ANDA_DI_SINI") {
-                shoutbox.innerHTML = `<p class="text-center text-red-500 text-[10px] mt-4">URL Google Script belum diisi di dalam kode.</p>`;
-                return;
-            }
-            try {
-                const response = await fetch(APPS_SCRIPT_URL + "?action=read");
-                const data = await response.json();
-                shoutbox.innerHTML = "";
-                data.forEach(chat => {
-                    shoutbox.innerHTML += `
-                    <div class="border-b border-white/5 pb-2 mb-2 animate-pulse" style="animation-iteration-count: 1;">
-                        <p class="flex items-center gap-2">
-                            <span class="text-red-600 font-bold uppercase text-[10px]"><i class="fas fa-user-circle"></i> ${chat.nama}</span> 
-                            <span class="text-[8px] text-gray-500">${chat.waktu}</span>
-                        </p>
-                        <p class="text-gray-300 mt-1 pl-4 border-l-2 border-red-600/30 msg-text">${chat.pesan}</p>
-                    </div>`;
-                });
-                shoutbox.scrollTop = shoutbox.scrollHeight;
-            } catch (error) {
-                shoutbox.innerHTML = `<p class="text-center text-red-500 mt-4">Gagal memuat pesan.</p>`;
-            }
-        }
-
-        document.getElementById('chatForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btnKirim = document.getElementById('btnKirim');
-            btnKirim.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-            btnKirim.disabled = true;
-
-            const formData = new FormData(this);
-            formData.append('type', 'chat');
-
-            fetch(APPS_SCRIPT_URL, { method: 'POST', body: formData })
-                .then(response => {
-                    this.reset();
-                    btnKirim.innerHTML = "Kirim";
-                    btnKirim.disabled = false;
-                    loadChats();
-                })
-                .catch(error => {
-                    console.error('Error!', error.message);
-                    btnKirim.innerHTML = "Kirim";
-                    btnKirim.disabled = false;
-                });
-        });
-
-        // FOTO UPLOAD ENGINE
-        document.getElementById('fileFoto').addEventListener('change', function(e) {
-            const fileNameDisplay = document.getElementById('fileNameDisplay');
-            if(this.files[0]) {
-                fileNameDisplay.textContent = "File terpilih: " + this.files[0].name;
-                fileNameDisplay.classList.remove('hidden');
-            }
-        });
-
-        document.getElementById('uploadForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const btnUpload = document.getElementById('btnUpload');
-            const statusText = document.getElementById('uploadStatus');
-            const fileInput = document.getElementById('fileFoto');
-            const nama = document.getElementById('uploaderName').value;
-            const file = fileInput.files[0];
-
-            if (!file) return alert("Pilih foto terlebih dahulu!");
-
-            btnUpload.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENGUPLOAD...';
-            btnUpload.disabled = true;
-            statusText.textContent = "Sedang memproses gambar, mohon tunggu...";
-            statusText.className = "text-center text-[10px] mt-2 text-yellow-400 block animate-pulse";
-
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const base64Data = event.target.result.split(",")[1]; 
-
-                const formData = new URLSearchParams();
-                formData.append('type', 'upload');
-                formData.append('nama', nama);
-                formData.append('fileName', file.name);
-                formData.append('mimeType', file.type);
-                formData.append('fileData', base64Data);
-
-                fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === "sukses") {
-                        statusText.textContent = "Berhasil! Foto tersimpan.";
-                        statusText.className = "text-center text-[10px] mt-2 text-green-400 block";
-                        document.getElementById('uploadForm').reset();
-                        document.getElementById('fileNameDisplay').classList.add('hidden');
-                    } else {
-                        throw new Error(data.pesan);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    statusText.textContent = "Gagal mengupload. Coba lagi.";
-                    statusText.className = "text-center text-[10px] mt-2 text-red-500 block";
-                })
-                .finally(() => {
-                    btnUpload.innerHTML = "Upload Foto";
-                    btnUpload.disabled = false;
-                });
-            };
-            reader.readAsDataURL(file);
-        });
-
         // GATEKEEPER & MOSHPIT UNLOCK
         function unlockMoshpit() {
             spawnBats();
@@ -549,9 +378,6 @@
                         songTitle.classList.remove('pause-animation');
                     }).catch(err => console.log("Auto-play blocked by browser."));
                 }
-
-                loadChats();
-
             }, 1000);
         }
 
